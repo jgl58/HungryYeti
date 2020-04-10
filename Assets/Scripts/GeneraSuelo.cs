@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GeneraSuelo : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -14,21 +15,8 @@ public class GeneraSuelo : MonoBehaviour
 
     void Start()
     {
-        for(int i = -8; i <= 60; i += 2)
-        {
-            
-            int pongoPremio = Random.Range(0, 3);
-            if (pongoPremio == 1)
-            {
-                Instantiate(bloque, new Vector3(0, 0, i), new Quaternion()).transform.parent = suelo.transform;
-            }
-            else
-            {
 
-                Instantiate(nieve, new Vector3(0, 0, i), new Quaternion()).transform.parent = suelo.transform;
-            }
-
-        }
+        BloquesFactory.generateSuelo(16);
 
     }
 
@@ -39,4 +27,5 @@ public class GeneraSuelo : MonoBehaviour
     {
         
     }
+
 }

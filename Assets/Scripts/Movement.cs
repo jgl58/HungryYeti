@@ -24,6 +24,9 @@ public class Movement : MonoBehaviour
             {
                 refreshCounter = 5;
                 print("Cargamos nuevos bloques");
+
+
+                BloquesFactory.generateSuelo(5);
             }
 
             
