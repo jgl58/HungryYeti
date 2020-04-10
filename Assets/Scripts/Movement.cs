@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     // Start is called before the first frame update
+    private int refreshCounter = 5;
     void Start()
     {
         
@@ -18,6 +19,14 @@ public class Movement : MonoBehaviour
             Vector3 position = this.transform.position;
             position.z--;
             this.transform.position = position;
+            refreshCounter--;
+            if (refreshCounter == 0)
+            {
+                refreshCounter = 5;
+                print("Cargamos nuevos bloques");
+            }
+
+            
         }
     }
 }
