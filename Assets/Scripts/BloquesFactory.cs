@@ -12,6 +12,8 @@ public class BloquesFactory : MonoBehaviour
         GameObject suelo = GameObject.FindGameObjectWithTag("Suelo");
         GameObject bloque1 = (GameObject)Resources.Load("Prefabs/Bloque1");
         GameObject bloqueNieve = (GameObject)Resources.Load("Prefabs/BloqueNieve");
+        GameObject bloqueAgua = (GameObject)Resources.Load("Prefabs/BloqueAgua");
+        GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
 
         int aux = inicio;
         distancia = distancia * 2;
@@ -26,6 +28,16 @@ public class BloquesFactory : MonoBehaviour
 
                 obj = Instantiate(bloque1, new Vector3(0, 0, i), new Quaternion());
                 obj.transform.parent = suelo.transform;
+
+                //Instantiate(bloque, new Vector3(0, 0, i), new Quaternion()).transform.parent = suelo.transform;
+            }else if (pongoPremio == 2)
+            {
+
+                obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
+                obj.transform.parent = suelo.transform;
+
+                GameObject wood = Instantiate(tronco, new Vector3(0, 0, i), new Quaternion());
+                wood.transform.parent = obj.transform;
 
                 //Instantiate(bloque, new Vector3(0, 0, i), new Quaternion()).transform.parent = suelo.transform;
             }

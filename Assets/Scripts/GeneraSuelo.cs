@@ -7,17 +7,9 @@ public class GeneraSuelo : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public GameObject bloque;
-    public GameObject nieve;
-
-    public GameObject suelo;
-
-
     void Start()
     {
-
         BloquesFactory.generateSuelo(16);
-
     }
 
     
