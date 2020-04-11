@@ -36,8 +36,21 @@ public class BloquesFactory : MonoBehaviour
                 obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
                 obj.transform.parent = suelo.transform;
 
-                GameObject wood = Instantiate(tronco, new Vector3(0, 0, i), new Quaternion());
-                wood.transform.parent = obj.transform;
+                int direccion = Random.Range(0, 3);
+                print(direccion);
+                if (direccion == 0)
+                {
+                    //direccion derecha
+                    GameObject wood = Instantiate(tronco, new Vector3(-7, 0, i), new Quaternion());
+                    wood.transform.parent = obj.transform;
+                }
+                else
+                {
+                    //direccion izquierda
+                    GameObject wood = Instantiate(tronco, new Vector3(7, 0, i), new Quaternion());
+                    wood.transform.parent = obj.transform;
+                }
+                
 
                 //Instantiate(bloque, new Vector3(0, 0, i), new Quaternion()).transform.parent = suelo.transform;
             }
