@@ -62,6 +62,8 @@ public class Movement : MonoBehaviour
 
                             BloquesFactory.generateSuelo(5);
                         }
+                        int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1; 
+                        puntuacionLabel.text = string.Format ("{0:0000}", puntuacion);
                     }
                 break;    
             }
