@@ -23,6 +23,9 @@ public class HUD : MonoBehaviour
         var seconds = time % 60;
         var fraction = (time * 100) % 100;
         tiempoLabel.text = string.Format ("{0:00}:{1:00}", minutes, seconds);
+
+        //Globals.estado = Globals.gameState.menu;
+        //print(Globals.estado);
     }
 
 }
