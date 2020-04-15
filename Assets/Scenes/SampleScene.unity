@@ -150,9 +150,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3189fa05bdf5ae8498bd076e541a974f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloque: {fileID: 8315045928698714233, guid: 8b94606ddf74c3941aff718a45aa9215, type: 3}
-  nieve: {fileID: 1099135675850344663, guid: 1b673789735ce6a4b9530de8dfb8317e, type: 3}
-  suelo: {fileID: 1053448366}
 --- !u!4 &13016448
 Transform:
   m_ObjectHideFlags: 0
