@@ -18,6 +18,8 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             Vector3 position = this.transform.position;
@@ -49,7 +51,7 @@ public class Movement : MonoBehaviour
                         Vector3 position = this.transform.position;
                         position.z--;
                         this.transform.position = position;
-                        refreshCounter--;
+                        refreshCounter --;
                         if (refreshCounter == 0)
                         {
                             refreshCounter = 5;
@@ -58,7 +60,14 @@ public class Movement : MonoBehaviour
 
                             BloquesFactory.generateSuelo(5);
                         }
+                    }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
+                        //Swipe a la derecha
+                        player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
+                    }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
+                        //Swipe a la izquierda
+                        player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
                     }
+
                 break;    
             }
         }
