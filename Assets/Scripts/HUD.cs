@@ -8,6 +8,10 @@ public class HUD : MonoBehaviour
 {
     public Text tiempoLabel;
     public Text puntuacionLabel;
+
+     private float secondsCount;
+     private int minuteCount;
+     private int hourCount;
  
     private float time;
 
@@ -18,14 +22,22 @@ public class HUD : MonoBehaviour
  
     void Update() {
         // TIME STUFF
-        time += Time.deltaTime;
-        var minutes = time / 60;
-        var seconds = time % 60;
-        var fraction = (time * 100) % 100;
-        tiempoLabel.text = string.Format ("{0:00}:{1:00}", minutes, seconds);
-
+        UpdateTimerUI();
         //Globals.estado = Globals.gameState.menu;
         //print(Globals.estado);
     }
+
+     public void UpdateTimerUI(){
+         secondsCount += Time.deltaTime;
+         tiempoLabel.text = minuteCount.ToString("00") + ":" + ((int)secondsCount).ToString("00");
+         if(secondsCount >= 60){
+             minuteCount++;
+             secondsCount = 0;
+         }else if(minuteCount >= 60){
+             hourCount++;
+             minuteCount = 0;
+         }   
+  
+     }
 
 }
