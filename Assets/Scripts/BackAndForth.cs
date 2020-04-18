@@ -23,9 +23,9 @@ public class BackAndForth : MonoBehaviour
         Vector3 v = transform.position;
         if (goRight)
         {
-            if (transform.position.x <= -6.0f)
+            if (transform.position.x <= -7.0f)
             {
-                v.x = 6.0f;
+                v.x = 7.0f;
 
             }
             else
@@ -37,9 +37,9 @@ public class BackAndForth : MonoBehaviour
         }
         else
         {
-            if (transform.position.x >= 6.0f)
+            if (transform.position.x >= 7.0f)
             {
-                v.x = -6.0f;
+                v.x = -7.0f;
 
             }
             else
