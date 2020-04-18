@@ -9,7 +9,7 @@ public class GeneraSuelo : MonoBehaviour
 
     void Start()
     {
-        BloquesFactory.generateSuelo(24);
+        BloquesFactory.generateSuelo(45);
     }
 
     

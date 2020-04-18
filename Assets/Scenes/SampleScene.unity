@@ -575,13 +575,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.42572305, y: -0, z: -0, w: 0.9048536}
-  m_LocalPosition: {x: 0, y: 12.74, z: -8.4}
+  m_LocalRotation: {x: 0.40673664, y: 0, z: 0, w: 0.9135455}
+  m_LocalPosition: {x: 0, y: 11, z: -8.4}
   m_LocalScale: {x: 1, y: 1.6943921, z: 1.334}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 50.393, y: 0, z: 0}
+
+  m_LocalEulerAnglesHint: {x: 48, y: 0, z: 0}
 --- !u!1 &719471256
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoLabel: {fileID: 1153081550}
   puntuacionLabel: {fileID: 419362221}
+
 --- !u!1 &1053448366
 GameObject:
   m_ObjectHideFlags: 0
