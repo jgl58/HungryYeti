@@ -18,10 +18,9 @@ public class BloquesFactory : MonoBehaviour
         GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
 
         int aux = inicio;
-        distancia = distancia * 2;
         bool ponerNieve = true;
 
-        for (int i = aux; i < aux + distancia; i += 2)
+        for (int i = aux; i < aux + distancia; i++)
         {
             GameObject obj;
             
@@ -63,23 +62,28 @@ public class BloquesFactory : MonoBehaviour
                         ponerLateral(lateral, suelo, i);
                         break;
                     case 5:
-                        obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                        
-                        int direccion = Random.Range(0, 3);
-                        print(direccion);
-                        if (direccion == 0)
+                        for (int j = 0; j < 2; j++)
                         {
-                            //direccion derecha
-                            GameObject wood = Instantiate(tronco, new Vector3(-7, 0, i), new Quaternion());
-                            wood.transform.parent = obj.transform;
+                            obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
+                            obj.transform.parent = suelo.transform;
+
+                            int direccion = Random.Range(0, 3);
+                            print(direccion);
+                            if (direccion == 0)
+                            {
+                                //direccion derecha
+                                GameObject wood = Instantiate(tronco, new Vector3(-7, 0, i), new Quaternion());
+                                wood.transform.parent = obj.transform;
+                            }
+                            else
+                            {
+                                //direccion izquierda
+                                GameObject wood = Instantiate(tronco, new Vector3(7, 0, i), new Quaternion());
+                                wood.transform.parent = obj.transform;
+                            }
+                            i++;
                         }
-                        else
-                        {
-                            //direccion izquierda
-                            GameObject wood = Instantiate(tronco, new Vector3(7, 0, i), new Quaternion());
-                            wood.transform.parent = obj.transform;
-                        }
+                        i--;
                         break;
                     default:
                         break;
@@ -93,9 +97,9 @@ public class BloquesFactory : MonoBehaviour
 
     public static void ponerLateral(GameObject lateral,GameObject suelo, int i)
     {
-        GameObject lat = Instantiate(lateral, new Vector3(-5, 0, i), new Quaternion());
+        GameObject lat = Instantiate(lateral, new Vector3(-4.5f, 0f, i), new Quaternion());
         lat.transform.parent = suelo.transform;
-        GameObject lat2 = Instantiate(lateral, new Vector3(5, 0, i), new Quaternion());
+        GameObject lat2 = Instantiate(lateral, new Vector3(4.5f, 0f, i), new Quaternion());
         lat2.transform.parent = suelo.transform;
         
 
