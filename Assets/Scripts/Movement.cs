@@ -42,6 +42,14 @@ public class Movement : MonoBehaviour
             
         }
 
+        if (Input.GetKeyDown(KeyCode.RightArrow) && player.transform.position.x < 3){
+            player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && player.transform.position.x > -3){
+            player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
+        }
+
         if(Input.touchCount > 0){
             touch = Input.GetTouch(0);
             
