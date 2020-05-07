@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 632450754110343285}
   - component: {fileID: 6337272962737780197}
   - component: {fileID: 6017285079521310083}
-  - component: {fileID: -5975667648069902811}
   m_Layer: 0
   m_Name: Carretera
   m_TagString: Untagged
@@ -94,15 +93,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-5975667648069902811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3243091750541244680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0cd6b4cd93dde4cbc597a73171d97f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -11,22 +11,21 @@ public class BackAndForth : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
-        if (startPos.x == 8)
+        if (startPos.x > 0)
         {
             goRight = false;
         }
-        speed = Random.Range(1.0f, 2.0f);
     }
 
     void Update()
     {
         Vector3 v = transform.position;
-        if (goRight)
+        if (!goRight)
         {
-            if (transform.position.x <= -6.0f)
+            if (transform.position.x <= -7.0f)
             {
-                v.x = 6.0f;
-
+                BloquesFactory.createTronco(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z, false);
+                Destroy(gameObject);
             }
             else
             {
@@ -34,13 +33,14 @@ public class BackAndForth : MonoBehaviour
             }
             v.z = transform.parent.position.z;
             transform.position = v;
+            
         }
         else
         {
-            if (transform.position.x >= 6.0f)
+            if (transform.position.x >= 7.0f)
             {
-                v.x = -6.0f;
-
+                BloquesFactory.createTronco(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z, true);
+                Destroy(gameObject);
             }
             else
             {

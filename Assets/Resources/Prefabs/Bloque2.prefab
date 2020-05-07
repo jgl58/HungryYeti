@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2069640878213282508}
   - component: {fileID: 1022433593693198231}
   - component: {fileID: 7808078133939755820}
-  - component: {fileID: -1101411927963094217}
   m_Layer: 0
   m_Name: Bloque2
   m_TagString: Untagged
@@ -95,18 +94,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1101411927963094217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5404216595275844529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb0cd6b4cd93dde4cbc597a73171d97f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3466959812016051197
 PrefabInstance:
   m_ObjectHideFlags: 0

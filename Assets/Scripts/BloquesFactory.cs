@@ -21,20 +21,22 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject camion1Morado = (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Purple");
     private static GameObject policeCar = (GameObject)Resources.Load("Cars/Prefabs/Policecar");
 
+
+    private static GameObject suelo = GameObject.FindGameObjectWithTag("Suelo");
+    private static GameObject bloque1 = (GameObject)Resources.Load("Prefabs/Bloque1");
+    private static GameObject bloque2 = (GameObject)Resources.Load("Prefabs/Bloque2");
+    private static GameObject bloque3 = (GameObject)Resources.Load("Prefabs/Bloque3");
+    private static GameObject bloqueRoca = (GameObject)Resources.Load("Prefabs/BloqueRoca");
+    private static GameObject bloqueNieve = (GameObject)Resources.Load("Prefabs/BloqueNieve");
+    private static GameObject bloqueAgua = (GameObject)Resources.Load("Prefabs/BloqueAgua");
+    private static GameObject lateral = (GameObject)Resources.Load("Prefabs/Lateral");
+    private static GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
+
     public static void generateSuelo(int distancia)
     {
+        //NO QUITAR
         //print(OBJETO.GetComponent<Renderer>().bounds.size.y);
 
-        GameObject suelo = GameObject.FindGameObjectWithTag("Suelo");
-        GameObject bloque1 = (GameObject)Resources.Load("Prefabs/Bloque1");
-        GameObject bloque2 = (GameObject)Resources.Load("Prefabs/Bloque2");
-        GameObject bloque3 = (GameObject)Resources.Load("Prefabs/Bloque3");
-        GameObject bloqueRoca = (GameObject)Resources.Load("Prefabs/BloqueRoca");
-        GameObject bloqueNieve = (GameObject)Resources.Load("Prefabs/BloqueNieve");
-        GameObject bloqueAgua = (GameObject)Resources.Load("Prefabs/BloqueAgua");
-        GameObject lateral = (GameObject)Resources.Load("Prefabs/Lateral");
-        GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
-        
         int aux = inicio;
         bool ponerNieve = true;
 
@@ -161,29 +163,43 @@ public class BloquesFactory : MonoBehaviour
                                 GeneraSuelo.camino.AddLast(celda);
                             }
                             int direccion = Random.Range(0, 3);
-                            print(direccion);
+                        
                             if (direccion == 0)
                             {
                                 //direccion derecha
-                                GameObject wood = Instantiate(tronco, new Vector3(-8, 0, i), new Quaternion());
-                                wood.transform.parent = obj.transform;
+                                createTronco(obj, i, true);
+                                /*GameObject wood = Instantiate(tronco, new Vector3(-8, 0, i), new Quaternion());
+                                wood.transform.parent = obj.transform;*/
                             }
                             else
                             {
                                 //direccion izquierda
-                                GameObject wood = Instantiate(tronco, new Vector3(8, 0, i), new Quaternion());
-                                wood.transform.parent = obj.transform;
+                                createTronco(obj, i, false);
+                                /*GameObject wood = Instantiate(tronco, new Vector3(8, 0, i), new Quaternion());
+                                wood.transform.parent = obj.transform;*/
                             }
                             i++;
                         }
                         i--;
                         break;
                     case 6:
-                        int howMany = Random.Range(2, 5);
-                        for (int j = 0; j < howMany; j++)
+                        
+                        for (int j = 0; j < 2; j++)
                             {
                                 obj = Instantiate(carretera, new Vector3(0, -0.2f, i), new Quaternion());
                                 obj.transform.parent = suelo.transform;
+                                if (i >= -3)
+                                {
+                                    lista = new List<BloquesType>()
+                                    {
+                                        BloquesType.Nieve,
+                                        BloquesType.Nieve,
+                                        BloquesType.Nieve,
+                                        BloquesType.Nieve
+                                    };
+                                    celda = new Celda(lista);
+                                    GeneraSuelo.camino.AddLast(celda);
+                                }
                                 int direccion = Random.Range(0, 2);
                                 if(direccion == 0) { //derecha
                                     createCoche(obj, i,true);
@@ -221,22 +237,29 @@ public class BloquesFactory : MonoBehaviour
             coche.transform.parent = parent.transform;
     }
 
+    public static void createTronco(GameObject parent, int i, bool derecha)
+    {
+
+        GameObject t = Instantiate(tronco, new Vector3(derecha ? -7 : 7, 0, i), new Quaternion());
+        t.transform.parent = parent.transform;
+    }
+
     private static GameObject getCoche(int i){
         switch(i){
-            case 1: return busAzul; break;
-            case 2: return busRojo; break;
-            case 3: return busAmarillo; break;
-            case 4: return coche2Verde; break;
-            case 5: return coche2Morado; break;
-            case 6: return coche2Gris; break;
-            case 7: return coche5Rojo; break;
-            case 8: return coche5Gris; break;
-            case 9: return coche5Amarillo; break;
-            case 10: return camion1Azul; break;
-            case 11: return camion1Red; break;
-            case 12: return camion1Morado; break;
-            case 13: return policeCar; break;
-            default: return busAmarillo; break;
+            case 1: return busAzul; 
+            case 2: return busRojo; 
+            case 3: return busAmarillo; 
+            case 4: return coche2Verde; 
+            case 5: return coche2Morado; 
+            case 6: return coche2Gris; 
+            case 7: return coche5Rojo; 
+            case 8: return coche5Gris; 
+            case 9: return coche5Amarillo; 
+            case 10: return camion1Azul; 
+            case 11: return camion1Red; 
+            case 12: return camion1Morado; 
+            case 13: return policeCar; 
+            default: return busAmarillo; 
         }
     }
 
