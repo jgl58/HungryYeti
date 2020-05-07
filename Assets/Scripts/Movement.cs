@@ -84,27 +84,28 @@ public class Movement : MonoBehaviour
         if(Globals.estado == Globals.gameState.jugando){
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (comprobarCaminoArriba(player))
-            {
-                Vector3 position = this.transform.position;
-                position.z--;
-                this.transform.position = position;
-                refreshCounter--;
-                if (refreshCounter == 0)
+            
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    refreshCounter = 5;
-                    print("Cargamos nuevos bloques");
+                    if (comprobarCaminoArriba(player))
+                    {
+                    Vector3 position = this.transform.position;
+                    position.z--;
+                    this.transform.position = position;
+                    refreshCounter--;
+                    if (refreshCounter == 0)
+                    {
+                        refreshCounter = 5;
+                        print("Cargamos nuevos bloques");
 
 
-                    BloquesFactory.generateSuelo(5);
-                }
-                int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
-            }
+                        BloquesFactory.generateSuelo(5);
+                    }
+                    int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                    puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+                    }
    
-        }
+                }
 
         if (Input.GetKeyDown(KeyCode.RightArrow)){
             if (comprobarCaminoLado(false))
