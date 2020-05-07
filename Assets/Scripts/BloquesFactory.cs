@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class BloquesFactory : MonoBehaviour
 {
@@ -23,13 +24,27 @@ public class BloquesFactory : MonoBehaviour
         for (int i = aux; i < aux + distancia; i++)
         {
             GameObject obj;
-            
-            
+
+            Celda celda;
+            List<BloquesType> lista;
+
             if (ponerNieve)
             {
                 obj = Instantiate(bloqueNieve, new Vector3(0, 0, i), new Quaternion());
                 obj.transform.parent = suelo.transform;
                 ponerNieve = false;
+                if (i >= -3)
+                {
+                    lista = new List<BloquesType>()
+                    {
+                        BloquesType.Nieve,
+                        BloquesType.Nieve,
+                        BloquesType.Nieve,
+                        BloquesType.Nieve
+                    };
+                    celda = new Celda(lista);
+                    GeneraSuelo.camino.AddLast(celda);
+                }
                 ponerLateral(lateral, suelo, i);
             }
             else
@@ -42,31 +57,92 @@ public class BloquesFactory : MonoBehaviour
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
                         ponerLateral(lateral,suelo,i);
+                        if (i >= -3)
+                        {
+                            lista = new List<BloquesType>()
+                            {
+                                BloquesType.Obstaculo,
+                                BloquesType.Nieve,
+                                BloquesType.Obstaculo,
+                                BloquesType.Obstaculo
+                            };
+                            celda = new Celda(lista);
+                            GeneraSuelo.camino.AddLast(celda);
+                        }
                         break;
                     case 2:
                         obj = Instantiate(bloque2, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
                         ponerLateral(lateral, suelo, i);
+                        if (i >= -3)
+                        {
+                            lista = new List<BloquesType>()
+                            {
+                                BloquesType.Nieve,
+                                BloquesType.Nieve,
+                                BloquesType.Nieve,
+                                BloquesType.Obstaculo
+                            };
+                            celda = new Celda(lista);
+                            GeneraSuelo.camino.AddLast(celda);
+                        }
                         break;
                     case 3:
                         obj = Instantiate(bloque3, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
                         ponerLateral(lateral, suelo, i);
+                        if (i >= -3)
+                        {
+                            lista = new List<BloquesType>()
+                            {
+                                BloquesType.Obstaculo,
+                                BloquesType.Nieve,
+                                BloquesType.Nieve,
+                                BloquesType.Nieve
+                            };
+                            celda = new Celda(lista);
+                            GeneraSuelo.camino.AddLast(celda);
+                        }
                         break;
                     case 4:
                         obj = Instantiate(bloqueRoca, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
                         ponerLateral(lateral, suelo, i);
+                        if (i >= -3)
+                        {
+                            lista = new List<BloquesType>()
+                            {
+                                BloquesType.Obstaculo,
+                                BloquesType.Nieve,
+                                BloquesType.Nieve,
+                                BloquesType.Obstaculo
+                            };
+                            celda = new Celda(lista);
+                            GeneraSuelo.camino.AddLast(celda);
+
+                        }
+                        
                         break;
                     case 5:
                         for (int j = 0; j < 2; j++)
                         {
                             obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
                             obj.transform.parent = suelo.transform;
-
+                            if (i >= -3)
+                            {
+                                lista = new List<BloquesType>()
+                                {
+                                    BloquesType.Nieve,
+                                    BloquesType.Nieve,
+                                    BloquesType.Nieve,
+                                    BloquesType.Nieve
+                                };
+                                celda = new Celda(lista);
+                                GeneraSuelo.camino.AddLast(celda);
+                            }
                             int direccion = Random.Range(0, 3);
                             print(direccion);
                             if (direccion == 0)
@@ -90,8 +166,10 @@ public class BloquesFactory : MonoBehaviour
 
                 }
             }
-
+            
+            
         }
+        
         inicio = inicio + distancia - 5;
     }
 

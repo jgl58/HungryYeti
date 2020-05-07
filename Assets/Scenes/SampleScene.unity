@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 191091045}
   - component: {fileID: 191091044}
   - component: {fileID: 191091043}
+  - component: {fileID: 191091047}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -283,7 +284,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191091042}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -344,11 +345,23 @@ Transform:
   m_GameObject: {fileID: 191091042}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 1, z: -3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &191091047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191091042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1febaff2becf2534fb8f521d7539fc47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &419362219
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,8 +594,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-
-  m_LocalEulerAnglesHint: {x: 48, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &719471256
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,7 +778,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tiempoLabel: {fileID: 1153081550}
   puntuacionLabel: {fileID: 419362221}
-
 --- !u!1 &1053448366
 GameObject:
   m_ObjectHideFlags: 0
