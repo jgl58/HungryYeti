@@ -110,14 +110,9 @@ public class BloquesFactory : MonoBehaviour
                                 obj.transform.parent = suelo.transform;
                                 int direccion = Random.Range(0, 2);
                                 if(direccion == 0) { //derecha
-                                    int car = Random.Range(1, 13);
-                                    GameObject coche = Instantiate(getCoche(car), new Vector3(7, getYSizeOfCar(car), i), new Quaternion());
-                                    coche.transform.Rotate(new Vector3(0,180,0)); 
-                                    coche.transform.parent = obj.transform;
+                                    createCoche(obj, i,true);
                                 } else { //izquierda
-                                    int car = Random.Range(1, 13);
-                                    GameObject coche = Instantiate(getCoche(car), new Vector3(-7, getYSizeOfCar(car), i), new Quaternion());
-                                    coche.transform.parent = obj.transform;
+                                    createCoche(obj, i,false);
                                 }
                                 i++;
                             }
@@ -139,8 +134,13 @@ public class BloquesFactory : MonoBehaviour
         lat.transform.parent = suelo.transform;
         GameObject lat2 = Instantiate(lateral, new Vector3(4.5f, 0f, i), new Quaternion());
         lat2.transform.parent = suelo.transform;
-        
+    }
 
+    public static void createCoche(GameObject parent, int i,bool derecha){
+            int car = Random.Range(1, 13);
+            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? 7 : -7, getYSizeOfCar(car), i), new Quaternion());
+            if(derecha){ coche.transform.Rotate(new Vector3(0,180,0)); }
+            coche.transform.parent = parent.transform;
     }
 
     private static GameObject getCoche(int i){
@@ -186,6 +186,6 @@ public class BloquesFactory : MonoBehaviour
             case 13: res = 0.56f; break;
             default: res = 1.00f; break;
         }
-        return 0.35f+(res/2);
+        return 0.35f+(res/2); //UN POCO A OJO, PERO QUEDA BIEN
     }
 }

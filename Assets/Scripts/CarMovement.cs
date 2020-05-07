@@ -24,6 +24,7 @@ public class CarMovement : MonoBehaviour
         {
             if (transform.position.x <= -7.0f)
             {
+                BloquesFactory.createCoche(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z,true);
                 Destroy(gameObject);
             }
             else
@@ -37,7 +38,8 @@ public class CarMovement : MonoBehaviour
         {
             if (transform.position.x >= 7.0f)
             {
-                Destroy(gameObject);
+                BloquesFactory.createCoche(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z,false);
+                Destroy(gameObject);  
             }
             else
             {
