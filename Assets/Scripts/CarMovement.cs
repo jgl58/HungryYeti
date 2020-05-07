@@ -51,4 +51,11 @@ public class CarMovement : MonoBehaviour
         
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Player" && transform.position.z == other.gameObject.transform.position.z){
+            Globals.die();
+        }
+    }
 }

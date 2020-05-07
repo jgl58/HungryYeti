@@ -20,7 +20,7 @@ public class StartButtonHandler : MonoBehaviour
 	void TaskOnClick(){
         tituloLabel.SetActive(false);
         yourButton.gameObject.SetActive(false);
-        Instantiate(hud, new Vector3(0, 0, 0), Quaternion.identity);
+        Globals.hud = Instantiate(hud, new Vector3(0, 0, 0), Quaternion.identity);
         Globals.estado = Globals.gameState.jugando;
 	}
 
