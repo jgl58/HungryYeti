@@ -148,13 +148,13 @@ public class BloquesFactory : MonoBehaviour
                             if (direccion == 0)
                             {
                                 //direccion derecha
-                                GameObject wood = Instantiate(tronco, new Vector3(-7, 0, i), new Quaternion());
+                                GameObject wood = Instantiate(tronco, new Vector3(-8, 0, i), new Quaternion());
                                 wood.transform.parent = obj.transform;
                             }
                             else
                             {
                                 //direccion izquierda
-                                GameObject wood = Instantiate(tronco, new Vector3(7, 0, i), new Quaternion());
+                                GameObject wood = Instantiate(tronco, new Vector3(8, 0, i), new Quaternion());
                                 wood.transform.parent = obj.transform;
                             }
                             i++;

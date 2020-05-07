@@ -106,7 +106,6 @@ public class Movement : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow)){
-            print("Mi POSX: " + player.transform.position.x);
             if (comprobarCaminoLado(false))
             {
                 player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
@@ -119,7 +118,6 @@ public class Movement : MonoBehaviour
 
             if (comprobarCaminoLado(true))
             {
-                print("Mi POSX: " + player.transform.position.x);
                 player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
                 
             }

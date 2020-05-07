@@ -6,6 +6,7 @@ public class PlayerCollision : MonoBehaviour
 {
     // Start is called before the first frame update
     GameObject player;
+    bool playerFollow;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -14,19 +15,37 @@ public class PlayerCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerFollow)
+        {
+         this.player.transform.position = new Vector3(
+            this.transform.position.x,
+            player.transform.position.y,
+            player.transform.position.z);
+        }
+       
         
     }
 
     //When the Primitive collides with the walls, it will reverse direction
     private void OnTriggerEnter(Collider other)
     {
-        print("HOLA");
-
+        if(other.gameObject.tag == "Player")
+        {
+            print("HOLA");
+            playerFollow = true;
+            
+        }
     }
 
     //When the Primitive exits the collision, it will change Color
     private void OnTriggerExit(Collider other)
     {
-        print("ADIOS");
+
+        if (other.gameObject.tag == "Player")
+        {
+            print("ADIOS");
+            playerFollow = false;
+        }
+
     }
 }
