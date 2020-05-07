@@ -15,7 +15,7 @@ public class Globals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        estado = gameState.jugando;
+        estado = gameState.menu;
     }
 
     // Update is called once per frame
