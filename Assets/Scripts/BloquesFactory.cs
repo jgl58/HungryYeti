@@ -31,6 +31,7 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject bloqueAgua = (GameObject)Resources.Load("Prefabs/BloqueAgua");
     private static GameObject lateral = (GameObject)Resources.Load("Prefabs/Lateral");
     private static GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
+    private static GameObject trineo = (GameObject)Resources.Load("Prefabs/Trineo");
 
     public static void generateSuelo(int distancia)
     {
@@ -42,6 +43,7 @@ public class BloquesFactory : MonoBehaviour
 
         for (int i = aux; i < aux + distancia; i++)
         {
+            print("general"+i);
             GameObject obj;
 
             Celda celda;
@@ -68,10 +70,11 @@ public class BloquesFactory : MonoBehaviour
             }
             else
             {
-                int bloque = Random.Range(1, 7);
+                int bloque = Random.Range(1, 8);
                 switch (bloque)
                 {
                     case 1:
+                    print("caso 1 en" + i);
                         obj = Instantiate(bloque1, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
@@ -90,6 +93,7 @@ public class BloquesFactory : MonoBehaviour
                         }
                         break;
                     case 2:
+                    print("caso 2 en" + i);
                         obj = Instantiate(bloque2, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
@@ -108,6 +112,7 @@ public class BloquesFactory : MonoBehaviour
                         }
                         break;
                     case 3:
+                    print("caso 3 en"+i);
                         obj = Instantiate(bloque3, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
@@ -126,6 +131,7 @@ public class BloquesFactory : MonoBehaviour
                         }
                         break;
                     case 4:
+                    print("caso 4 en"+i);
                         obj = Instantiate(bloqueRoca, new Vector3(0, 0, i), new Quaternion());
                         obj.transform.parent = suelo.transform;
                         ponerNieve = true;
@@ -146,8 +152,10 @@ public class BloquesFactory : MonoBehaviour
                         
                         break;
                     case 5:
+                    print("caso 5");
                         for (int j = 0; j < 2; j++)
                         {
+                            print("caso 5 en " + i);
                             obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
                             obj.transform.parent = suelo.transform;
                             if (i >= -3)
@@ -183,9 +191,11 @@ public class BloquesFactory : MonoBehaviour
                         i--;
                         break;
                     case 6:
+                        print("caso 6");
                         
                         for (int j = 0; j < 2; j++)
                             {
+                                print("caso 6 en" + i);
                                 obj = Instantiate(carretera, new Vector3(0, -0.2f, i), new Quaternion());
                                 obj.transform.parent = suelo.transform;
                                 if (i >= -3)
@@ -210,9 +220,36 @@ public class BloquesFactory : MonoBehaviour
                             }
                         i--;
                         break;
+                    case 7: 
+                    print("caso 7");
+                        for (int j = 0; j < 10; j++)
+                            {
+                                print("caso 7 en"+i);
+                                obj = Instantiate(bloqueNieve, new Vector3(0, 0, i), new Quaternion());
+                                obj.transform.parent = suelo.transform;
+                                ponerNieve = false;
+                                if (i >= -3)
+                                {
+                                    lista = new List<BloquesType>()
+                                    {
+                                        BloquesType.Nieve,
+                                        BloquesType.Nieve,
+                                        BloquesType.Nieve,
+                                        BloquesType.Nieve
+                                    };
+                                    celda = new Celda(lista);
+                                    GeneraSuelo.camino.AddLast(celda);
+                                }
+                                ponerLateral(lateral, suelo, i);
+                                if(j==9){
+                                    createTrineo(obj, i);
+                                }
+                                i++;
+                            }
+                        i--;
+                        break; 
                     default:
-                        break;
-
+                        break;  
                 }
             }
             
@@ -242,6 +279,15 @@ public class BloquesFactory : MonoBehaviour
 
         GameObject t = Instantiate(tronco, new Vector3(derecha ? -7 : 7, 0, i), new Quaternion());
         t.transform.parent = parent.transform;
+    }
+
+    public static void createTrineo(GameObject parent, int i)
+    {
+        int xInicial = Random.Range(1, 5);
+        GameObject t = Instantiate(trineo, new Vector3(getXtrineo(xInicial), 0.5f, i), new Quaternion());
+        t.transform.parent = parent.transform;
+        t.transform.Rotate(new Vector3(270, 0, 180));
+        t.transform.localScale = new Vector3(10, 45, 45);
     }
 
     private static GameObject getCoche(int i){
@@ -288,5 +334,15 @@ public class BloquesFactory : MonoBehaviour
             default: res = 1.00f; break;
         }
         return 0.35f+(res/2); //UN POCO A OJO, PERO QUEDA BIEN
+    }
+
+    private static float getXtrineo(int i){
+        switch(i){
+            case 1: return -3; 
+            case 2: return -1; 
+            case 3: return 1; 
+            case 4: return 3; 
+            default: return 1;
+        }
     }
 }
