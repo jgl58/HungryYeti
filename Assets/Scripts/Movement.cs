@@ -6,7 +6,7 @@ using System;
 
 public class Movement : MonoBehaviour
 {
-    public Text puntuacionLabel;
+    public static Text puntuacionLabel;
     // Start is called before the first frame update
     private int refreshCounter = 5;
 
@@ -15,7 +15,7 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
-        
+        //puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
     }
 
     int getColumnaPlayer(GameObject player)
@@ -83,7 +83,6 @@ public class Movement : MonoBehaviour
     {
         if(Globals.estado == Globals.gameState.jugando){
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
             
                 if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
