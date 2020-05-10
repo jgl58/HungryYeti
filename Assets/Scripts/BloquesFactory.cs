@@ -289,4 +289,5 @@ public class BloquesFactory : MonoBehaviour
         }
         return 0.35f+(res/2); //UN POCO A OJO, PERO QUEDA BIEN
     }
+    
 }

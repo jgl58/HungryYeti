@@ -27,26 +27,38 @@ public class Globals : MonoBehaviour
     }
 
     public static void die(){
-        estado = gameState.menu;
-        GameObject tituloLabel = null;
-        GameObject tituloImagen = null;
-        GameObject yourButton = null;
-        Transform[] trs= GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
-        foreach(Transform t in trs){
-            if(t.name == "TitleImage"){
-                tituloImagen = t.gameObject;
+        if(estado == gameState.jugando){
+            estado = gameState.menu;
+            GameObject tituloLabel = null;
+            GameObject tituloImagen = null;
+            GameObject yourButton = null;
+            Transform[] trs= GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
+            foreach(Transform t in trs){
+                if(t.name == "TitleImage"){
+                    tituloImagen = t.gameObject;
+                }
+                if(t.name == "Titulo"){
+                    tituloLabel = t.gameObject;
+                }
+                if(t.name == "StartButton"){
+                    yourButton = t.gameObject;
+                }
             }
-            if(t.name == "Titulo"){
-                tituloLabel = t.gameObject;
+            tituloImagen.gameObject.SetActive(true);
+            tituloLabel.gameObject.SetActive(true);
+            yourButton.gameObject.SetActive(true);
+            /*GameObject[] canvases = GameObject.FindGameObjectsWithTag("Canvas");
+            foreach(GameObject canvas in canvases){
+                Destroy(canvas);
             }
-            if(t.name == "StartButton"){
-                yourButton = t.gameObject;
+            GameObject suelo =  GameObject.Find("Suelo");
+            foreach (Transform child in suelo.transform){
+                if(child.name != "Destroyer"){
+                    Destroy(child.gameObject);
+                }
             }
+            BloquesFactory.inicio = -10;
+            BloquesFactory.generateSuelo(45);*/
         }
-        tituloImagen.gameObject.SetActive(true);
-        tituloLabel.gameObject.SetActive(true);
-        yourButton.gameObject.SetActive(true);
-        //Destroy(GameObject.Find("GameCanvas"), 1);
     }
-
 }
