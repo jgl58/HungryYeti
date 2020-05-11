@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delta: 1.5
-  speed: 1
+  speed: 1.5
 --- !u!65 &321315070784440365
 BoxCollider:
   m_ObjectHideFlags: 0

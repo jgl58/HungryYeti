@@ -15,6 +15,14 @@ public class CarMovement : MonoBehaviour
         {
             goRight = false;
         }
+        speed = speed * Random.Range(90, 130) / 100;
+
+        GameObject[] puntuaciones = GameObject.FindGameObjectsWithTag("Canvas");
+        if(puntuaciones.Length > 0){
+            int puntuacion = int.Parse(puntuaciones[0].GetComponent<HUD>().puntuacionLabel.text);
+            speed *= (puntuacion / 100) == 0 ? 1 : (puntuacion / 100) + 0.5f;
+        }
+        
     }
 
     void Update()
