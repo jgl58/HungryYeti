@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class BloquesFactory : MonoBehaviour
 {
-    public static int inicio = -10;
+    public static int inicio;
+    public static int BLOQUES_ITERACION = 6;
 
     //Carreteras y coches
     private static GameObject carretera = (GameObject)Resources.Load("Prefabs/Carretera");
@@ -31,28 +32,33 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject bloqueAgua = (GameObject)Resources.Load("Prefabs/BloqueAgua");
     private static GameObject lateral = (GameObject)Resources.Load("Prefabs/Lateral");
     private static GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
+    private static GameObject trineo = (GameObject)Resources.Load("Prefabs/Trineo");
+
+    private static List<int> points = new List<int>() { -3, -1, 1, 3 };
 
     public static void generateSuelo(int distancia)
     {
         //NO QUITAR
         //print(OBJETO.GetComponent<Renderer>().bounds.size.y);
 
-        int aux = inicio;
+  
         bool ponerNieve = true;
 
-        for (int i = aux; i < aux + distancia; i++)
+        int contadorBloques = 0;
+
+
+        for (int i = 0; i < distancia; i++)
         {
             GameObject obj;
 
             Celda celda;
             List<BloquesType> lista;
-
             if (ponerNieve)
             {
-                obj = Instantiate(bloqueNieve, new Vector3(0, 0, i), new Quaternion());
+                obj = Instantiate(bloqueNieve, new Vector3(0, 0, inicio), new Quaternion());
                 obj.transform.parent = suelo.transform;
                 ponerNieve = false;
-                if (i >= -3)
+                if (inicio >= -3)
                 {
                     lista = new List<BloquesType>()
                     {
@@ -61,166 +67,247 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Nieve,
                         BloquesType.Nieve
                     };
-                    celda = new Celda(lista);
+                    celda = new Celda(lista, points);
                     GeneraSuelo.camino.AddLast(celda);
                 }
-                ponerLateral(lateral, suelo, i);
+                ponerLateral(lateral, suelo, inicio);
+                
+                inicio++;
             }
             else
             {
-                int bloque = Random.Range(1, 7);
+                int bloque = Random.Range(1, 8);
+
                 switch (bloque)
                 {
                     case 1:
-                        obj = Instantiate(bloque1, new Vector3(0, 0, i), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                        ponerNieve = true;
-                        ponerLateral(lateral,suelo,i);
-                        if (i >= -3)
-                        {
-                            lista = new List<BloquesType>()
-                            {
-                                BloquesType.Obstaculo,
-                                BloquesType.Nieve,
-                                BloquesType.Obstaculo,
-                                BloquesType.Obstaculo
-                            };
-                            celda = new Celda(lista);
-                            GeneraSuelo.camino.AddLast(celda);
-                        }
-                        break;
                     case 2:
-                        obj = Instantiate(bloque2, new Vector3(0, 0, i), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                        ponerNieve = true;
-                        ponerLateral(lateral, suelo, i);
-                        if (i >= -3)
-                        {
-                            lista = new List<BloquesType>()
-                            {
-                                BloquesType.Nieve,
-                                BloquesType.Nieve,
-                                BloquesType.Nieve,
-                                BloquesType.Obstaculo
-                            };
-                            celda = new Celda(lista);
-                            GeneraSuelo.camino.AddLast(celda);
-                        }
-                        break;
                     case 3:
-                        obj = Instantiate(bloque3, new Vector3(0, 0, i), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                        ponerNieve = true;
-                        ponerLateral(lateral, suelo, i);
-                        if (i >= -3)
-                        {
-                            lista = new List<BloquesType>()
-                            {
-                                BloquesType.Obstaculo,
-                                BloquesType.Nieve,
-                                BloquesType.Nieve,
-                                BloquesType.Nieve
-                            };
-                            celda = new Celda(lista);
-                            GeneraSuelo.camino.AddLast(celda);
-                        }
-                        break;
                     case 4:
-                        obj = Instantiate(bloqueRoca, new Vector3(0, 0, i), new Quaternion());
-                        obj.transform.parent = suelo.transform;
+                        inicio = ponerObstaculos(inicio, bloque);
                         ponerNieve = true;
-                        ponerLateral(lateral, suelo, i);
-                        if (i >= -3)
-                        {
-                            lista = new List<BloquesType>()
-                            {
-                                BloquesType.Obstaculo,
-                                BloquesType.Nieve,
-                                BloquesType.Nieve,
-                                BloquesType.Obstaculo
-                            };
-                            celda = new Celda(lista);
-                            GeneraSuelo.camino.AddLast(celda);
-
-                        }
-                        
                         break;
                     case 5:
-                        for (int j = 0; j < 2; j++)
-                        {
-                            obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, i), new Quaternion());
-                            obj.transform.parent = suelo.transform;
-                            if (i >= -3)
-                            {
-                                lista = new List<BloquesType>()
-                                {
-                                    BloquesType.Nieve,
-                                    BloquesType.Nieve,
-                                    BloquesType.Nieve,
-                                    BloquesType.Nieve
-                                };
-                                celda = new Celda(lista);
-                                GeneraSuelo.camino.AddLast(celda);
-                            }
-                            int direccion = Random.Range(0, 3);
-                        
-                            if (direccion == 0)
-                            {
-                                //direccion derecha
-                                createTronco(obj, i, true);
-                                /*GameObject wood = Instantiate(tronco, new Vector3(-8, 0, i), new Quaternion());
-                                wood.transform.parent = obj.transform;*/
-                            }
-                            else
-                            {
-                                //direccion izquierda
-                                createTronco(obj, i, false);
-                                /*GameObject wood = Instantiate(tronco, new Vector3(8, 0, i), new Quaternion());
-                                wood.transform.parent = obj.transform;*/
-                            }
-                            i++;
-                        }
-                        i--;
+                        inicio = ponerAgua(inicio);
+                        ponerNieve = true;
                         break;
                     case 6:
-                        
-                        for (int j = 0; j < 2; j++)
-                            {
-                                obj = Instantiate(carretera, new Vector3(0, -0.2f, i), new Quaternion());
-                                obj.transform.parent = suelo.transform;
-                                if (i >= -3)
-                                {
-                                    lista = new List<BloquesType>()
-                                    {
-                                        BloquesType.Nieve,
-                                        BloquesType.Nieve,
-                                        BloquesType.Nieve,
-                                        BloquesType.Nieve
-                                    };
-                                    celda = new Celda(lista);
-                                    GeneraSuelo.camino.AddLast(celda);
-                                }
-                                int direccion = Random.Range(0, 2);
-                                if(direccion == 0) { //derecha
-                                    createCoche(obj, i,true);
-                                } else { //izquierda
-                                    createCoche(obj, i,false);
-                                }
-                                i++;
-                            }
-                        i--;
+                        inicio = ponerCarretera(inicio);
+                        ponerNieve = true;
+                        break;
+                    case 7:
+                        int bloqueEsqui = Random.Range(1, 6);
+                        if(bloqueEsqui == 5)
+                        {
+                            inicio = ponerEsquiadores(inicio);
+                        }
+                        else
+                        {
+                            inicio = ponerObstaculos(inicio,bloqueEsqui);
+                        }
+                        ponerNieve = true;
                         break;
                     default:
                         break;
 
                 }
             }
-            
-            
         }
-        
-        inicio = inicio + distancia - 5;
     }
+
+    //Funciones bloques
+
+    public static int ponerObstaculos(int posicion, int tipo)
+    {
+        GameObject obj;
+        List<BloquesType> lista;
+        switch (tipo)
+        {
+            case 1:
+                obj = Instantiate(bloque1, new Vector3(0, 0, posicion), new Quaternion());
+                obj.transform.parent = suelo.transform;
+                
+                ponerLateral(lateral, suelo, posicion);
+                if (posicion >= -3)
+                {
+                    lista = new List<BloquesType>()
+                            {
+                                BloquesType.Obstaculo,
+                                BloquesType.Nieve,
+                                BloquesType.Obstaculo,
+                                BloquesType.Obstaculo
+                            };
+                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                }
+                break;
+            case 2:
+                obj = Instantiate(bloque2, new Vector3(0, 0, posicion), new Quaternion());
+                obj.transform.parent = suelo.transform;
+                
+                ponerLateral(lateral, suelo, posicion);
+                if (posicion >= -3)
+                {
+                    lista = new List<BloquesType>()
+                    {
+                        BloquesType.Nieve,
+                        BloquesType.Nieve,
+                        BloquesType.Nieve,
+                        BloquesType.Obstaculo
+                    };
+                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                }
+                break;
+            case 3:
+                obj = Instantiate(bloque3, new Vector3(0, 0, posicion), new Quaternion());
+                obj.transform.parent = suelo.transform;
+                
+                ponerLateral(lateral, suelo, posicion);
+                if (posicion >= -3)
+                {
+                    lista = new List<BloquesType>()
+                    {
+                        BloquesType.Obstaculo,
+                        BloquesType.Nieve,
+                        BloquesType.Nieve,
+                        BloquesType.Nieve
+                    };
+                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                }
+                break;
+            case 4:
+                obj = Instantiate(bloqueRoca, new Vector3(0, 0, posicion), new Quaternion());
+                obj.transform.parent = suelo.transform;
+                ponerLateral(lateral, suelo, posicion);
+                if (posicion >= -3)
+                {
+                    lista = new List<BloquesType>()
+                    {
+                        BloquesType.Obstaculo,
+                        BloquesType.Nieve,
+                        BloquesType.Nieve,
+                        BloquesType.Obstaculo
+                    };
+                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                }
+
+                break;
+        }
+
+        return posicion + 1;
+
+    }
+
+    public static int ponerAgua(int posicion)
+    {
+        GameObject obj;
+        List<BloquesType> lista;
+        for (int j = posicion; j < posicion + 2; j++)
+        {
+
+            obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, j), new Quaternion());
+            obj.transform.parent = suelo.transform;
+            if (j >= -3)
+            {
+                lista = new List<BloquesType>()
+                {
+                    BloquesType.Agua,
+                    BloquesType.Agua,
+                    BloquesType.Agua,
+                    BloquesType.Agua
+                };
+                GeneraSuelo.camino.AddLast(new Celda(lista, points));
+            }
+            int direccion = Random.Range(0, 2);
+
+            if (direccion == 0)
+            {
+                //direccion derecha
+                createTronco(obj, j, true);
+            }
+            else
+            {
+                //direccion izquierda
+                createTronco(obj, j, false);
+            }
+        }
+
+        return posicion + 2;
+
+    }
+
+
+    public static int ponerCarretera(int posicion)
+    {
+        GameObject obj;
+        List<BloquesType> lista;
+        for (int j = posicion; j < posicion + 2; j++)
+        {
+
+            obj = Instantiate(carretera, new Vector3(0, -0.2f, j), new Quaternion());
+            obj.transform.parent = suelo.transform;
+            if (j >= -3)
+            {
+                lista = new List<BloquesType>()
+                {
+                    BloquesType.Carretera,
+                    BloquesType.Carretera,
+                    BloquesType.Carretera,
+                    BloquesType.Carretera
+                };
+                GeneraSuelo.camino.AddLast(new Celda(lista, points));
+            }
+            int direccion = Random.Range(0, 2);
+            if (direccion == 0)
+            { //derecha
+                createCoche(obj, j, true);
+            }
+            else
+            { //izquierda
+                createCoche(obj, j, false);
+            }
+        }
+
+        return posicion + 2;
+
+    }
+
+    public static int ponerEsquiadores(int posicion)
+    {
+        GameObject obj;
+        List<BloquesType> lista;
+        for (int j = posicion; j < posicion + 10; j++)
+        {
+           
+            obj = Instantiate(bloqueNieve, new Vector3(0, 0, j), new Quaternion());
+            obj.transform.parent = suelo.transform;
+
+            if (j >= -3)
+            {
+                lista = new List<BloquesType>()
+                {
+                    BloquesType.Nieve,
+                    BloquesType.Nieve,
+                    BloquesType.Nieve,
+                    BloquesType.Nieve
+                };
+                GeneraSuelo.camino.AddLast(new Celda(lista, points));
+            }
+            ponerLateral(lateral, suelo, j);
+            if (j == posicion + 9)
+            {
+                createTrineo(obj, j);
+            }
+        }
+
+        return posicion + 10;
+
+    }
+
+
 
     public static void ponerLateral(GameObject lateral,GameObject suelo, int i)
     {
@@ -231,7 +318,7 @@ public class BloquesFactory : MonoBehaviour
     }
 
     public static void createCoche(GameObject parent, int i,bool derecha){
-            int car = Random.Range(1, 13);
+            int car = Random.Range(1, 14);
             GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? 7 : -7, getYSizeOfCar(car), i), new Quaternion());
             if(derecha){ coche.transform.Rotate(new Vector3(0,180,0)); }
             coche.transform.parent = parent.transform;
@@ -242,6 +329,15 @@ public class BloquesFactory : MonoBehaviour
 
         GameObject t = Instantiate(tronco, new Vector3(derecha ? -7 : 7, 0, i), new Quaternion());
         t.transform.parent = parent.transform;
+    }
+
+    public static void createTrineo(GameObject parent, int i)
+    {
+        int xInicial = Random.Range(1, 5);
+        GameObject t = Instantiate(trineo, new Vector3(getXtrineo(xInicial), 0.5f, i), new Quaternion());
+        t.transform.parent = parent.transform;
+        t.transform.Rotate(new Vector3(270, 0, 180));
+        t.transform.localScale = new Vector3(10, 45, 45);
     }
 
     private static GameObject getCoche(int i){
@@ -289,5 +385,14 @@ public class BloquesFactory : MonoBehaviour
         }
         return 0.35f+(res/2); //UN POCO A OJO, PERO QUEDA BIEN
     }
-    
+    private static float getXtrineo(int i){
+        switch(i){
+            case 1: return -3; 
+            case 2: return -1; 
+            case 3: return 1; 
+            case 4: return 3; 
+            default: return 1;
+        }
+    }
+
 }

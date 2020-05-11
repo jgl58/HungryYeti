@@ -8,6 +8,7 @@ TagManager:
   - Tronco
   - PointsLabel
   - Canvas
+  - Trineo
   layers:
   - Default
   - TransparentFX

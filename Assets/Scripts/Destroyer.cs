@@ -18,7 +18,7 @@ public class Destroyer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("Destruido");
+     
         Destroy(other.gameObject,1);
     }
 }

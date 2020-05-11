@@ -31,7 +31,7 @@ public class PlayerCollision : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            print("HOLA");
+            
             playerFollow = true;
             
         }
@@ -43,7 +43,9 @@ public class PlayerCollision : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
-            print("ADIOS");
+            Celda c = GeneraSuelo.camino.First.Value;
+            c.recolocarPlayer(player);
+
             playerFollow = false;
         }
 
