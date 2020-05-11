@@ -16,6 +16,8 @@ public class Globals : MonoBehaviour
     public static GameObject tituloImagen;
     public static GameObject gameOver;
     public static GameObject yourButton;
+    public static GameObject player;
+    public static GameObject camera;
 
     private static GameObject hud;
  
@@ -24,6 +26,8 @@ public class Globals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
         BloquesFactory.inicio = -10;
         BloquesFactory.generateSuelo(45);
         estado = gameState.menu;
@@ -73,6 +77,17 @@ public class Globals : MonoBehaviour
                 foreach (Transform child in suelo.transform){
                     Destroy(child.gameObject);   
                 }
+
+                Vector3 position = player.transform.position;
+                position.z = -3;
+                position.x = 1;
+                player.transform.position = position;
+
+                position = camera.transform.position;
+                position.z = -8.4f;
+                camera.transform.position = position;
+
+
                 GeneraSuelo.camino.Clear();
                 BloquesFactory.inicio = -10;
                 BloquesFactory.generateSuelo(45);

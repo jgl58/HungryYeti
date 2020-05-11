@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     {
         if(Globals.estado == Globals.gameState.jugando){
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-
+            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
             Celda miCelda = GeneraSuelo.camino.First.Value;
             
                 if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -34,11 +34,15 @@ public class Movement : MonoBehaviour
                     if (miCelda.comprobarCaminoArriba(player))
                     {
 
-                        Vector3 position = this.transform.position;
-                        position.z--;
-                        this.transform.position = position;
+                        Vector3 position = player.transform.position;
+                        position.z++;
+                        player.transform.position = position;
 
-                        refreshCounter--;
+                        position = camera.transform.position;
+                        position.z++;
+                        camera.transform.position = position;
+
+                    refreshCounter--;
                         if (refreshCounter == 0)
                         {
                             refreshCounter = BloquesFactory.BLOQUES_ITERACION;
