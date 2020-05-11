@@ -11,7 +11,7 @@ public class GeneraSuelo : MonoBehaviour
     void Start()
     {
         camino = new LinkedList<Celda>();
-        BloquesFactory.generateSuelo(45);
+        //BloquesFactory.generateSuelo(45);
     }
 
     

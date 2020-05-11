@@ -6,16 +6,17 @@ using System;
 
 public class Movement : MonoBehaviour
 {
-    public Text puntuacionLabel;
+    public static Text puntuacionLabel;
     // Start is called before the first frame update
-    private int refreshCounter = 5;
+    public int refreshCounter;
 
     private Touch touch;
     private Vector2 beginTouchPosition, endTouchPosition;
 
     void Start()
     {
-        
+        refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+        //puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
     }
 
     
@@ -25,7 +26,6 @@ public class Movement : MonoBehaviour
     {
         if(Globals.estado == Globals.gameState.jugando){
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
 
             Celda miCelda = GeneraSuelo.camino.First.Value;
             
@@ -41,11 +41,11 @@ public class Movement : MonoBehaviour
                         refreshCounter--;
                         if (refreshCounter == 0)
                         {
-                            refreshCounter = 5;
+                            refreshCounter = BloquesFactory.BLOQUES_ITERACION;
                             print("Cargamos nuevos bloques");
 
 
-                            BloquesFactory.generateSuelo(5);
+                            BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
                         }
                         int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
                         puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
@@ -79,11 +79,11 @@ public class Movement : MonoBehaviour
                             refreshCounter --;
                             if (refreshCounter == 0)
                             {
-                                refreshCounter = 5;
+                                refreshCounter = BloquesFactory.BLOQUES_ITERACION;
                                 print("Cargamos nuevos bloques");
 
 
-                                BloquesFactory.generateSuelo(5);
+                                BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
                             }
                             int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1; 
                             puntuacionLabel.text = string.Format ("{0:0000}", puntuacion);

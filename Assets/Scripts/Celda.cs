@@ -6,10 +6,11 @@ public enum BloquesType
 {
     Nieve,
     Obstaculo,
-    Agua
+    Agua,
+    Carretera
 }
 
-public class Celda : MonoBehaviour
+public class Celda
 {
     private List<BloquesType> celdas;
     private List<int> centerPoints;
@@ -64,12 +65,12 @@ public class Celda : MonoBehaviour
         if (!lado)//miramos derecha
         {
             if (getColumnaPlayer(player) == 3) { return false; }
-            return (GetCelda(columna + 1) == BloquesType.Nieve);
+            return (GetCelda(columna + 1) != BloquesType.Obstaculo);
         }
         else //miramos izquierda
         {
             if (getColumnaPlayer(player) == 0) { return false; }
-            return (GetCelda(columna - 1) == BloquesType.Nieve);
+            return (GetCelda(columna - 1) != BloquesType.Obstaculo);
         }
 
     }
@@ -80,9 +81,8 @@ public class Celda : MonoBehaviour
         int columna = getColumnaPlayer(player);
         Celda celdaSiguiente = GeneraSuelo.camino.First.Next.Value;
 
-        if (celdaSiguiente.GetCelda(columna) == BloquesType.Nieve)
-        {
-            
+        if (celdaSiguiente.GetCelda(columna) != BloquesType.Obstaculo)
+        { 
             GeneraSuelo.camino.RemoveFirst();
             return true;
         }
