@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.92549026, g: 0.8313726, b: 0.454902, a: 1}
+  m_Color: {r: 0.9254902, g: 0.61586237, b: 0.45490196, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -860,7 +860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.909804, g: 0.8313726, b: 0.5058824, a: 1}
+  m_Color: {r: 0.909804, g: 0.45490196, b: 0.5058824, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -895,7 +895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea46d0bcb3a248d9b95bfa33f43167c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tituloLabel: {fileID: 745549943}
   yourButton: {fileID: 1005047449}
 --- !u!1 &1053448366
 GameObject:
@@ -941,7 +940,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d317c5d5f175f6b4da305a416b4b5b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puntuacionLabel: {fileID: 0}
 --- !u!1 &1331752992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,7 +1174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea46d0bcb3a248d9b95bfa33f43167c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tituloLabel: {fileID: 301271234}
   yourButton: {fileID: 1005047449}
 --- !u!1001 &4205469679336471871
 PrefabInstance:
