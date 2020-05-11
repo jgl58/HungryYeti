@@ -40,6 +40,8 @@ public class BloquesFactory : MonoBehaviour
         int aux = inicio;
         bool ponerNieve = true;
 
+        List<int> points = new List<int>() { -3, -1, 1, 3 };
+
         for (int i = aux; i < aux + distancia; i++)
         {
             GameObject obj;
@@ -61,7 +63,7 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Nieve,
                         BloquesType.Nieve
                     };
-                    celda = new Celda(lista);
+                    celda = new Celda(lista,points);
                     GeneraSuelo.camino.AddLast(celda);
                 }
                 ponerLateral(lateral, suelo, i);
@@ -85,7 +87,7 @@ public class BloquesFactory : MonoBehaviour
                                 BloquesType.Obstaculo,
                                 BloquesType.Obstaculo
                             };
-                            celda = new Celda(lista);
+                            celda = new Celda(lista, points);
                             GeneraSuelo.camino.AddLast(celda);
                         }
                         break;
@@ -103,7 +105,7 @@ public class BloquesFactory : MonoBehaviour
                                 BloquesType.Nieve,
                                 BloquesType.Obstaculo
                             };
-                            celda = new Celda(lista);
+                            celda = new Celda(lista, points);
                             GeneraSuelo.camino.AddLast(celda);
                         }
                         break;
@@ -121,7 +123,7 @@ public class BloquesFactory : MonoBehaviour
                                 BloquesType.Nieve,
                                 BloquesType.Nieve
                             };
-                            celda = new Celda(lista);
+                            celda = new Celda(lista, points);
                             GeneraSuelo.camino.AddLast(celda);
                         }
                         break;
@@ -139,7 +141,7 @@ public class BloquesFactory : MonoBehaviour
                                 BloquesType.Nieve,
                                 BloquesType.Obstaculo
                             };
-                            celda = new Celda(lista);
+                            celda = new Celda(lista, points);
                             GeneraSuelo.camino.AddLast(celda);
 
                         }
@@ -159,7 +161,7 @@ public class BloquesFactory : MonoBehaviour
                                     BloquesType.Nieve,
                                     BloquesType.Nieve
                                 };
-                                celda = new Celda(lista);
+                                celda = new Celda(lista, points);
                                 GeneraSuelo.camino.AddLast(celda);
                             }
                             int direccion = Random.Range(0, 3);
@@ -197,7 +199,7 @@ public class BloquesFactory : MonoBehaviour
                                         BloquesType.Nieve,
                                         BloquesType.Nieve
                                     };
-                                    celda = new Celda(lista);
+                                    celda = new Celda(lista, points);
                                     GeneraSuelo.camino.AddLast(celda);
                                 }
                                 int direccion = Random.Range(0, 2);
