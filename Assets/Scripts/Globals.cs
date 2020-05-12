@@ -95,10 +95,12 @@ public class Globals : MonoBehaviour
                 BloquesFactory.inicio = -10;
                 BloquesFactory.generateInit();
                 BloquesFactory.generateSuelo(35);
+
             } else {
                 firstTime = false;
             }
             estado = Globals.gameState.jugando;
+            estoyTronco = false;
         }
     }
 }

@@ -19,19 +19,18 @@ public class Movement : MonoBehaviour
         //puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
     }
 
-    
+
 
     // Update is called once per frame
     void Update()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Celda miCelda = GeneraSuelo.camino.First.Value;
-        
-        if(Globals.estado == Globals.gameState.jugando){
+
+        if (Globals.estado == Globals.gameState.jugando){
            
             GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-           
-            
+
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if (miCelda.comprobarCaminoArriba(player))
