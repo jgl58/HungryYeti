@@ -22,7 +22,9 @@ public class Globals : MonoBehaviour
     private static GameObject hud;
  
     public static gameState estado = gameState.jugando;
- 
+
+    public static bool estoyTronco = false;
+
     // Start is called before the first frame update
     void Start()
     {

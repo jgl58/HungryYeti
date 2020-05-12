@@ -24,38 +24,41 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Celda miCelda = GeneraSuelo.camino.First.Value;
+        
         if(Globals.estado == Globals.gameState.jugando){
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+           
             GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-            Celda miCelda = GeneraSuelo.camino.First.Value;
+           
             
-                if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (miCelda.comprobarCaminoArriba(player))
                 {
-                    if (miCelda.comprobarCaminoArriba(player))
+
+                    Vector3 position = player.transform.position;
+                    position.z++;
+                    player.transform.position = position;
+
+                    position = camera.transform.position;
+                    position.z++;
+                    camera.transform.position = position;
+
+                refreshCounter--;
+                    if (refreshCounter == 0)
                     {
-
-                        Vector3 position = player.transform.position;
-                        position.z++;
-                        player.transform.position = position;
-
-                        position = camera.transform.position;
-                        position.z++;
-                        camera.transform.position = position;
-
-                    refreshCounter--;
-                        if (refreshCounter == 0)
-                        {
-                            refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                            print("Cargamos nuevos bloques");
+                        refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                        print("Cargamos nuevos bloques");
 
 
-                            BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
-                        }
-                        int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                        puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+                        BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
                     }
-   
+                    int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                    puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
                 }
+   
+            }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -119,7 +122,13 @@ public class Movement : MonoBehaviour
                 }
             }
         }
-        
+
+        if (Globals.estoyTronco == false && miCelda.GetCelda(miCelda.getColumnaPlayer(player)) == BloquesType.Agua)
+        {
+            Globals.die();
+        }
+
+
     }
 
     bool checkTap(){

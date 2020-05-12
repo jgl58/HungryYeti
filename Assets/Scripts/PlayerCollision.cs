@@ -7,6 +7,7 @@ public class PlayerCollision : MonoBehaviour
     // Start is called before the first frame update
     GameObject player;
     bool playerFollow;
+    float offset = 0f;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -15,10 +16,11 @@ public class PlayerCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerFollow)
+        Celda celda = GeneraSuelo.camino.First.Value;
+        if (playerFollow && celda.GetCelda(celda.getColumnaPlayer(player)) == BloquesType.Agua)
         {
-         this.player.transform.position = new Vector3(
-            this.transform.position.x,
+            player.transform.position = new Vector3(
+            transform.position.x + offset,
             player.transform.position.y,
             player.transform.position.z);
         }
@@ -29,10 +31,13 @@ public class PlayerCollision : MonoBehaviour
     //When the Primitive collides with the walls, it will reverse direction
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        Celda celda = GeneraSuelo.camino.First.Value;
+        if (other.gameObject.tag == "Player" )
         {
-            
+            print("Entro tronco");
+            offset = (player.transform.position.x - transform.position.x);
             playerFollow = true;
+            Globals.estoyTronco = true;
             
         }
     }
@@ -43,10 +48,12 @@ public class PlayerCollision : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
+            print("Salgo tronco");
             Celda c = GeneraSuelo.camino.First.Value;
             c.recolocarPlayer(player);
 
             playerFollow = false;
+            Globals.estoyTronco = false;
         }
 
     }
