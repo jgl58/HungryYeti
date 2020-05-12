@@ -358,6 +358,12 @@ public class BloquesFactory : MonoBehaviour
                     BloquesType.Nieve
                 };
                 GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                if(ponerFruta == 0){
+                    obj = Instantiate(getFruta(), new Vector3(getPosX(1, 5), 0.7f, inicio), new Quaternion());
+                    obj.transform.parent = suelo.transform;
+                }
             }
             ponerLateral(lateral, suelo, j);
             if (j == posicion + 9)
