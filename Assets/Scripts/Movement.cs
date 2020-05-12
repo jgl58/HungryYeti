@@ -76,27 +76,43 @@ public class Movement : MonoBehaviour
                         break;
                     case TouchPhase.Ended:
                         endTouchPosition = touch.position;
-                        if(beginTouchPosition == endTouchPosition){
-                            Vector3 position = this.transform.position;
-                            position.z--;
-                            this.transform.position = position;
-                            refreshCounter --;
-                            if (refreshCounter == 0)
+                        float x = endTouchPosition.x - beginTouchPosition.x;
+                        float y = endTouchPosition.y - beginTouchPosition.y;
+
+                        //beginTouchPosition == endTouchPosition
+                        if (Mathf.Abs(x) == 0 && Mathf.Abs(y) == 0)
+                        {
+                            if (miCelda.comprobarCaminoArriba(player))
                             {
-                                refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                                print("Cargamos nuevos bloques");
+
+                                Vector3 position = player.transform.position;
+                                position.z++;
+                                player.transform.position = position;
+
+                                position = camera.transform.position;
+                                position.z++;
+                                camera.transform.position = position;
+
+                                refreshCounter--;
+                                if (refreshCounter == 0)
+                                {
+                                    refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                                    print("Cargamos nuevos bloques");
 
 
-                                BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                                    BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                                }
+                                int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                                puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
                             }
-                            int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1; 
-                            puntuacionLabel.text = string.Format ("{0:0000}", puntuacion);
                         }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
                             //Swipe a la derecha
-                            player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
+                            //player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
+                            player.transform.position = miCelda.moverDerecha(player);
                         }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
                             //Swipe a la izquierda
-                            player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
+                            //player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
+                            player.transform.position = miCelda.moverIzquierda(player);
                         }
 
                     break;    
@@ -104,6 +120,15 @@ public class Movement : MonoBehaviour
             }
         }
         
+    }
+
+    bool checkTap(){
+        print(beginTouchPosition.x);
+        print(endTouchPosition.x);
+        if(beginTouchPosition.x+0.000000000000000000000000000000000000000005 > endTouchPosition.x || beginTouchPosition.x-0.000000000000000000000000000000000000000005 < endTouchPosition.x){
+            return true;
+        }
+        return false;
     }
 
    
