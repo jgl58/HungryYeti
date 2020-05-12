@@ -29,7 +29,8 @@ public class Globals : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         BloquesFactory.inicio = -10;
-        BloquesFactory.generateSuelo(45);
+        BloquesFactory.generateInit();
+        BloquesFactory.generateSuelo(35);
         estado = gameState.menu;
         hud = (GameObject)Resources.Load("Prefabs/GameCanvas");
         Transform[] trs= GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
@@ -90,7 +91,8 @@ public class Globals : MonoBehaviour
 
                 GeneraSuelo.camino.Clear();
                 BloquesFactory.inicio = -10;
-                BloquesFactory.generateSuelo(45);
+                BloquesFactory.generateInit();
+                BloquesFactory.generateSuelo(35);
             } else {
                 firstTime = false;
             }

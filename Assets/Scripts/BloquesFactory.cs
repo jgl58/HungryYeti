@@ -5,7 +5,18 @@ public class BloquesFactory : MonoBehaviour
 {
     public static int inicio;
     public static int BLOQUES_ITERACION = 6;
+    public static int BLOQUES_BLANCOS_INICIO = 10;
+    public static int FRECUENCIA_FRUTAS = 3;
 
+    //Frutas
+    private static GameObject apple = (GameObject)Resources.Load("Fruits/Prefabs/apple");
+    private static GameObject banana = (GameObject)Resources.Load("Fruits/Prefabs/banana");
+    private static GameObject cherries = (GameObject)Resources.Load("Fruits/Prefabs/cherries");
+    private static GameObject lemon = (GameObject)Resources.Load("Fruits/Prefabs/lemon");
+    private static GameObject peach = (GameObject)Resources.Load("Fruits/Prefabs/peach");
+    private static GameObject pear = (GameObject)Resources.Load("Fruits/Prefabs/pear");
+    private static GameObject strawberry = (GameObject)Resources.Load("Fruits/Prefabs/strawberry");
+    private static GameObject watermelon = (GameObject)Resources.Load("Fruits/Prefabs/watermelon");
     //Carreteras y coches
     private static GameObject carretera = (GameObject)Resources.Load("Prefabs/Carretera");
     private static GameObject busAzul = (GameObject)Resources.Load("Cars/Prefabs/Bus_Blue");
@@ -21,8 +32,7 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject camion1Red = (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Red");
     private static GameObject camion1Morado = (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Purple");
     private static GameObject policeCar = (GameObject)Resources.Load("Cars/Prefabs/Policecar");
-
-
+    //Suelos y prefabs
     private static GameObject suelo = GameObject.FindGameObjectWithTag("Suelo");
     private static GameObject bloque1 = (GameObject)Resources.Load("Prefabs/Bloque1");
     private static GameObject bloque2 = (GameObject)Resources.Load("Prefabs/Bloque2");
@@ -36,16 +46,37 @@ public class BloquesFactory : MonoBehaviour
 
     private static List<int> points = new List<int>() { -3, -1, 1, 3 };
 
+    public static void generateInit()
+    {
+        GameObject obj;
+        Celda celda;
+        List<BloquesType> lista;
+        for(int i = 0; i < BLOQUES_BLANCOS_INICIO ; i++){
+            obj = Instantiate(bloqueNieve, new Vector3(0, 0, inicio), new Quaternion());
+            obj.transform.parent = suelo.transform;
+            if (inicio >= -3)
+            {
+                lista = new List<BloquesType>()
+                {
+                    BloquesType.Nieve,
+                    BloquesType.Nieve,
+                    BloquesType.Nieve,
+                    BloquesType.Nieve
+                };
+                celda = new Celda(lista, points);
+                GeneraSuelo.camino.AddLast(celda);
+            }
+            ponerLateral(lateral, suelo, inicio);
+            inicio++;
+        }
+    }
+
     public static void generateSuelo(int distancia)
     {
         //NO QUITAR
         //print(OBJETO.GetComponent<Renderer>().bounds.size.y);
-
   
         bool ponerNieve = true;
-
-        int contadorBloques = 0;
-
 
         for (int i = 0; i < distancia; i++)
         {
@@ -71,7 +102,13 @@ public class BloquesFactory : MonoBehaviour
                     GeneraSuelo.camino.AddLast(celda);
                 }
                 ponerLateral(lateral, suelo, inicio);
-                
+
+                int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                if(ponerFruta == 0){
+                    obj = Instantiate(getFruta(), new Vector3(getPosX(1, 5), 0.7f, inicio), new Quaternion());
+                    obj.transform.parent = suelo.transform;
+                }
+            
                 inicio++;
             }
             else
@@ -139,6 +176,12 @@ public class BloquesFactory : MonoBehaviour
                             };
                     GeneraSuelo.camino.AddLast(new Celda(lista, points));
 
+                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                    if(ponerFruta == 0){
+                        obj = Instantiate(getFruta(), new Vector3(-1, 0.7f, inicio), new Quaternion());
+                        obj.transform.parent = suelo.transform;
+                    }
+
                 }
                 break;
             case 2:
@@ -156,6 +199,12 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Obstaculo
                     };
                     GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                    if(ponerFruta == 0){
+                        obj = Instantiate(getFruta(), new Vector3(getPosX(1, 4), 0.7f, inicio), new Quaternion());
+                        obj.transform.parent = suelo.transform;
+                    }
 
                 }
                 break;
@@ -175,6 +224,12 @@ public class BloquesFactory : MonoBehaviour
                     };
                     GeneraSuelo.camino.AddLast(new Celda(lista, points));
 
+                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                    if(ponerFruta == 0){
+                        obj = Instantiate(getFruta(), new Vector3(getPosX(2, 5), 0.7f, inicio), new Quaternion());
+                        obj.transform.parent = suelo.transform;
+                    }
+
                 }
                 break;
             case 4:
@@ -192,6 +247,12 @@ public class BloquesFactory : MonoBehaviour
                     };
                     GeneraSuelo.camino.AddLast(new Celda(lista, points));
 
+                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                    if(ponerFruta == 0){
+                        obj = Instantiate(getFruta(), new Vector3(getPosX(2, 4), 0.7f, inicio), new Quaternion());
+                        obj.transform.parent = suelo.transform;
+                    }
+
                 }
 
                 break;
@@ -205,7 +266,8 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 2; j++)
+        int max = Random.Range(2, 7);
+        for (int j = posicion; j < posicion + max; j++)
         {
 
             obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, j), new Quaternion());
@@ -235,7 +297,7 @@ public class BloquesFactory : MonoBehaviour
             }
         }
 
-        return posicion + 2;
+        return posicion + max;
 
     }
 
@@ -244,7 +306,8 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 2; j++)
+        int max = Random.Range(2, 7);
+        for (int j = posicion; j < posicion + max; j++)
         {
 
             obj = Instantiate(carretera, new Vector3(0, -0.2f, j), new Quaternion());
@@ -271,7 +334,7 @@ public class BloquesFactory : MonoBehaviour
             }
         }
 
-        return posicion + 2;
+        return posicion + max;
 
     }
 
@@ -295,6 +358,12 @@ public class BloquesFactory : MonoBehaviour
                     BloquesType.Nieve
                 };
                 GeneraSuelo.camino.AddLast(new Celda(lista, points));
+
+                int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+                if(ponerFruta == 0){
+                    obj = Instantiate(getFruta(), new Vector3(getPosX(1, 5), 0.7f, j), new Quaternion());
+                    obj.transform.parent = suelo.transform;
+                }
             }
             ponerLateral(lateral, suelo, j);
             if (j == posicion + 9)
@@ -319,7 +388,7 @@ public class BloquesFactory : MonoBehaviour
 
     public static void createCoche(GameObject parent, int i,bool derecha){
             int car = Random.Range(1, 14);
-            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? 7 : -7, getYSizeOfCar(car), i), new Quaternion());
+            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? Random.Range(7, 11) : Random.Range(-10, -6), getYSizeOfCar(car), i), new Quaternion());
             if(derecha){ coche.transform.Rotate(new Vector3(0,180,0)); }
             coche.transform.parent = parent.transform;
     }
@@ -356,6 +425,32 @@ public class BloquesFactory : MonoBehaviour
             case 12: return camion1Morado; 
             case 13: return policeCar; 
             default: return busAmarillo; 
+        }
+    }
+
+     private static int getPosX(int min, int max){
+        int x = Random.Range(min, max);
+        switch(x){
+            case 1: return -3; 
+            case 2: return -1; 
+            case 3: return 1; 
+            case 4: return 3; 
+            default: return 1;
+        }
+    }
+
+    private static GameObject getFruta(){
+        int fruta = Random.Range(1, 9);
+        switch(fruta){
+            case 1: return apple; 
+            case 2: return banana; 
+            case 3: return cherries; 
+            case 4: return lemon; 
+            case 5: return peach; 
+            case 6: return pear; 
+            case 7: return strawberry; 
+            case 8: return watermelon; 
+            default: return apple;
         }
     }
 

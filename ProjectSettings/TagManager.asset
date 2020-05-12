@@ -9,6 +9,7 @@ TagManager:
   - PointsLabel
   - Canvas
   - Trineo
+  - Camion
   layers:
   - Default
   - TransparentFX
