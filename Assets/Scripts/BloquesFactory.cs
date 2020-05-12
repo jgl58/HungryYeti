@@ -227,7 +227,8 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 2; j++)
+        int max = Random.Range(2, 7);
+        for (int j = posicion; j < posicion + max; j++)
         {
 
             obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, j), new Quaternion());
@@ -257,7 +258,7 @@ public class BloquesFactory : MonoBehaviour
             }
         }
 
-        return posicion + 2;
+        return posicion + max;
 
     }
 
@@ -266,7 +267,8 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 2; j++)
+        int max = Random.Range(2, 7);
+        for (int j = posicion; j < posicion + max; j++)
         {
 
             obj = Instantiate(carretera, new Vector3(0, -0.2f, j), new Quaternion());
@@ -293,7 +295,7 @@ public class BloquesFactory : MonoBehaviour
             }
         }
 
-        return posicion + 2;
+        return posicion + max;
 
     }
 
