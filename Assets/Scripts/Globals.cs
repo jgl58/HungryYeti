@@ -22,7 +22,9 @@ public class Globals : MonoBehaviour
     private static GameObject hud;
  
     public static gameState estado = gameState.jugando;
- 
+
+    public static bool estoyTronco = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,10 +95,12 @@ public class Globals : MonoBehaviour
                 BloquesFactory.inicio = -10;
                 BloquesFactory.generateInit();
                 BloquesFactory.generateSuelo(35);
+
             } else {
                 firstTime = false;
             }
             estado = Globals.gameState.jugando;
+            estoyTronco = false;
         }
     }
 }
