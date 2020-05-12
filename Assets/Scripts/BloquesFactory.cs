@@ -8,30 +8,6 @@ public class BloquesFactory : MonoBehaviour
     public static int BLOQUES_BLANCOS_INICIO = 10;
     public static int FRECUENCIA_FRUTAS = 3;
 
-    //Frutas
-    private static GameObject apple = (GameObject)Resources.Load("Fruits/Prefabs/apple");
-    private static GameObject banana = (GameObject)Resources.Load("Fruits/Prefabs/banana");
-    private static GameObject cherries = (GameObject)Resources.Load("Fruits/Prefabs/cherries");
-    private static GameObject lemon = (GameObject)Resources.Load("Fruits/Prefabs/lemon");
-    private static GameObject peach = (GameObject)Resources.Load("Fruits/Prefabs/peach");
-    private static GameObject pear = (GameObject)Resources.Load("Fruits/Prefabs/pear");
-    private static GameObject strawberry = (GameObject)Resources.Load("Fruits/Prefabs/strawberry");
-    private static GameObject watermelon = (GameObject)Resources.Load("Fruits/Prefabs/watermelon");
-    //Carreteras y coches
-    private static GameObject carretera = (GameObject)Resources.Load("Prefabs/Carretera");
-    private static GameObject busAzul = (GameObject)Resources.Load("Cars/Prefabs/Bus_Blue");
-    private static GameObject busRojo = (GameObject)Resources.Load("Cars/Prefabs/Bus_Red");
-    private static GameObject busAmarillo = (GameObject)Resources.Load("Cars/Prefabs/Bus_Yellow");
-    private static GameObject coche2Verde = (GameObject)Resources.Load("Cars/Prefabs/Car_2_Green");
-    private static GameObject coche2Morado = (GameObject)Resources.Load("Cars/Prefabs/Car_2_Purple");
-    private static GameObject coche2Gris = (GameObject)Resources.Load("Cars/Prefabs/Car_2_Silver");
-    private static GameObject coche5Rojo = (GameObject)Resources.Load("Cars/Prefabs/Car_5_Red");
-    private static GameObject coche5Gris = (GameObject)Resources.Load("Cars/Prefabs/Car_5_Silver");
-    private static GameObject coche5Amarillo = (GameObject)Resources.Load("Cars/Prefabs/Car_5_Yellow");
-    private static GameObject camion1Azul = (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Blue");
-    private static GameObject camion1Red = (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Red");
-    private static GameObject camion1Morado = (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Purple");
-    private static GameObject policeCar = (GameObject)Resources.Load("Cars/Prefabs/Policecar");
     //Suelos y prefabs
     private static GameObject suelo = GameObject.FindGameObjectWithTag("Suelo");
     private static GameObject bloque1 = (GameObject)Resources.Load("Prefabs/Bloque1");
@@ -129,7 +105,13 @@ public class BloquesFactory : MonoBehaviour
                         ponerNieve = true;
                         break;
                     case 6:
-                        inicio = ponerCarretera(inicio);
+                        int carr = Random.Range(0, 2);
+                        if(carr == 0){
+                            inicio = ponerCarretera(inicio);
+                        } else {
+                            int auxBloque = Random.Range(1, 5);
+                            inicio = ponerObstaculos(inicio, auxBloque);
+                        }
                         ponerNieve = true;
                         break;
                     case 7:
@@ -310,7 +292,7 @@ public class BloquesFactory : MonoBehaviour
         for (int j = posicion; j < posicion + max; j++)
         {
 
-            obj = Instantiate(carretera, new Vector3(0, -0.2f, j), new Quaternion());
+            obj = Instantiate((GameObject)Resources.Load("Prefabs/Carretera"), new Vector3(0, -0.2f, j), new Quaternion());
             obj.transform.parent = suelo.transform;
             if (j >= -3)
             {
@@ -411,20 +393,20 @@ public class BloquesFactory : MonoBehaviour
 
     private static GameObject getCoche(int i){
         switch(i){
-            case 1: return busAzul; 
-            case 2: return busRojo; 
-            case 3: return busAmarillo; 
-            case 4: return coche2Verde; 
-            case 5: return coche2Morado; 
-            case 6: return coche2Gris; 
-            case 7: return coche5Rojo; 
-            case 8: return coche5Gris; 
-            case 9: return coche5Amarillo; 
-            case 10: return camion1Azul; 
-            case 11: return camion1Red; 
-            case 12: return camion1Morado; 
-            case 13: return policeCar; 
-            default: return busAmarillo; 
+            case 1: return (GameObject)Resources.Load("Cars/Prefabs/Bus_Blue"); 
+            case 2: return (GameObject)Resources.Load("Cars/Prefabs/Bus_Red"); 
+            case 3: return (GameObject)Resources.Load("Cars/Prefabs/Bus_Yellow"); 
+            case 4: return (GameObject)Resources.Load("Cars/Prefabs/Car_2_Green"); 
+            case 5: return (GameObject)Resources.Load("Cars/Prefabs/Car_2_Purple"); 
+            case 6: return (GameObject)Resources.Load("Cars/Prefabs/Car_2_Silver"); 
+            case 7: return (GameObject)Resources.Load("Cars/Prefabs/Car_5_Red"); 
+            case 8: return (GameObject)Resources.Load("Cars/Prefabs/Car_5_Silver"); 
+            case 9: return (GameObject)Resources.Load("Cars/Prefabs/Car_5_Yellow"); 
+            case 10: return (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Blue"); 
+            case 11: return (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Red"); 
+            case 12: return (GameObject)Resources.Load("Cars/Prefabs/Truck_1_Purple"); 
+            case 13: return (GameObject)Resources.Load("Cars/Prefabs/Policecar"); 
+            default: return (GameObject)Resources.Load("Cars/Prefabs/Bus_Yellow"); 
         }
     }
 
@@ -442,15 +424,15 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject getFruta(){
         int fruta = Random.Range(1, 9);
         switch(fruta){
-            case 1: return apple; 
-            case 2: return banana; 
-            case 3: return cherries; 
-            case 4: return lemon; 
-            case 5: return peach; 
-            case 6: return pear; 
-            case 7: return strawberry; 
-            case 8: return watermelon; 
-            default: return apple;
+            case 1: return (GameObject)Resources.Load("Fruits/Prefabs/apple"); 
+            case 2: return (GameObject)Resources.Load("Fruits/Prefabs/banana"); 
+            case 3: return (GameObject)Resources.Load("Fruits/Prefabs/cherries"); 
+            case 4: return (GameObject)Resources.Load("Fruits/Prefabs/lemon"); 
+            case 5: return (GameObject)Resources.Load("Fruits/Prefabs/peach"); 
+            case 6: return (GameObject)Resources.Load("Fruits/Prefabs/pear"); 
+            case 7: return (GameObject)Resources.Load("Fruits/Prefabs/strawberry"); 
+            case 8: return (GameObject)Resources.Load("Fruits/Prefabs/watermelon"); 
+            default: return (GameObject)Resources.Load("Fruits/Prefabs/apple");
         }
     }
 
