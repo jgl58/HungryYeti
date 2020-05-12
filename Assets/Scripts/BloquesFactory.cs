@@ -115,7 +115,7 @@ public class BloquesFactory : MonoBehaviour
                         break;
                     case 6:
                         inicio = ponerCarretera(inicio);
-                        ponerNieve = true;
+                        //ponerNieve = true;
                         break;
                     case 7:
                         int bloqueEsqui = Random.Range(1, 6);
