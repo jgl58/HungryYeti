@@ -582,7 +582,7 @@ GameObject:
   - component: {fileID: -5530834222512373498}
   m_Layer: 0
   m_Name: Truck_1_Purple
-  m_TagString: Untagged
+  m_TagString: Camion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delta: 1.5
-  speed: 1
+  speed: 1.5
 --- !u!65 &321315070784440365
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class BloquesFactory : MonoBehaviour
 {
     public static int inicio;
     public static int BLOQUES_ITERACION = 6;
+    public static int BLOQUES_BLANCOS_INICIO = 10;
 
     //Carreteras y coches
     private static GameObject carretera = (GameObject)Resources.Load("Prefabs/Carretera");
@@ -36,16 +37,37 @@ public class BloquesFactory : MonoBehaviour
 
     private static List<int> points = new List<int>() { -3, -1, 1, 3 };
 
+    public static void generateInit()
+    {
+        GameObject obj;
+        Celda celda;
+        List<BloquesType> lista;
+        for(int i = 0; i < BLOQUES_BLANCOS_INICIO ; i++){
+            obj = Instantiate(bloqueNieve, new Vector3(0, 0, inicio), new Quaternion());
+            obj.transform.parent = suelo.transform;
+            if (inicio >= -3)
+            {
+                lista = new List<BloquesType>()
+                {
+                    BloquesType.Nieve,
+                    BloquesType.Nieve,
+                    BloquesType.Nieve,
+                    BloquesType.Nieve
+                };
+                celda = new Celda(lista, points);
+                GeneraSuelo.camino.AddLast(celda);
+            }
+            ponerLateral(lateral, suelo, inicio);
+            inicio++;
+        }
+    }
+
     public static void generateSuelo(int distancia)
     {
         //NO QUITAR
         //print(OBJETO.GetComponent<Renderer>().bounds.size.y);
-
   
         bool ponerNieve = true;
-
-        int contadorBloques = 0;
-
 
         for (int i = 0; i < distancia; i++)
         {
@@ -93,7 +115,7 @@ public class BloquesFactory : MonoBehaviour
                         break;
                     case 6:
                         inicio = ponerCarretera(inicio);
-                        ponerNieve = true;
+                        //ponerNieve = true;
                         break;
                     case 7:
                         int bloqueEsqui = Random.Range(1, 6);
@@ -205,7 +227,8 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 2; j++)
+        int max = Random.Range(2, 7);
+        for (int j = posicion; j < posicion + max; j++)
         {
 
             obj = Instantiate(bloqueAgua, new Vector3(0, -0.5f, j), new Quaternion());
@@ -235,7 +258,7 @@ public class BloquesFactory : MonoBehaviour
             }
         }
 
-        return posicion + 2;
+        return posicion + max;
 
     }
 
@@ -244,7 +267,8 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 2; j++)
+        int max = Random.Range(2, 7);
+        for (int j = posicion; j < posicion + max; j++)
         {
 
             obj = Instantiate(carretera, new Vector3(0, -0.2f, j), new Quaternion());
@@ -271,7 +295,7 @@ public class BloquesFactory : MonoBehaviour
             }
         }
 
-        return posicion + 2;
+        return posicion + max;
 
     }
 
@@ -319,7 +343,7 @@ public class BloquesFactory : MonoBehaviour
 
     public static void createCoche(GameObject parent, int i,bool derecha){
             int car = Random.Range(1, 14);
-            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? 7 : -7, getYSizeOfCar(car), i), new Quaternion());
+            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? Random.Range(7, 11) : Random.Range(-10, -6), getYSizeOfCar(car), i), new Quaternion());
             if(derecha){ coche.transform.Rotate(new Vector3(0,180,0)); }
             coche.transform.parent = parent.transform;
     }
