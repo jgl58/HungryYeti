@@ -7,6 +7,7 @@ public class BloquesFactory : MonoBehaviour
     public static int BLOQUES_ITERACION = 6;
     public static int BLOQUES_BLANCOS_INICIO = 10;
     public static int FRECUENCIA_FRUTAS = 3;
+    public static int BLOQUES_ESQUIADORES = 30;
 
     //Suelos y prefabs
     private static GameObject suelo = GameObject.FindGameObjectWithTag("Suelo");
@@ -128,7 +129,6 @@ public class BloquesFactory : MonoBehaviour
                         break;
                     default:
                         break;
-
                 }
             }
         }
@@ -324,7 +324,7 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        for (int j = posicion; j < posicion + 10; j++)
+        for (int j = posicion; j < posicion + BLOQUES_ESQUIADORES; j++)
         {
            
             obj = Instantiate(bloqueNieve, new Vector3(0, 0, j), new Quaternion());
@@ -346,15 +346,23 @@ public class BloquesFactory : MonoBehaviour
                     GameObject fruit = Instantiate(getFruta(), new Vector3(getPosX(1, 5), 0.7f, j), new Quaternion());
                     fruit.transform.parent = suelo.transform;
                 }
+
+                if(j == posicion + 2){
+                    MeshFilter mf = obj.GetComponent<MeshFilter>();
+                    if (mf && mf.sharedMesh)
+                    {
+                        Bounds bounds = mf.sharedMesh.bounds;
+                        BoxCollider collider = mf.gameObject.AddComponent<BoxCollider>();
+                        collider.center = bounds.center;
+                        collider.size = new Vector3(bounds.size.x, bounds.size.y * 2, bounds.size.z);
+                        collider.isTrigger = true;
+                    }
+                }
             }
             ponerLateral(lateral, suelo, j);
-            if (j == posicion + 9)
-            {
-                createTrineo(obj, j);
-            }
         }
 
-        return posicion + 10;
+        return posicion + BLOQUES_ESQUIADORES;
 
     }
 
@@ -382,13 +390,13 @@ public class BloquesFactory : MonoBehaviour
         t.transform.parent = parent.transform;
     }
 
-    public static void createTrineo(GameObject parent, int i)
+    public static void createTrineo(int i, int pos)
     {
         int xInicial = Random.Range(1, 5);
-        GameObject t = Instantiate(trineo, new Vector3(getXtrineo(xInicial), 0.5f, i), new Quaternion());
-        t.transform.parent = parent.transform;
+        GameObject t = Instantiate(trineo, new Vector3(pos, 0.5f, i), new Quaternion());
+        //t.transform.parent = parent.transform;
         t.transform.Rotate(new Vector3(270, 0, 180));
-        t.transform.localScale = new Vector3(10, 45, 45);
+        //t.transform.localScale = new Vector3(10, 45, 45);
     }
 
     private static GameObject getCoche(int i){
@@ -410,7 +418,7 @@ public class BloquesFactory : MonoBehaviour
         }
     }
 
-     private static int getPosX(int min, int max){
+    public static int getPosX(int min, int max){
         int x = Random.Range(min, max);
         switch(x){
             case 1: return -3; 
