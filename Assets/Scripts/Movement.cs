@@ -134,7 +134,7 @@ public class Movement : MonoBehaviour
     bool checkTap(){
         print(beginTouchPosition.x);
         print(endTouchPosition.x);
-        if(beginTouchPosition.x + 7 > endTouchPosition.x && beginTouchPosition.x - 7  < endTouchPosition.x){
+        if(beginTouchPosition.x + 30 > endTouchPosition.x && beginTouchPosition.x - 30  < endTouchPosition.x){
             return true;
         }
         return false;
