@@ -394,7 +394,7 @@ public class BloquesFactory : MonoBehaviour
     {
         int xInicial = Random.Range(1, 5);
         GameObject t = Instantiate(trineo, new Vector3(pos, 0.5f, i), new Quaternion());
-        //t.transform.parent = parent.transform;
+        t.transform.parent = suelo.transform;
         t.transform.Rotate(new Vector3(270, 0, 180));
         //t.transform.localScale = new Vector3(10, 45, 45);
     }
