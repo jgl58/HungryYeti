@@ -10,7 +10,7 @@ public class SlideDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        speed = speed * Random.Range(80, 150) / 100;
     }
 
     // Update is called once per frame
