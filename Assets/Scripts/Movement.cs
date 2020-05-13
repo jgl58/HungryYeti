@@ -82,7 +82,8 @@ public class Movement : MonoBehaviour
                         float y = endTouchPosition.y - beginTouchPosition.y;
 
                         //beginTouchPosition == endTouchPosition
-                        if (Mathf.Abs(x) == 0 && Mathf.Abs(y) == 0)
+                        //Mathf.Abs(x) == 0 && Mathf.Abs(y) == 0
+                        if (checkTap())
                         {
                             if (miCelda.comprobarCaminoArriba(player))
                             {
@@ -133,7 +134,7 @@ public class Movement : MonoBehaviour
     bool checkTap(){
         print(beginTouchPosition.x);
         print(endTouchPosition.x);
-        if(beginTouchPosition.x+0.000000000000000000000000000000000000000005 > endTouchPosition.x || beginTouchPosition.x-0.000000000000000000000000000000000000000005 < endTouchPosition.x){
+        if(beginTouchPosition.x + 7 > endTouchPosition.x && beginTouchPosition.x - 7  < endTouchPosition.x){
             return true;
         }
         return false;
