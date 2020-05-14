@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
 
     private Touch touch;
     private Vector2 beginTouchPosition, endTouchPosition;
-    private bool estoyTronco = false;
 
     private GameObject player;
     private GameObject camera;
@@ -45,15 +44,15 @@ public class Movement : MonoBehaviour
 
                     if (estoyEnAgua)
                     {
-                        if (Physics.CheckSphere(nextPosition, 0.1f))
+                        if (Physics.CheckSphere(nextPosition, 0.3f))
                         {
                             print("Hay tronco");
-                            estoyTronco = true;
+                            Globals.estoyTronco = true;
                         }
                         else
                         {
                             print("Espero que sepas nadar");
-                            estoyTronco = false;
+                            Globals.estoyTronco = false;
 
                         }
                     }
@@ -65,7 +64,7 @@ public class Movement : MonoBehaviour
                     camera.transform.position = nextPosition;
 
 
-                    if (estoyEnAgua && !estoyTronco)
+                    if (estoyEnAgua && !Globals.estoyTronco)
                     {
                         Globals.die();
                     }
@@ -117,25 +116,24 @@ public class Movement : MonoBehaviour
 
                                 if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua)
                                 {
-                                    if (Physics.CheckSphere(nextPosition, 0.1f))
+                                    if (Physics.CheckSphere(nextPosition, 0.5f))
                                     {
                                         print("Hay tronco");
-                                        estoyTronco = true;
+                                        Globals.estoyTronco = true;
                                     }
                                     else
                                     {
                                         print("Espero que sepas nadar");
-                                        estoyTronco = false;
-
+                                        Globals.estoyTronco = false;
                                     }
                                 }
                                 player.transform.position = nextPosition;
-
+                               
                                 nextPosition = camera.transform.position;
                                 nextPosition.z++;
                                 camera.transform.position = nextPosition;
 
-                                if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !estoyTronco)
+                                if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Globals.estoyTronco)
                                 {
                                     Globals.die();
                                 }
