@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Globals : MonoBehaviour
 {
-    public enum gameState {
+    public enum gameState
+    {
         menu,
         jugando,
         perdido
@@ -20,7 +21,7 @@ public class Globals : MonoBehaviour
     public static GameObject camera;
 
     private static GameObject hud;
- 
+
     public static gameState estado = gameState.jugando;
 
     public static bool estoyTronco = false;
@@ -35,15 +36,19 @@ public class Globals : MonoBehaviour
         BloquesFactory.generateSuelo(35);
         estado = gameState.menu;
         hud = (GameObject)Resources.Load("Prefabs/GameCanvas");
-        Transform[] trs= GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
-        foreach(Transform t in trs){
-            if(t.name == "TitleImage"){
+        Transform[] trs = GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "TitleImage")
+            {
                 tituloImagen = t.gameObject;
             }
-            if(t.name == "StartButton"){
+            if (t.name == "StartButton")
+            {
                 yourButton = t.gameObject;
             }
-            if(t.name == "GameOver"){
+            if (t.name == "GameOver")
+            {
                 gameOver = t.gameObject;
             }
         }
@@ -52,33 +57,40 @@ public class Globals : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
-    public static void die(){
-        if(estado == gameState.jugando){
+    public static void die()
+    {
+        if (estado == gameState.jugando)
+        {
             estado = gameState.perdido;
             yourButton.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
         }
     }
 
-    public static void start(){
-        if(estado != gameState.jugando){
+    public static void start()
+    {
+        if (estado != gameState.jugando)
+        {
             //hud.GetComponent<HUD>().reset();
             tituloImagen.SetActive(false);
             gameOver.gameObject.SetActive(false);
             yourButton.gameObject.SetActive(false);
             GameObject[] canvases = GameObject.FindGameObjectsWithTag("Canvas");
-            foreach(GameObject canvas in canvases){
+            foreach (GameObject canvas in canvases)
+            {
                 Destroy(canvas);
             }
             hud = Instantiate((GameObject)Resources.Load("Prefabs/GameCanvas"), new Vector3(0, 0, 0), Quaternion.identity);
             Movement.puntuacionLabel = hud.GetComponent<HUD>().puntuacionLabel;
-            if(!firstTime){
-                GameObject suelo =  GameObject.Find("Suelo");
-                foreach (Transform child in suelo.transform){
-                    Destroy(child.gameObject);   
+            if (!firstTime)
+            {
+                GameObject suelo = GameObject.Find("Suelo");
+                foreach (Transform child in suelo.transform)
+                {
+                    Destroy(child.gameObject);
                 }
 
                 Vector3 position = player.transform.position;
@@ -96,7 +108,9 @@ public class Globals : MonoBehaviour
                 BloquesFactory.generateInit();
                 BloquesFactory.generateSuelo(35);
 
-            } else {
+            }
+            else
+            {
                 firstTime = false;
             }
             estado = Globals.gameState.jugando;

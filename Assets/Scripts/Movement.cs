@@ -12,11 +12,16 @@ public class Movement : MonoBehaviour
 
     private Touch touch;
     private Vector2 beginTouchPosition, endTouchPosition;
+    private bool estoyTronco = false;
+
+    private GameObject player;
+    private GameObject camera;
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
         refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-        //puntuacionLabel = GameObject.FindGameObjectWithTag("PointsLabel").GetComponent<Text>();
     }
 
 
@@ -24,37 +29,60 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
         Celda miCelda = GeneraSuelo.camino.First.Value;
 
         if (Globals.estado == Globals.gameState.jugando){
-           
-            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if (miCelda.comprobarCaminoArriba(player))
                 {
+                    Vector3 nextPosition = player.transform.position;
+                    nextPosition.z++;
 
-                    Vector3 position = player.transform.position;
-                    position.z++;
-                    player.transform.position = position;
+                    Celda siguiente = GeneraSuelo.camino.First.Value;
 
-                    position = camera.transform.position;
-                    position.z++;
-                    camera.transform.position = position;
+                    bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
 
-                refreshCounter--;
-                    if (refreshCounter == 0)
+                    if (estoyEnAgua)
                     {
-                        refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                        print("Cargamos nuevos bloques");
+                        if (Physics.CheckSphere(nextPosition, 0.1f))
+                        {
+                            print("Hay tronco");
+                            estoyTronco = true;
+                        }
+                        else
+                        {
+                            print("Espero que sepas nadar");
+                            estoyTronco = false;
 
-
-                        BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                        }
                     }
-                    int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                    puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+
+                    player.transform.position = nextPosition;
+
+                    nextPosition = camera.transform.position;
+                    nextPosition.z++;
+                    camera.transform.position = nextPosition;
+
+
+                    if (estoyEnAgua && !estoyTronco)
+                    {
+                        Globals.die();
+                    }
+                    else
+                    {
+                        refreshCounter--;
+                        if (refreshCounter == 0)
+                        {
+                            refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                            print("Cargamos nuevos bloques");
+
+
+                            BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                        }
+                        int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                        puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+                    }
                 }
    
             }
@@ -78,35 +106,53 @@ public class Movement : MonoBehaviour
                         break;
                     case TouchPhase.Ended:
                         endTouchPosition = touch.position;
-                        float x = endTouchPosition.x - beginTouchPosition.x;
-                        float y = endTouchPosition.y - beginTouchPosition.y;
-
-                        //beginTouchPosition == endTouchPosition
-                        //Mathf.Abs(x) == 0 && Mathf.Abs(y) == 0
                         if (checkTap())
                         {
                             if (miCelda.comprobarCaminoArriba(player))
                             {
+                                Vector3 nextPosition = player.transform.position;
+                                nextPosition.z++;
 
-                                Vector3 position = player.transform.position;
-                                position.z++;
-                                player.transform.position = position;
+                                Celda siguiente = GeneraSuelo.camino.First.Value;
 
-                                position = camera.transform.position;
-                                position.z++;
-                                camera.transform.position = position;
-
-                                refreshCounter--;
-                                if (refreshCounter == 0)
+                                if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua)
                                 {
-                                    refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                                    print("Cargamos nuevos bloques");
+                                    if (Physics.CheckSphere(nextPosition, 0.1f))
+                                    {
+                                        print("Hay tronco");
+                                        estoyTronco = true;
+                                    }
+                                    else
+                                    {
+                                        print("Espero que sepas nadar");
+                                        estoyTronco = false;
 
-
-                                    BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                                    }
                                 }
-                                int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                                puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+                                player.transform.position = nextPosition;
+
+                                nextPosition = camera.transform.position;
+                                nextPosition.z++;
+                                camera.transform.position = nextPosition;
+
+                                if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !estoyTronco)
+                                {
+                                    Globals.die();
+                                }
+                                else
+                                {
+                                    refreshCounter--;
+                                    if (refreshCounter == 0)
+                                    {
+                                        refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                                        print("Cargamos nuevos bloques");
+
+
+                                        BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                                    }
+                                    int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                                    puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+                                }
                             }
                         }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
                             //Swipe a la derecha
@@ -122,13 +168,6 @@ public class Movement : MonoBehaviour
                 }
             }
         }
-
-        if (Globals.estoyTronco == false && miCelda.GetCelda(miCelda.getColumnaPlayer(player)) == BloquesType.Agua)
-        {
-            Globals.die();
-        }
-
-
     }
 
     bool checkTap(){

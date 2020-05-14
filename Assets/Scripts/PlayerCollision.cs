@@ -24,21 +24,19 @@ public class PlayerCollision : MonoBehaviour
             player.transform.position.y,
             player.transform.position.z);
         }
-       
-        
+
+
     }
 
     //When the Primitive collides with the walls, it will reverse direction
     private void OnTriggerEnter(Collider other)
     {
         Celda celda = GeneraSuelo.camino.First.Value;
-        if (other.gameObject.tag == "Player" )
+        if (other.gameObject.tag == "Player")
         {
             print("Entro tronco");
             offset = (player.transform.position.x - transform.position.x);
             playerFollow = true;
-            Globals.estoyTronco = true;
-            
         }
     }
 
@@ -46,14 +44,12 @@ public class PlayerCollision : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-        if (other.gameObject.tag == "Player")
+        if ((other.gameObject.tag == "Player"))
         {
             print("Salgo tronco");
             Celda c = GeneraSuelo.camino.First.Value;
             c.recolocarPlayer(player);
-
             playerFollow = false;
-            Globals.estoyTronco = false;
         }
 
     }
