@@ -16,6 +16,8 @@ public class Movement : MonoBehaviour
     private GameObject player;
     private GameObject camera;
 
+    private bool isMoving = false;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -58,11 +60,12 @@ public class Movement : MonoBehaviour
                     }
 
                     player.transform.position = nextPosition;
+                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
 
                     nextPosition = camera.transform.position;
                     nextPosition.z++;
                     camera.transform.position = nextPosition;
-
+                    //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
 
                     if (estoyEnAgua && !Globals.estoyTronco)
                     {
@@ -88,12 +91,13 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-                player.transform.position = miCelda.moverDerecha(player);
+                //player.transform.position = miCelda.moverDerecha(player);
+                StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
 
-                player.transform.position = miCelda.moverIzquierda(player);
+                StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
         }
 
             if(Input.touchCount > 0){
@@ -128,10 +132,12 @@ public class Movement : MonoBehaviour
                                     }
                                 }
                                 player.transform.position = nextPosition;
+                                //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
                                
                                 nextPosition = camera.transform.position;
                                 nextPosition.z++;
                                 camera.transform.position = nextPosition;
+                                //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
 
                                 if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Globals.estoyTronco)
                                 {
@@ -155,11 +161,13 @@ public class Movement : MonoBehaviour
                         }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
                             //Swipe a la derecha
                             //player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
-                            player.transform.position = miCelda.moverDerecha(player);
+                            //player.transform.position = miCelda.moverDerecha(player);
+                            StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
                         }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
                             //Swipe a la izquierda
                             //player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
                             player.transform.position = miCelda.moverIzquierda(player);
+                            StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
                         }
 
                     break;    
@@ -176,6 +184,26 @@ public class Movement : MonoBehaviour
         }
         return false;
     }
+
+    IEnumerator desplazarCorrutina(Vector3 destino, int direccion, GameObject obj){
+        /*
+        Delante = 0
+        Izquierda = 1
+        Derecha = 2
+        */
+        if(!isMoving){
+            isMoving = true;
+            Vector3 origen = obj.gameObject.transform.position;
+            float time = 0.0f;
+            while(time < 1f){
+                obj.transform.position = Vector3.Lerp(origen, destino, time);
+                time += Time.deltaTime * 10f;
+                yield return null;
+            }
+            isMoving = false;
+        }
+    }
+    
 
    
 }
