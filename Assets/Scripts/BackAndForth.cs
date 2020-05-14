@@ -22,7 +22,7 @@ public class BackAndForth : MonoBehaviour
         Vector3 v = transform.position;
         if (!goRight)
         {
-            if (transform.position.x <= -7.0f)
+            if (transform.position.x <= -10.0f)
             {
                 BloquesFactory.createTronco(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z, false);
                 Destroy(gameObject);
@@ -37,7 +37,7 @@ public class BackAndForth : MonoBehaviour
         }
         else
         {
-            if (transform.position.x >= 7.0f)
+            if (transform.position.x >= 10.0f)
             {
                 BloquesFactory.createTronco(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z, true);
                 Destroy(gameObject);

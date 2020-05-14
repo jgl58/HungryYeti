@@ -30,7 +30,7 @@ public class CarMovement : MonoBehaviour
         Vector3 v = transform.position;
         if (!goRight)
         {
-            if (transform.position.x <= -7.0f)
+            if (transform.position.x <= -10.0f)
             {
                 BloquesFactory.createCoche(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z,true);
                 Destroy(gameObject);
@@ -44,7 +44,7 @@ public class CarMovement : MonoBehaviour
         }
         else
         {
-            if (transform.position.x >= 7.0f)
+            if (transform.position.x >= 10.0f)
             {
                 BloquesFactory.createCoche(gameObject.transform.parent.gameObject, (int)gameObject.transform.position.z,false);
                 Destroy(gameObject);  

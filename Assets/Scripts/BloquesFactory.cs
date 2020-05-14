@@ -370,15 +370,24 @@ public class BloquesFactory : MonoBehaviour
 
     public static void ponerLateral(GameObject lateral,GameObject suelo, int i)
     {
-        GameObject lat = Instantiate(lateral, new Vector3(-4.5f, 0f, i), new Quaternion());
-        lat.transform.parent = suelo.transform;
-        GameObject lat2 = Instantiate(lateral, new Vector3(4.5f, 0f, i), new Quaternion());
-        lat2.transform.parent = suelo.transform;
+
+        for(float left = -4.5f; left > -10.5f; left += -1f)
+        {
+            GameObject lat = Instantiate(lateral, new Vector3(left, 0f, i), new Quaternion());
+            lat.transform.parent = suelo.transform;
+        }
+        
+        for (float right = 4.5f; right < 10.5f; right += 1f)
+        {
+            GameObject lat = Instantiate(lateral, new Vector3(right, 0f, i), new Quaternion());
+            lat.transform.parent = suelo.transform;
+        }
+
     }
 
     public static void createCoche(GameObject parent, int i,bool derecha){
             int car = Random.Range(1, 14);
-            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? Random.Range(7, 11) : Random.Range(-10, -6), getYSizeOfCar(car), i), new Quaternion());
+            GameObject coche = Instantiate(getCoche(car), new Vector3(derecha ? Random.Range(10, 13) : Random.Range(-13, -9), getYSizeOfCar(car), i), new Quaternion());
             if(derecha){ coche.transform.Rotate(new Vector3(0,180,0)); }
             coche.transform.parent = parent.transform;
     }
@@ -386,7 +395,7 @@ public class BloquesFactory : MonoBehaviour
     public static void createTronco(GameObject parent, int i, bool derecha)
     {
 
-        GameObject t = Instantiate(tronco, new Vector3(derecha ? -7 : 7, 0, i), new Quaternion());
+        GameObject t = Instantiate(tronco, new Vector3(derecha ? -10 : 10, 0, i), new Quaternion());
         t.transform.parent = parent.transform;
     }
 
