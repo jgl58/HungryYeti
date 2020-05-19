@@ -15,13 +15,15 @@ public class Juego : MonoBehaviour
 
     public static bool firstTime = true;
 
+    public Text puntuacionLabel;
+    public static GameObject MenuPrincipal;
     public static GameObject tituloImagen;
+    public static GameObject imagenTiempo;
+    public static GameObject imagenPuntuacion;
     public static GameObject gameOver;
     public static GameObject yourButton;
     public static GameObject player;
     public static GameObject mainCamera;
-
-    private static GameObject hud;
 
     public static gameState estado = gameState.jugando;
 
@@ -30,6 +32,7 @@ public class Juego : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Movement.puntuacionLabel = puntuacionLabel;
         camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -37,8 +40,8 @@ public class Juego : MonoBehaviour
         BloquesFactory.generateInit();
         BloquesFactory.generateSuelo(25);
         estado = gameState.menu;
-        hud = (GameObject)Resources.Load("Prefabs/GameCanvas");
-        Transform[] trs = GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
+        MenuPrincipal = GameObject.Find("/MenuPrincipal");
+        Transform[] trs = MenuPrincipal.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
             if (t.name == "TitleImage")
@@ -52,6 +55,14 @@ public class Juego : MonoBehaviour
             if (t.name == "GameOver")
             {
                 gameOver = t.gameObject;
+            }
+            if (t.name == "ImagePuntuacion")
+            {
+                imagenPuntuacion = t.gameObject;
+            }
+            if (t.name == "ImageTiempo")
+            {
+                imagenTiempo = t.gameObject;
             }
         }
     }
@@ -76,17 +87,12 @@ public class Juego : MonoBehaviour
     {
         if (estado != gameState.jugando)
         {
-            //hud.GetComponent<HUD>().reset();
+            MenuPrincipal.GetComponent<HUD>().reset();
             tituloImagen.SetActive(false);
             gameOver.gameObject.SetActive(false);
             yourButton.gameObject.SetActive(false);
-            GameObject[] canvases = GameObject.FindGameObjectsWithTag("Canvas");
-            foreach (GameObject canvas in canvases)
-            {
-                Destroy(canvas);
-            }
-            hud = Instantiate((GameObject)Resources.Load("Prefabs/GameCanvas"), new Vector3(0, 0, 0), Quaternion.identity);
-            Movement.puntuacionLabel = hud.GetComponent<HUD>().puntuacionLabel;
+            imagenTiempo.gameObject.SetActive(true);
+            imagenPuntuacion.gameObject.SetActive(true);
             if (!firstTime)
             {
                 GameObject suelo = GameObject.Find("Suelo");

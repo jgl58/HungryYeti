@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
         right
     }
 
-    public rotationState rotationDirection = rotationState.up;
+    private rotationState rotationDirection = rotationState.up;
 
     public LeanTweenType saltoEasing;
     public static Text puntuacionLabel;

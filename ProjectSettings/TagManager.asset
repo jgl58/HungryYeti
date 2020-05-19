@@ -10,6 +10,7 @@ TagManager:
   - Canvas
   - Trineo
   - Camion
+  - Fruta
   layers:
   - Default
   - TransparentFX

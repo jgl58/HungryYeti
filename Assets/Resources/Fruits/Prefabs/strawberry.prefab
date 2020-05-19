@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 23644498670348300}
   - component: {fileID: 6164592450952557604}
   - component: {fileID: 1929362233634345646}
-  - component: {fileID: 2725834347390897917}
   m_Layer: 0
   m_Name: strawberry
-  m_TagString: Untagged
+  m_TagString: Fruta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,15 +111,3 @@ CapsuleCollider:
   m_Height: 0.01282423
   m_Direction: 1
   m_Center: {x: 0.00009602611, y: -0.000020088159, z: -4.656612e-10}
---- !u!114 &2725834347390897917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1724972533694550}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a509f462cf8c34af69013eab9ecf0334, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
