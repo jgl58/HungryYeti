@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
             {
                 if (miCelda.comprobarCaminoArriba(player))
                 {
-                    if(!goUp){
+                    if(!goUp && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                         goUp = true;
                         Vector3 nextPosition = player.transform.position;
                         nextPosition.z++;
@@ -107,9 +107,9 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
                 //player.transform.position = miCelda.moverDerecha(player);
-                if(!goLado){
+                if(!goLado && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                     print("salto");
-                    Time.timeScale = 0.1f;
+                    //Time.timeScale = 0.1f;
                     goLado = true;
                     Vector3 posicionNueva = miCelda.moverDerecha(player);
                     player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
@@ -127,10 +127,10 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
 
                 //player.transform.position = miCelda.moverIzquierda(player);
-                if(!goLado){
+                if(!goLado && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                     print("salto");
                     goLado = true;
-                    Time.timeScale = 0.1f;
+                    //Time.timeScale = 0.1f;
                     Vector3 posicionNueva = miCelda.moverIzquierda(player);
                     player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
                     player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
