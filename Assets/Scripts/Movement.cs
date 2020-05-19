@@ -91,13 +91,14 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-                //player.transform.position = miCelda.moverDerecha(player);
-                StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
+                player.transform.position = miCelda.moverDerecha(player);
+                //StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
 
-                StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
+                player.transform.position = miCelda.moverIzquierda(player);
+                //StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
         }
 
         if(Input.touchCount > 0){
@@ -161,13 +162,13 @@ public class Movement : MonoBehaviour
                     }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
                         //Swipe a la derecha
                         //player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
-                        //player.transform.position = miCelda.moverDerecha(player);
+                        player.transform.position = miCelda.moverDerecha(player);
                         StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
                     }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
                         //Swipe a la izquierda
                         //player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
                         player.transform.position = miCelda.moverIzquierda(player);
-                        StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
+                        //StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
                     }
 
                 break;    
