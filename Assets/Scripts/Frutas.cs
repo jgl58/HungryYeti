@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Frutas : MonoBehaviour
 {
+
+    public Text puntuacionLabel;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -18,11 +22,10 @@ public class Frutas : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player"){ //&& transform.position.z == other.gameObject.transform.position.z){
-            GameObject puntuaciones = GameObject.FindGameObjectWithTag("Canvas");
-            int puntuacion = int.Parse(puntuaciones.GetComponent<HUD>().puntuacionLabel.text);
-            puntuaciones.GetComponent<HUD>().puntuacionLabel.text = string.Format ("{0:0000}", puntuacion + 25);
-            Destroy(gameObject);
+        if(other.gameObject.tag == "Fruta"){
+            int puntuacion = int.Parse(puntuacionLabel.text);
+            puntuacionLabel.text = string.Format ("{0:0000}", puntuacion + 25);
+            Destroy(other.gameObject);
         }
     }
 }

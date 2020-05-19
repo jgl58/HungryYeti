@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 23272747751323546}
   - component: {fileID: 3508966218295037098}
   - component: {fileID: 3556142390741073014}
-  - component: {fileID: 5858488438241803462}
   m_Layer: 0
   m_Name: cherries
-  m_TagString: Untagged
+  m_TagString: Fruta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,15 +111,3 @@ CapsuleCollider:
   m_Height: 0.012921382
   m_Direction: 1
   m_Center: {x: -0.00038395217, y: -0.00029923808, z: 0}
---- !u!114 &5858488438241803462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802840387486672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a509f462cf8c34af69013eab9ecf0334, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
