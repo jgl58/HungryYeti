@@ -13,7 +13,7 @@ public class StartButtonHandler : MonoBehaviour
 	}
 
 	void TaskOnClick(){
-        Globals.start();
+        Juego.start();
 	}
 
 }

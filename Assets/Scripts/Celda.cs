@@ -79,11 +79,11 @@ public class Celda
     public bool comprobarCaminoArriba(GameObject player)
     {
         int columna = getColumnaPlayer(player);
-        Celda celdaSiguiente = GeneraSuelo.camino.First.Next.Value;
+        Celda celdaSiguiente = Juego.camino.First.Next.Value;
 
         if (celdaSiguiente.GetCelda(columna) != BloquesType.Obstaculo)
         { 
-            GeneraSuelo.camino.RemoveFirst();
+            Juego.camino.RemoveFirst();
             return true;
         }
         return false;

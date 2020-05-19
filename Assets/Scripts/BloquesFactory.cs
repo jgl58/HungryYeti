@@ -41,7 +41,7 @@ public class BloquesFactory : MonoBehaviour
                     BloquesType.Nieve
                 };
                 celda = new Celda(lista, points);
-                GeneraSuelo.camino.AddLast(celda);
+                Juego.camino.AddLast(celda);
             }
             ponerLateral(lateral, suelo, inicio);
             inicio++;
@@ -76,7 +76,7 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Nieve
                     };
                     celda = new Celda(lista, points);
-                    GeneraSuelo.camino.AddLast(celda);
+                    Juego.camino.AddLast(celda);
                 }
                 ponerLateral(lateral, suelo, inicio);
 
@@ -156,7 +156,7 @@ public class BloquesFactory : MonoBehaviour
                                 BloquesType.Obstaculo,
                                 BloquesType.Obstaculo
                             };
-                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                    Juego.camino.AddLast(new Celda(lista, points));
 
                     int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
                     if(ponerFruta == 0){
@@ -180,7 +180,7 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Nieve,
                         BloquesType.Obstaculo
                     };
-                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                    Juego.camino.AddLast(new Celda(lista, points));
 
                     int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
                     if(ponerFruta == 0){
@@ -204,7 +204,7 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Nieve,
                         BloquesType.Nieve
                     };
-                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                    Juego.camino.AddLast(new Celda(lista, points));
 
                     int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
                     if(ponerFruta == 0){
@@ -227,7 +227,7 @@ public class BloquesFactory : MonoBehaviour
                         BloquesType.Nieve,
                         BloquesType.Obstaculo
                     };
-                    GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                    Juego.camino.AddLast(new Celda(lista, points));
 
                     int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
                     if(ponerFruta == 0){
@@ -248,7 +248,7 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        int max = Random.Range(2, 7);
+        int max = Random.Range(2, 5);
         for (int j = posicion; j < posicion + max; j++)
         {
 
@@ -263,7 +263,7 @@ public class BloquesFactory : MonoBehaviour
                     BloquesType.Agua,
                     BloquesType.Agua
                 };
-                GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                Juego.camino.AddLast(new Celda(lista, points));
             }
             int direccion = Random.Range(0, 2);
 
@@ -303,7 +303,7 @@ public class BloquesFactory : MonoBehaviour
                     BloquesType.Carretera,
                     BloquesType.Carretera
                 };
-                GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                Juego.camino.AddLast(new Celda(lista, points));
             }
             int direccion = Random.Range(0, 2);
             if (direccion == 0)
@@ -339,7 +339,7 @@ public class BloquesFactory : MonoBehaviour
                     BloquesType.Nieve,
                     BloquesType.Nieve
                 };
-                GeneraSuelo.camino.AddLast(new Celda(lista, points));
+                Juego.camino.AddLast(new Celda(lista, points));
 
                 int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
                 if(ponerFruta == 0){

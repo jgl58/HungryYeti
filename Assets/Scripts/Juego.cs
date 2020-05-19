@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Globals : MonoBehaviour
+public class Juego : MonoBehaviour
 {
     public enum gameState
     {
@@ -11,6 +11,7 @@ public class Globals : MonoBehaviour
         jugando,
         perdido
     }
+    public static LinkedList<Celda> camino;
 
     public static bool firstTime = true;
 
@@ -18,7 +19,7 @@ public class Globals : MonoBehaviour
     public static GameObject gameOver;
     public static GameObject yourButton;
     public static GameObject player;
-    public static GameObject camera;
+    public static GameObject mainCamera;
 
     private static GameObject hud;
 
@@ -29,11 +30,12 @@ public class Globals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         BloquesFactory.inicio = -10;
         BloquesFactory.generateInit();
-        BloquesFactory.generateSuelo(35);
+        BloquesFactory.generateSuelo(25);
         estado = gameState.menu;
         hud = (GameObject)Resources.Load("Prefabs/GameCanvas");
         Transform[] trs = GameObject.Find("/MenuPrincipal").GetComponentsInChildren<Transform>(true);
@@ -98,22 +100,22 @@ public class Globals : MonoBehaviour
                 position.x = 1;
                 player.transform.position = position;
 
-                position = camera.transform.position;
+                position = mainCamera.transform.position;
                 position.z = -8.4f;
-                camera.transform.position = position;
+                mainCamera.transform.position = position;
 
 
-                GeneraSuelo.camino.Clear();
+                camino.Clear();
                 BloquesFactory.inicio = -10;
                 BloquesFactory.generateInit();
-                BloquesFactory.generateSuelo(35);
+                BloquesFactory.generateSuelo(25);
 
             }
             else
             {
                 firstTime = false;
             }
-            estado = Globals.gameState.jugando;
+            estado = gameState.jugando;
             estoyTronco = false;
         }
     }

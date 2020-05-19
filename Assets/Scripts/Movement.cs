@@ -6,26 +6,31 @@ using System;
 
 public class Movement : MonoBehaviour
 {
+    public enum rotationState
+    {
+        up,
+        left,
+        right
+    }
+
+    public rotationState rotationDirection = rotationState.up;
 
     public LeanTweenType saltoEasing;
     public static Text puntuacionLabel;
     // Start is called before the first frame update
     public int refreshCounter;
-    private bool goUp = false;
-    private bool goLado = false;
+    private bool go = false;
 
     private Touch touch;
     private Vector2 beginTouchPosition, endTouchPosition;
 
     private GameObject player;
-    private GameObject camera;
-
-    private bool isMoving = false;
+    private GameObject mainCamera;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         refreshCounter = BloquesFactory.BLOQUES_ITERACION;
     }
 
@@ -34,71 +39,54 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Celda miCelda = GeneraSuelo.camino.First.Value;
+        Celda miCelda = Juego.camino.First.Value;
 
-        if (Globals.estado == Globals.gameState.jugando){
+        if (Juego.estado == Juego.gameState.jugando){
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if (miCelda.comprobarCaminoArriba(player))
+                if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
                 {
-                    if(!goUp && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
-                        goUp = true;
-                        Vector3 nextPosition = player.transform.position;
-                        nextPosition.z++;
+                    Vector3 nextPosition = player.transform.position;
+                    nextPosition.z++;
 
-                        Celda siguiente = GeneraSuelo.camino.First.Value;
+                    Celda siguiente = Juego.camino.First.Value;
 
-                        bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
+                    bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
 
-                        if (estoyEnAgua)
+                    if (estoyEnAgua)
+                    {
+                        if (Physics.CheckSphere(nextPosition, 0.3f))
                         {
-                            if (Physics.CheckSphere(nextPosition, 0.3f))
-                            {
-                                print("Hay tronco");
-                                Globals.estoyTronco = true;
-                            }
-                            else
-                            {
-                                print("Espero que sepas nadar");
-                                Globals.estoyTronco = false;
-
-                            }
-                        }
-
-                    //player.transform.position = nextPosition;
-                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
-
-                    
-                        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
-                        player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
-                        player.gameObject.LeanMove(nextPosition,0.25f).setEase(saltoEasing).setOnComplete(()=>{
-                            player.gameObject.transform.position = nextPosition;
-                            nextPosition = camera.transform.position;
-                            nextPosition.z++;
-                            camera.transform.position = nextPosition;
-                            goUp = false;
-                        });
-                    
-                        //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
-
-                        if (estoyEnAgua && !Globals.estoyTronco)
-                        {
-                            Globals.die();
+                            print("Hay tronco");
+                            Juego.estoyTronco = true;
                         }
                         else
                         {
-                            refreshCounter--;
-                            if (refreshCounter == 0)
-                            {
-                                refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                                print("Cargamos nuevos bloques");
-
-
-                                BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
-                            }
-                            int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                            puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+                            print("Espero que sepas nadar");
+                            Juego.estoyTronco = false;
                         }
+                    }
+                    //player.transform.position = nextPosition;
+                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
+                    goUp(nextPosition);
+                    //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
+                    if (estoyEnAgua && !Juego.estoyTronco)
+                    {
+                        Juego.die();
+                    }
+                    else
+                    {
+                        refreshCounter--;
+                        if (refreshCounter == 0)
+                        {
+                            refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                            print("Cargamos nuevos bloques");
+
+
+                            BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                        }
+                        int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                        puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
                     }
                 }
    
@@ -106,42 +94,15 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-                //player.transform.position = miCelda.moverDerecha(player);
-                if(!goLado && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
-                    print("salto");
-                    //Time.timeScale = 0.1f;
-                    goLado = true;
-                    Vector3 posicionNueva = miCelda.moverDerecha(player);
-                    player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
-                    player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
-                    player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
-                        player.gameObject.transform.position = posicionNueva;
-                        goLado = false;
-                    });
+                if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+                    goSide(miCelda, true);
                 }
-                
-
-                //LeanTween.cancel(player);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
-
-                //player.transform.position = miCelda.moverIzquierda(player);
-                if(!goLado && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
-                    print("salto");
-                    goLado = true;
-                    //Time.timeScale = 0.1f;
-                    Vector3 posicionNueva = miCelda.moverIzquierda(player);
-                    player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
-                    player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
-                    player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
-                        player.gameObject.transform.position = posicionNueva;
-                        goLado = false;
-                    });
+                if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+                    goSide(miCelda, false);
                 }
-                
-                //player.gameObject.LeanMove(miCelda.moverIzquierda(player),1).setEaseInQuad();
-                //StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
         }
 
         if(Input.touchCount > 0){
@@ -155,37 +116,32 @@ public class Movement : MonoBehaviour
                     endTouchPosition = touch.position;
                     if (checkTap())
                     {
-                        if (miCelda.comprobarCaminoArriba(player))
+                        if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
                         {
                             Vector3 nextPosition = player.transform.position;
                             nextPosition.z++;
 
-                            Celda siguiente = GeneraSuelo.camino.First.Value;
+                            Celda siguiente = Juego.camino.First.Value;
 
                             if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua)
                             {
                                 if (Physics.CheckSphere(nextPosition, 0.5f))
                                 {
                                     print("Hay tronco");
-                                    Globals.estoyTronco = true;
+                                    Juego.estoyTronco = true;
                                 }
                                 else
                                 {
                                     print("Espero que sepas nadar");
-                                    Globals.estoyTronco = false;
+                                    Juego.estoyTronco = false;
                                 }
                             }
-                            player.transform.position = nextPosition;
-                            //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
                             
-                            nextPosition = camera.transform.position;
-                            nextPosition.z++;
-                            camera.transform.position = nextPosition;
-                            //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
+                            goUp(nextPosition);
 
-                            if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Globals.estoyTronco)
+                            if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Juego.estoyTronco)
                             {
-                                Globals.die();
+                                Juego.die();
                             }
                             else
                             {
@@ -203,15 +159,13 @@ public class Movement : MonoBehaviour
                             }
                         }
                     }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
-                        //Swipe a la derecha
-                        //player.transform.position = new Vector3(player.transform.position.x + 2, player.transform.position.y, player.transform.position.z);
-                        player.transform.position = miCelda.moverDerecha(player);
-                        StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
+                        if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+                            goSide(miCelda, true);
+                        }
                     }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
-                        //Swipe a la izquierda
-                        //player.transform.position = new Vector3(player.transform.position.x - 2, player.transform.position.y, player.transform.position.z);
-                        player.transform.position = miCelda.moverIzquierda(player);
-                        //StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
+                        if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+                            goSide(miCelda, false);
+                        }
                     }
 
                 break;    
@@ -229,12 +183,12 @@ public class Movement : MonoBehaviour
         return false;
     }
 
+    /*
+    private bool isMoving = false;
     IEnumerator desplazarCorrutina(Vector3 destino, int direccion, GameObject obj){
-        /*
-        Delante = 0
-        Izquierda = 1
-        Derecha = 2
-        */
+        //Delante = 0
+        //Izquierda = 1
+        //Derecha = 2
         print("corutina");
         if(!isMoving && obj.transform.position != destino){
             isMoving = true;
@@ -247,7 +201,52 @@ public class Movement : MonoBehaviour
             }
             isMoving = false;
         }
+    }*/
+
+    /*
+        nextPosition: la siguiente posicion
+    */
+    private void goUp(Vector3 nextPosition){
+        go = true;
+        player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+        player.gameObject.GetComponent<Animator>().SetTrigger("SaltarAdelante");
+        player.gameObject.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
+            player.gameObject.transform.position = nextPosition;
+            go = false;
+        });
+        if(rotationDirection != rotationState.up){
+            player.gameObject.LeanRotate(new Vector3(0, 0, 0), 0.15f).setOnComplete(()=>{
+                rotationDirection = rotationState.up;
+            });
+        }
+        Vector3 cameraPosition = mainCamera.transform.position;
+        cameraPosition.z++;
+        mainCamera.gameObject.LeanMove(cameraPosition,0.15f);
     }
+    /*
+        miCelda: celda en la que estoy
+        derecha: bool si vamos a la derecha
+    */
+    private void goSide(Celda miCelda, bool derecha){
+        go = true;
+        //Time.timeScale = 0.1f;
+        Vector3 posicionNueva = derecha ? miCelda.moverDerecha(player) : miCelda.moverIzquierda(player);
+        player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+        player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
+        player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
+            player.gameObject.transform.position = posicionNueva;
+            go = false;
+        });
+        if((derecha && rotationDirection != rotationState.right) || (!derecha && rotationDirection != rotationState.left)){
+            player.gameObject.LeanRotate(derecha ? new Vector3(0, 90, 0) : new Vector3(0, 270, 0) , 0.25f).setOnComplete(()=>{
+                rotationDirection = derecha ? rotationState.right : rotationState.left;
+            });
+        }
+    }
+
+
     
 
    

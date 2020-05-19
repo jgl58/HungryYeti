@@ -16,7 +16,7 @@ public class PlayerCollision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Celda celda = GeneraSuelo.camino.First.Value;
+        Celda celda = Juego.camino.First.Value;
         if (playerFollow && celda.GetCelda(celda.getColumnaPlayer(player)) == BloquesType.Agua)
         {
             player.transform.position = new Vector3(
@@ -31,7 +31,7 @@ public class PlayerCollision : MonoBehaviour
     //When the Primitive collides with the walls, it will reverse direction
     private void OnTriggerEnter(Collider other)
     {
-        Celda celda = GeneraSuelo.camino.First.Value;
+        Celda celda = Juego.camino.First.Value;
         if (other.gameObject.tag == "Player")
         {
             print("Entro tronco");
@@ -47,7 +47,7 @@ public class PlayerCollision : MonoBehaviour
         if ((other.gameObject.tag == "Player"))
         {
             print("Salgo tronco");
-            Celda c = GeneraSuelo.camino.First.Value;
+            Celda c = Juego.camino.First.Value;
             c.recolocarPlayer(player);
             playerFollow = false;
         }
