@@ -212,12 +212,13 @@ public class Movement : MonoBehaviour
         player.gameObject.GetComponent<Animator>().SetTrigger("SaltarAdelante");
         player.gameObject.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
             player.gameObject.transform.position = nextPosition;
-            nextPosition = camera.transform.position;
-            nextPosition.z++;
-            camera.transform.position = nextPosition;
             go = false;
         });
         player.gameObject.LeanRotate(new Vector3(0, 0, 0), 0.15f);
+        Vector3 cameraPosition = camera.transform.position;
+        cameraPosition.z++;
+        camera.transform.position = cameraPosition;
+        camera.gameObject.LeanMove(cameraPosition,0.15f);
     }
     /*
         miCelda: celda en la que estoy
