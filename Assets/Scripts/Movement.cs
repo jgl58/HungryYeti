@@ -12,8 +12,7 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     public int refreshCounter;
     private bool goUp = false;
-    private bool goRight = false;
-    private bool goLeft = false;
+    private bool goLado = false;
 
     private Touch touch;
     private Vector2 beginTouchPosition, endTouchPosition;
@@ -108,15 +107,16 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
                 //player.transform.position = miCelda.moverDerecha(player);
-                if(!goRight){
-                    //Time.timeScale = 0.1f;
-                    goRight = true;
+                if(!goLado){
+                    print("salto");
+                    Time.timeScale = 0.1f;
+                    goLado = true;
                     Vector3 posicionNueva = miCelda.moverDerecha(player);
+                    player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
                     player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
                     player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
-                        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
                         player.gameObject.transform.position = posicionNueva;
-                        goRight = false;
+                        goLado = false;
                     });
                 }
                 
@@ -127,15 +127,16 @@ public class Movement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
 
                 //player.transform.position = miCelda.moverIzquierda(player);
-                if(!goLeft){
-                    goLeft = true;
-                    //Time.timeScale = 0.1f;
+                if(!goLado){
+                    print("salto");
+                    goLado = true;
+                    Time.timeScale = 0.1f;
                     Vector3 posicionNueva = miCelda.moverIzquierda(player);
+                    player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
                     player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
                     player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
-                        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
                         player.gameObject.transform.position = posicionNueva;
-                        goLeft = false;
+                        goLado = false;
                     });
                 }
                 
