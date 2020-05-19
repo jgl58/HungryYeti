@@ -27,8 +27,6 @@ public class Movement : MonoBehaviour
     private GameObject player;
     private GameObject camera;
 
-    private bool isMoving = false;
-
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -41,9 +39,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Celda miCelda = GeneraSuelo.camino.First.Value;
+        Celda miCelda = Juego.camino.First.Value;
 
-        if (Globals.estado == Globals.gameState.jugando){
+        if (Juego.estado == Juego.gameState.jugando){
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
@@ -51,7 +49,7 @@ public class Movement : MonoBehaviour
                     Vector3 nextPosition = player.transform.position;
                     nextPosition.z++;
 
-                    Celda siguiente = GeneraSuelo.camino.First.Value;
+                    Celda siguiente = Juego.camino.First.Value;
 
                     bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
 
@@ -60,26 +58,21 @@ public class Movement : MonoBehaviour
                         if (Physics.CheckSphere(nextPosition, 0.3f))
                         {
                             print("Hay tronco");
-                            Globals.estoyTronco = true;
+                            Juego.estoyTronco = true;
                         }
                         else
                         {
                             print("Espero que sepas nadar");
-                            Globals.estoyTronco = false;
-
+                            Juego.estoyTronco = false;
                         }
                     }
-
-                //player.transform.position = nextPosition;
-                //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
-
+                    //player.transform.position = nextPosition;
+                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
                     goUp(nextPosition);
-                
                     //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
-
-                    if (estoyEnAgua && !Globals.estoyTronco)
+                    if (estoyEnAgua && !Juego.estoyTronco)
                     {
-                        Globals.die();
+                        Juego.die();
                     }
                     else
                     {
@@ -128,27 +121,27 @@ public class Movement : MonoBehaviour
                             Vector3 nextPosition = player.transform.position;
                             nextPosition.z++;
 
-                            Celda siguiente = GeneraSuelo.camino.First.Value;
+                            Celda siguiente = Juego.camino.First.Value;
 
                             if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua)
                             {
                                 if (Physics.CheckSphere(nextPosition, 0.5f))
                                 {
                                     print("Hay tronco");
-                                    Globals.estoyTronco = true;
+                                    Juego.estoyTronco = true;
                                 }
                                 else
                                 {
                                     print("Espero que sepas nadar");
-                                    Globals.estoyTronco = false;
+                                    Juego.estoyTronco = false;
                                 }
                             }
                             
                             goUp(nextPosition);
 
-                            if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Globals.estoyTronco)
+                            if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Juego.estoyTronco)
                             {
-                                Globals.die();
+                                Juego.die();
                             }
                             else
                             {
@@ -190,7 +183,9 @@ public class Movement : MonoBehaviour
         return false;
     }
 
-    /*IEnumerator desplazarCorrutina(Vector3 destino, int direccion, GameObject obj){
+    /*
+    private bool isMoving = false;
+    IEnumerator desplazarCorrutina(Vector3 destino, int direccion, GameObject obj){
         //Delante = 0
         //Izquierda = 1
         //Derecha = 2
@@ -207,8 +202,6 @@ public class Movement : MonoBehaviour
             isMoving = false;
         }
     }*/
-
-    //Time.timeScale = 0.1f;
 
     /*
         nextPosition: la siguiente posicion
@@ -237,6 +230,7 @@ public class Movement : MonoBehaviour
     */
     private void goSide(Celda miCelda, bool derecha){
         go = true;
+        //Time.timeScale = 0.1f;
         Vector3 posicionNueva = derecha ? miCelda.moverDerecha(player) : miCelda.moverIzquierda(player);
         player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
         player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");

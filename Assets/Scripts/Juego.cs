@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Globals : MonoBehaviour
+public class Juego : MonoBehaviour
 {
     public enum gameState
     {
@@ -11,6 +11,7 @@ public class Globals : MonoBehaviour
         jugando,
         perdido
     }
+    public static LinkedList<Celda> camino;
 
     public static bool firstTime = true;
 
@@ -29,6 +30,7 @@ public class Globals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         BloquesFactory.inicio = -10;
@@ -103,7 +105,7 @@ public class Globals : MonoBehaviour
                 camera.transform.position = position;
 
 
-                GeneraSuelo.camino.Clear();
+                camino.Clear();
                 BloquesFactory.inicio = -10;
                 BloquesFactory.generateInit();
                 BloquesFactory.generateSuelo(25);
@@ -113,7 +115,7 @@ public class Globals : MonoBehaviour
             {
                 firstTime = false;
             }
-            estado = Globals.gameState.jugando;
+            estado = gameState.jugando;
             estoyTronco = false;
         }
     }

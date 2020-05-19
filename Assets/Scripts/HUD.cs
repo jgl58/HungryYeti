@@ -22,7 +22,7 @@ public class HUD : MonoBehaviour
  
     void Update() {
         // TIME STUFF
-        if(Globals.estado == Globals.gameState.jugando){
+        if(Juego.estado == Juego.gameState.jugando){
             UpdateTimerUI();
         }
     }

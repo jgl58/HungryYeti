@@ -21,7 +21,7 @@ public class DeadTrigger : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             print("Te has morido");
-            Globals.die();
+            Juego.die();
 
         }
     }
