@@ -248,7 +248,7 @@ public class BloquesFactory : MonoBehaviour
     {
         GameObject obj;
         List<BloquesType> lista;
-        int max = Random.Range(2, 7);
+        int max = Random.Range(2, 5);
         for (int j = posicion; j < posicion + max; j++)
         {
 
