@@ -62,8 +62,8 @@ public class TransformInfo : Editor
         textSize = EditorPrefs.GetInt(increaseSizeString, 20);
         #endregion
         #region INIT
-        SceneView.onSceneGUIDelegate -= OnSceneGUI;
-        SceneView.onSceneGUIDelegate += OnSceneGUI;
+        SceneView.duringSceneGui -= OnSceneGUI;
+        SceneView.duringSceneGui += OnSceneGUI;
         #endregion
     }
 
