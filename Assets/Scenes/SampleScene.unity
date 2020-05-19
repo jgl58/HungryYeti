@@ -1107,6 +1107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d317c5d5f175f6b4da305a416b4b5b13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saltoEasing: 1
   refreshCounter: 5
 --- !u!1001 &1116620222
 PrefabInstance:

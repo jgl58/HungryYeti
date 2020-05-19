@@ -6,9 +6,14 @@ using System;
 
 public class Movement : MonoBehaviour
 {
+
+    public LeanTweenType saltoEasing;
     public static Text puntuacionLabel;
     // Start is called before the first frame update
     public int refreshCounter;
+    private bool goUp = false;
+    private bool goRight = false;
+    private bool goLeft = false;
 
     private Touch touch;
     private Vector2 beginTouchPosition, endTouchPosition;
@@ -37,53 +42,64 @@ public class Movement : MonoBehaviour
             {
                 if (miCelda.comprobarCaminoArriba(player))
                 {
-                    Vector3 nextPosition = player.transform.position;
-                    nextPosition.z++;
+                    if(!goUp){
+                        goUp = true;
+                        Vector3 nextPosition = player.transform.position;
+                        nextPosition.z++;
 
-                    Celda siguiente = GeneraSuelo.camino.First.Value;
+                        Celda siguiente = GeneraSuelo.camino.First.Value;
 
-                    bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
+                        bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
 
-                    if (estoyEnAgua)
-                    {
-                        if (Physics.CheckSphere(nextPosition, 0.3f))
+                        if (estoyEnAgua)
                         {
-                            print("Hay tronco");
-                            Globals.estoyTronco = true;
+                            if (Physics.CheckSphere(nextPosition, 0.3f))
+                            {
+                                print("Hay tronco");
+                                Globals.estoyTronco = true;
+                            }
+                            else
+                            {
+                                print("Espero que sepas nadar");
+                                Globals.estoyTronco = false;
+
+                            }
+                        }
+
+                    //player.transform.position = nextPosition;
+                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
+
+                    
+                        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+                        player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
+                        player.gameObject.LeanMove(nextPosition,0.25f).setEase(saltoEasing).setOnComplete(()=>{
+                            player.gameObject.transform.position = nextPosition;
+                            nextPosition = camera.transform.position;
+                            nextPosition.z++;
+                            camera.transform.position = nextPosition;
+                            goUp = false;
+                        });
+                    
+                        //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
+
+                        if (estoyEnAgua && !Globals.estoyTronco)
+                        {
+                            Globals.die();
                         }
                         else
                         {
-                            print("Espero que sepas nadar");
-                            Globals.estoyTronco = false;
+                            refreshCounter--;
+                            if (refreshCounter == 0)
+                            {
+                                refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                                print("Cargamos nuevos bloques");
 
+
+                                BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                            }
+                            int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                            puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
                         }
-                    }
-
-                    player.transform.position = nextPosition;
-                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
-
-                    nextPosition = camera.transform.position;
-                    nextPosition.z++;
-                    camera.transform.position = nextPosition;
-                    //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
-
-                    if (estoyEnAgua && !Globals.estoyTronco)
-                    {
-                        Globals.die();
-                    }
-                    else
-                    {
-                        refreshCounter--;
-                        if (refreshCounter == 0)
-                        {
-                            refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                            print("Cargamos nuevos bloques");
-
-
-                            BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
-                        }
-                        int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                        puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
                     }
                 }
    
@@ -91,13 +107,39 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-                player.transform.position = miCelda.moverDerecha(player);
-                //StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
+                //player.transform.position = miCelda.moverDerecha(player);
+                if(!goRight){
+                    //Time.timeScale = 0.1f;
+                    goRight = true;
+                    Vector3 posicionNueva = miCelda.moverDerecha(player);
+                    player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
+                    player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
+                        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+                        player.gameObject.transform.position = posicionNueva;
+                        goRight = false;
+                    });
+                }
+                
+
+                //LeanTween.cancel(player);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
 
-                player.transform.position = miCelda.moverIzquierda(player);
+                //player.transform.position = miCelda.moverIzquierda(player);
+                if(!goLeft){
+                    goLeft = true;
+                    //Time.timeScale = 0.1f;
+                    Vector3 posicionNueva = miCelda.moverIzquierda(player);
+                    player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
+                    player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
+                        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+                        player.gameObject.transform.position = posicionNueva;
+                        goLeft = false;
+                    });
+                }
+                
+                //player.gameObject.LeanMove(miCelda.moverIzquierda(player),1).setEaseInQuad();
                 //StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
         }
 
