@@ -25,12 +25,12 @@ public class Movement : MonoBehaviour
     private Vector2 beginTouchPosition, endTouchPosition;
 
     private GameObject player;
-    private GameObject camera;
+    private GameObject mainCamera;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         refreshCounter = BloquesFactory.BLOQUES_ITERACION;
     }
 
@@ -220,9 +220,9 @@ public class Movement : MonoBehaviour
                 rotationDirection = rotationState.up;
             });
         }
-        Vector3 cameraPosition = camera.transform.position;
+        Vector3 cameraPosition = mainCamera.transform.position;
         cameraPosition.z++;
-        camera.gameObject.LeanMove(cameraPosition,0.15f);
+        mainCamera.gameObject.LeanMove(cameraPosition,0.15f);
     }
     /*
         miCelda: celda en la que estoy

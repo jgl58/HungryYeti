@@ -19,7 +19,7 @@ public class Juego : MonoBehaviour
     public static GameObject gameOver;
     public static GameObject yourButton;
     public static GameObject player;
-    public static GameObject camera;
+    public static GameObject mainCamera;
 
     private static GameObject hud;
 
@@ -32,7 +32,7 @@ public class Juego : MonoBehaviour
     {
         camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         BloquesFactory.inicio = -10;
         BloquesFactory.generateInit();
         BloquesFactory.generateSuelo(25);
@@ -100,9 +100,9 @@ public class Juego : MonoBehaviour
                 position.x = 1;
                 player.transform.position = position;
 
-                position = camera.transform.position;
+                position = mainCamera.transform.position;
                 position.z = -8.4f;
-                camera.transform.position = position;
+                mainCamera.transform.position = position;
 
 
                 camino.Clear();
