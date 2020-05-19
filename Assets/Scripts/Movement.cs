@@ -91,13 +91,22 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-                player.transform.position = miCelda.moverDerecha(player);
+                //player.transform.position = miCelda.moverDerecha(player);
+                player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
+                player.gameObject.LeanMove(miCelda.moverDerecha(player),1).setEaseInQuad().setOnComplete(()=>{
+                    player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+                });
                 //StartCoroutine(desplazarCorrutina(miCelda.moverDerecha(player),2,player));
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)){
 
-                player.transform.position = miCelda.moverIzquierda(player);
+                //player.transform.position = miCelda.moverIzquierda(player);
+                player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
+                player.gameObject.LeanMove(miCelda.moverIzquierda(player),1).setEaseInQuad().setOnComplete(()=>{
+                    player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+                });
+                //player.gameObject.LeanMove(miCelda.moverIzquierda(player),1).setEaseInQuad();
                 //StartCoroutine(desplazarCorrutina(miCelda.moverIzquierda(player),1,player));
         }
 
