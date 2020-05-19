@@ -6,6 +6,14 @@ using System;
 
 public class Movement : MonoBehaviour
 {
+    public enum rotationState
+    {
+        up,
+        left,
+        right
+    }
+
+    public rotationState rotationDirection = rotationState.up;
 
     public LeanTweenType saltoEasing;
     public static Text puntuacionLabel;
@@ -214,10 +222,13 @@ public class Movement : MonoBehaviour
             player.gameObject.transform.position = nextPosition;
             go = false;
         });
-        player.gameObject.LeanRotate(new Vector3(0, 0, 0), 0.15f);
+        if(rotationDirection != rotationState.up){
+            player.gameObject.LeanRotate(new Vector3(0, 0, 0), 0.15f).setOnComplete(()=>{
+                rotationDirection = rotationState.up;
+            });
+        }
         Vector3 cameraPosition = camera.transform.position;
         cameraPosition.z++;
-        camera.transform.position = cameraPosition;
         camera.gameObject.LeanMove(cameraPosition,0.15f);
     }
     /*
@@ -234,7 +245,11 @@ public class Movement : MonoBehaviour
             player.gameObject.transform.position = posicionNueva;
             go = false;
         });
-        player.gameObject.LeanRotate(derecha ? new Vector3(0, 90, 0) : new Vector3(0, 270, 0) , 0.25f);
+        if((derecha && rotationDirection != rotationState.right) || (!derecha && rotationDirection != rotationState.left)){
+            player.gameObject.LeanRotate(derecha ? new Vector3(0, 90, 0) : new Vector3(0, 270, 0) , 0.25f).setOnComplete(()=>{
+                rotationDirection = derecha ? rotationState.right : rotationState.left;
+            });
+        }
     }
 
 

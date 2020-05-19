@@ -37,7 +37,6 @@ public class HUD : MonoBehaviour
              hourCount++;
              minuteCount = 0;
          }   
-  
     }
 
     public void reset() {
