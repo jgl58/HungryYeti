@@ -27,6 +27,8 @@ public class Movement : MonoBehaviour
     private GameObject player;
     private GameObject mainCamera;
 
+    private bool estoyEnAgua = false;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -49,45 +51,11 @@ public class Movement : MonoBehaviour
                     Vector3 nextPosition = player.transform.position;
                     nextPosition.z++;
 
-                    Celda siguiente = Juego.camino.First.Value;
-
-                    bool estoyEnAgua = siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua;
-
-                    if (estoyEnAgua)
-                    {
-                        if (Physics.CheckSphere(nextPosition, 0.3f))
-                        {
-                            print("Hay tronco");
-                            Juego.estoyTronco = true;
-                        }
-                        else
-                        {
-                            print("Espero que sepas nadar");
-                            Juego.estoyTronco = false;
-                        }
-                    }
                     //player.transform.position = nextPosition;
                     //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
                     goUp(nextPosition);
                     //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
-                    if (estoyEnAgua && !Juego.estoyTronco)
-                    {
-                        Juego.die();
-                    }
-                    else
-                    {
-                        refreshCounter--;
-                        if (refreshCounter == 0)
-                        {
-                            refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                            print("Cargamos nuevos bloques");
-
-
-                            BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
-                        }
-                        int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                        puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
-                    }
+                   
                 }
    
             }
@@ -121,42 +89,8 @@ public class Movement : MonoBehaviour
                             Vector3 nextPosition = player.transform.position;
                             nextPosition.z++;
 
-                            Celda siguiente = Juego.camino.First.Value;
-
-                            if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua)
-                            {
-                                if (Physics.CheckSphere(nextPosition, 0.5f))
-                                {
-                                    print("Hay tronco");
-                                    Juego.estoyTronco = true;
-                                }
-                                else
-                                {
-                                    print("Espero que sepas nadar");
-                                    Juego.estoyTronco = false;
-                                }
-                            }
-                            
                             goUp(nextPosition);
 
-                            if (siguiente.GetCelda(siguiente.getColumnaPlayer(player)) == BloquesType.Agua && !Juego.estoyTronco)
-                            {
-                                Juego.die();
-                            }
-                            else
-                            {
-                                refreshCounter--;
-                                if (refreshCounter == 0)
-                                {
-                                    refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                                    print("Cargamos nuevos bloques");
-
-
-                                    BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
-                                }
-                                int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
-                                puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
-                            }
                         }
                     }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
                         if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
@@ -214,6 +148,49 @@ public class Movement : MonoBehaviour
         player.gameObject.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
             player.gameObject.transform.position = nextPosition;
             go = false;
+            Celda actual = Juego.camino.First.Value;
+
+            estoyEnAgua = actual.GetCelda(actual.getColumnaPlayer(player)) == BloquesType.Agua;
+
+            if (estoyEnAgua)
+            {
+                Collider[] colliders = Physics.OverlapSphere(nextPosition, 0.2f);
+
+                foreach (Collider c in colliders)
+                {
+                    if (c.gameObject.tag != "Player")
+                    {
+                        print("Hay tronco");
+                        Juego.estoyTronco = true;
+                        break;
+                    }
+                    else
+                    {
+                        print("Espero que sepas nadar");
+                        Juego.estoyTronco = false;
+                    }
+                }
+            }
+
+            if (estoyEnAgua && !Juego.estoyTronco)
+            {
+                Juego.die();
+            }
+            else
+            {
+                actual.recolocarPlayer(player);
+                refreshCounter--;
+                if (refreshCounter == 0)
+                {
+                    refreshCounter = BloquesFactory.BLOQUES_ITERACION;
+                    print("Cargamos nuevos bloques");
+
+
+                    BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
+                }
+                int puntuacion = Convert.ToInt32(puntuacionLabel.text) + 1;
+                puntuacionLabel.text = string.Format("{0:0000}", puntuacion);
+            }
         });
         if(rotationDirection != rotationState.up){
             player.gameObject.LeanRotate(new Vector3(0, 0, 0), 0.15f).setOnComplete(()=>{

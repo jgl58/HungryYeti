@@ -80,6 +80,7 @@ public class Juego : MonoBehaviour
             estado = gameState.perdido;
             yourButton.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
+            player.SetActive(false);
         }
     }
 
@@ -93,6 +94,9 @@ public class Juego : MonoBehaviour
             yourButton.gameObject.SetActive(false);
             imagenTiempo.gameObject.SetActive(true);
             imagenPuntuacion.gameObject.SetActive(true);
+
+            player.SetActive(true);
+
             if (!firstTime)
             {
                 GameObject suelo = GameObject.Find("Suelo");
