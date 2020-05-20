@@ -22,6 +22,8 @@ public class Juego : MonoBehaviour
     public static GameObject imagenPuntuacion;
     public static GameObject gameOver;
     public static GameObject yourButton;
+    public static GameObject menuButton;
+    public static GameObject removeAdsButton;
     public static GameObject player;
     public static GameObject mainCamera;
 
@@ -64,6 +66,14 @@ public class Juego : MonoBehaviour
             {
                 imagenTiempo = t.gameObject;
             }
+            if (t.name == "BackMenuButton")
+            {
+                menuButton = t.gameObject;
+            }
+            if (t.name == "RemoveAdsButton")
+            {
+                removeAdsButton = t.gameObject;
+            }
         }
     }
 
@@ -80,6 +90,8 @@ public class Juego : MonoBehaviour
             estado = gameState.perdido;
             yourButton.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
+            menuButton.gameObject.SetActive(true);
+
         }
     }
 
@@ -91,6 +103,8 @@ public class Juego : MonoBehaviour
             tituloImagen.SetActive(false);
             gameOver.gameObject.SetActive(false);
             yourButton.gameObject.SetActive(false);
+            menuButton.gameObject.SetActive(false);
+            removeAdsButton.gameObject.SetActive(false);
             imagenTiempo.gameObject.SetActive(true);
             imagenPuntuacion.gameObject.SetActive(true);
             if (!firstTime)
@@ -124,5 +138,37 @@ public class Juego : MonoBehaviour
             estado = gameState.jugando;
             estoyTronco = false;
         }
+    }
+
+    public static void backToMenu(){
+        firstTime = true;
+        estado = gameState.menu;
+        tituloImagen.SetActive(true);
+        gameOver.gameObject.SetActive(false);
+        yourButton.gameObject.SetActive(true);
+        menuButton.gameObject.SetActive(false);
+        removeAdsButton.gameObject.SetActive(true);
+        imagenTiempo.gameObject.SetActive(false);
+        imagenPuntuacion.gameObject.SetActive(false);
+        GameObject suelo = GameObject.Find("Suelo");
+        foreach (Transform child in suelo.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        Vector3 position = player.transform.position;
+        position.z = -3;
+        position.x = 1;
+        player.transform.position = position;
+
+        position = mainCamera.transform.position;
+        position.z = -8.4f;
+        mainCamera.transform.position = position;
+
+
+        camino.Clear();
+        BloquesFactory.inicio = -10;
+        BloquesFactory.generateInit();
+        BloquesFactory.generateSuelo(25);
     }
 }
