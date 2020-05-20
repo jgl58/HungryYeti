@@ -80,6 +80,18 @@ public class Movement : MonoBehaviour
                 case TouchPhase.Began:
                     beginTouchPosition = touch.position;
                     break;
+
+                case TouchPhase.Stationary:
+                    if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
+                    {
+                        Vector3 nextPosition = player.transform.position;
+                        nextPosition.z++;
+
+                        goUp(nextPosition);
+
+                    }
+                    break;
+
                 case TouchPhase.Ended:
                     endTouchPosition = touch.position;
                     if (checkTap())
@@ -111,7 +123,7 @@ public class Movement : MonoBehaviour
     bool checkTap(){
         print(beginTouchPosition.x);
         print(endTouchPosition.x);
-        if(beginTouchPosition.x + 30 > endTouchPosition.x && beginTouchPosition.x - 30  < endTouchPosition.x){
+        if(beginTouchPosition.x + 50 > endTouchPosition.x && beginTouchPosition.x - 50  < endTouchPosition.x){
             return true;
         }
         return false;
