@@ -6,6 +6,14 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    //COSAS DE MORIR
+    public const float maxTime = 6.0f; //MENOS 1, ES DECIR, 6.0f -> 5 segundos;
+    public static float lastCheckTime = maxTime;
+    public static Vector3 lastCheckPos;
+    public GameObject player;
+
+    //OTRAS COSAS
+    public Text tiempoLabelDown;
     public Text tiempoLabel;
     public Text puntuacionLabel;
 
@@ -18,12 +26,31 @@ public class HUD : MonoBehaviour
     void Start()
     {
         //puntuacionLabel.text = string.Format ("{0:0000}", 1);
+        lastCheckPos = player.transform.position;
     }
  
     void Update() {
         // TIME STUFF
         if(Juego.estado == Juego.gameState.jugando){
             UpdateTimerUI();
+            UpdateDie();
+        }
+    }
+
+    public void UpdateDie(){
+        if (player.transform.position != lastCheckPos){
+            lastCheckTime = maxTime;
+        }
+        if (lastCheckTime < 1)
+        {
+            tiempoLabelDown.text = "0";
+            lastCheckTime = maxTime;
+            lastCheckPos = player.transform.position;
+            Juego.die(); 
+        } else {
+            lastCheckTime -= Time.deltaTime;
+            tiempoLabelDown.text = ((int)lastCheckTime).ToString("0");
+            lastCheckPos = player.transform.position;
         }
     }
 
