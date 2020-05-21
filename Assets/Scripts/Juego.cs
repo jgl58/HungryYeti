@@ -143,8 +143,6 @@ public class Juego : MonoBehaviour
                 BloquesFactory.generateInit();
                 BloquesFactory.generateSuelo(25);
 
-                
-
             }
             else
             {
@@ -152,7 +150,7 @@ public class Juego : MonoBehaviour
                 firstTime = false;
             }
             instance.StartCoroutine(AnimationCamera());
-            estado = gameState.jugando;
+            
             estoyTronco = false;
         }
     }
@@ -172,5 +170,6 @@ public class Juego : MonoBehaviour
 
         mainCamera.transform.position = finCamera;
         mainCamera.transform.eulerAngles = rotationFinCamera;
+        estado = gameState.jugando;
     }
 }
