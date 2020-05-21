@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 
 public class Juego : MonoBehaviour
@@ -120,6 +121,7 @@ public class Juego : MonoBehaviour
             gameOver.gameObject.SetActive(true);
             player.SetActive(false);
             menuButton.gameObject.SetActive(true);
+            instance.StartCoroutine(ShowAdWhenReady()); // PUBLICIDAD
         }
     }
 
@@ -223,5 +225,13 @@ public class Juego : MonoBehaviour
         BloquesFactory.inicio = -10;
         BloquesFactory.generateInit();
         BloquesFactory.generateSuelo(25);
+    }
+
+    public static IEnumerator ShowAdWhenReady()
+    {
+        while (!Advertisement.IsReady(InitializeAdsScript.placementId))
+            yield return new WaitForSeconds (0.5f);
+ 
+        Advertisement.Show(InitializeAdsScript.placementId);
     }
 }
