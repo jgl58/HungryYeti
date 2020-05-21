@@ -12,9 +12,18 @@ public class InitializeAdsScript : MonoBehaviour {
     #endif
 
     public static string placementId = "GameOver";
+    public static string placementRewardedId = "rewardedVideo";
     bool testMode = true;
 
     void Start () {
         Advertisement.Initialize(gameId, testMode);
+    }
+
+    public static bool hasAds(){
+        if (PlayerPrefs.HasKey("Ads"))
+        {
+            return PlayerPrefs.GetInt("Ads") == 1;
+        }
+        return true;
     }
 }
