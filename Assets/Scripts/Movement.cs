@@ -80,18 +80,6 @@ public class Movement : MonoBehaviour
                 case TouchPhase.Began:
                     beginTouchPosition = touch.position;
                     break;
-
-                case TouchPhase.Stationary:
-                    if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
-                    {
-                        Vector3 nextPosition = player.transform.position;
-                        nextPosition.z++;
-
-                        goUp(nextPosition);
-
-                    }
-                    break;
-
                 case TouchPhase.Ended:
                     endTouchPosition = touch.position;
                     if (checkTap())
@@ -104,11 +92,11 @@ public class Movement : MonoBehaviour
                             goUp(nextPosition);
 
                         }
-                    }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
+                    }else if(beginTouchPosition.x < endTouchPosition.x){
                         if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                             goSide(miCelda, true);
                         }
-                    }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
+                    }else if(beginTouchPosition.x > endTouchPosition.x){
                         if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                             goSide(miCelda, false);
                         }
@@ -129,29 +117,6 @@ public class Movement : MonoBehaviour
         return false;
     }
 
-    /*
-    private bool isMoving = false;
-    IEnumerator desplazarCorrutina(Vector3 destino, int direccion, GameObject obj){
-        //Delante = 0
-        //Izquierda = 1
-        //Derecha = 2
-        print("corutina");
-        if(!isMoving && obj.transform.position != destino){
-            isMoving = true;
-            Vector3 origen = obj.gameObject.transform.position;
-            float time = 0.0f;
-            while(time < 1f){
-                obj.transform.position = Vector3.Lerp(origen, destino, time);
-                time += Time.deltaTime * 10f;
-                yield return null;
-            }
-            isMoving = false;
-        }
-    }*/
-
-    /*
-        nextPosition: la siguiente posicion
-    */
     private void goUp(Vector3 nextPosition){
         go = true;
         player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");

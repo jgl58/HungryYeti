@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Juego : MonoBehaviour
 {
     public enum gameState
@@ -29,6 +30,14 @@ public class Juego : MonoBehaviour
 
     public static bool estoyTronco = false;
 
+    private static Vector3 inicioCamera;
+    private static Vector3 finCamera;
+
+    private static Vector3 rotationInicioCamera;
+    private static Vector3 rotationFinCamera;
+
+    public static Juego instance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +45,17 @@ public class Juego : MonoBehaviour
         camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+
+        inicioCamera = new Vector3(-0.8f, 6.5f, -6f);
+        finCamera = new Vector3(0f,13f,-9f);
+
+        rotationInicioCamera = new Vector3(51f,31f,0f);
+        rotationFinCamera = new Vector3(53f,0f,0f);
+
+        instance = this;
+        
+
         BloquesFactory.inicio = -10;
         BloquesFactory.generateInit();
         BloquesFactory.generateSuelo(25);
@@ -65,6 +85,8 @@ public class Juego : MonoBehaviour
                 imagenTiempo = t.gameObject;
             }
         }
+
+        
     }
 
     // Update is called once per frame
@@ -110,23 +132,42 @@ public class Juego : MonoBehaviour
                 position.x = 1;
                 player.transform.position = position;
 
-                position = mainCamera.transform.position;
-                position.z = -8.4f;
-                mainCamera.transform.position = position;
+                /* position = mainCamera.transform.position;
+                 position.z = -9f;
+                 mainCamera.transform.position = position;*/
 
+                mainCamera.transform.position = inicioCamera;
 
                 camino.Clear();
                 BloquesFactory.inicio = -10;
                 BloquesFactory.generateInit();
                 BloquesFactory.generateSuelo(25);
 
+                
+
             }
             else
             {
+                
                 firstTime = false;
             }
+            instance.StartCoroutine(AnimationCamera());
             estado = gameState.jugando;
             estoyTronco = false;
+        }
+    }
+
+
+   public static IEnumerator AnimationCamera()
+    {
+       // mainCamera.transform.position = inicioCamera;
+        float t = 0.0f;
+        while(t <= 1.0f)
+        {
+            mainCamera.transform.position = Vector3.Lerp(inicioCamera,finCamera,t);
+            mainCamera.transform.eulerAngles = Vector3.Lerp(rotationInicioCamera, rotationFinCamera, t);
+            t += Time.deltaTime;
+            yield return null;
         }
     }
 }
