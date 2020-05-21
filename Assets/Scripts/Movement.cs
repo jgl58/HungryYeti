@@ -92,11 +92,11 @@ public class Movement : MonoBehaviour
                             goUp(nextPosition);
 
                         }
-                    }else if(beginTouchPosition.x < endTouchPosition.x && player.transform.position.x < 3){
+                    }else if(beginTouchPosition.x < endTouchPosition.x){
                         if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                             goSide(miCelda, true);
                         }
-                    }else if(beginTouchPosition.x > endTouchPosition.x && player.transform.position.x > -3){
+                    }else if(beginTouchPosition.x > endTouchPosition.x){
                         if(!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle")){
                             goSide(miCelda, false);
                         }
@@ -111,35 +111,12 @@ public class Movement : MonoBehaviour
     bool checkTap(){
         print(beginTouchPosition.x);
         print(endTouchPosition.x);
-        if(beginTouchPosition.x + 30 > endTouchPosition.x && beginTouchPosition.x - 30  < endTouchPosition.x){
+        if(beginTouchPosition.x + 50 > endTouchPosition.x && beginTouchPosition.x - 50  < endTouchPosition.x){
             return true;
         }
         return false;
     }
 
-    /*
-    private bool isMoving = false;
-    IEnumerator desplazarCorrutina(Vector3 destino, int direccion, GameObject obj){
-        //Delante = 0
-        //Izquierda = 1
-        //Derecha = 2
-        print("corutina");
-        if(!isMoving && obj.transform.position != destino){
-            isMoving = true;
-            Vector3 origen = obj.gameObject.transform.position;
-            float time = 0.0f;
-            while(time < 1f){
-                obj.transform.position = Vector3.Lerp(origen, destino, time);
-                time += Time.deltaTime * 10f;
-                yield return null;
-            }
-            isMoving = false;
-        }
-    }*/
-
-    /*
-        nextPosition: la siguiente posicion
-    */
     private void goUp(Vector3 nextPosition){
         go = true;
         player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
