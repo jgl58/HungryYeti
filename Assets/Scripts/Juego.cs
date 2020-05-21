@@ -162,12 +162,15 @@ public class Juego : MonoBehaviour
     {
        // mainCamera.transform.position = inicioCamera;
         float t = 0.0f;
-        while(t <= 1.0f)
+        while(t < 1.0f)
         {
             mainCamera.transform.position = Vector3.Lerp(inicioCamera,finCamera,t);
             mainCamera.transform.eulerAngles = Vector3.Lerp(rotationInicioCamera, rotationFinCamera, t);
             t += Time.deltaTime;
             yield return null;
         }
+
+        mainCamera.transform.position = finCamera;
+        mainCamera.transform.eulerAngles = rotationFinCamera;
     }
 }
