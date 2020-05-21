@@ -17,6 +17,7 @@ public class Juego : MonoBehaviour
     public static bool firstTime = true;
 
     public Text puntuacionLabel;
+    public static GameObject imagenTiempoDown;
     public static GameObject MenuPrincipal;
     public static GameObject tituloImagen;
     public static GameObject imagenTiempo;
@@ -64,6 +65,10 @@ public class Juego : MonoBehaviour
         Transform[] trs = MenuPrincipal.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
         {
+            if (t.name == "ImageTiempoDown")
+            {
+                imagenTiempoDown = t.gameObject;
+            }
             if (t.name == "TitleImage")
             {
                 tituloImagen = t.gameObject;
@@ -111,6 +116,7 @@ public class Juego : MonoBehaviour
         if (estado != gameState.jugando)
         {
             MenuPrincipal.GetComponent<HUD>().reset();
+            imagenTiempoDown.SetActive(true);
             tituloImagen.SetActive(false);
             gameOver.gameObject.SetActive(false);
             yourButton.gameObject.SetActive(false);
@@ -132,11 +138,10 @@ public class Juego : MonoBehaviour
                 position.x = 1;
                 player.transform.position = position;
 
-                /* position = mainCamera.transform.position;
-                 position.z = -9f;
-                 mainCamera.transform.position = position;*/
-
                 mainCamera.transform.position = inicioCamera;
+
+                HUD.lastCheckPos = player.transform.position;
+
 
                 camino.Clear();
                 BloquesFactory.inicio = -10;
