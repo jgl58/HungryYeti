@@ -44,6 +44,7 @@ public class Juego : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.DeleteAll();
         Movement.puntuacionLabel = puntuacionLabel;
         camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -100,6 +101,14 @@ public class Juego : MonoBehaviour
             {
                 removeAdsButton = t.gameObject;
             }
+        }
+
+        if (PlayerPrefs.HasKey("Ads"))
+        {
+            int hasAds = PlayerPrefs.GetInt("Ads");
+            removeAdsButton.SetActive(hasAds == 1);
+        }else{
+            removeAdsButton.SetActive(true);
         }
 
         
@@ -198,7 +207,13 @@ public class Juego : MonoBehaviour
         gameOver.gameObject.SetActive(false);
         yourButton.gameObject.SetActive(true);
         menuButton.gameObject.SetActive(false);
-        removeAdsButton.gameObject.SetActive(true);
+        if (PlayerPrefs.HasKey("Ads"))
+        {
+            int hasAds = PlayerPrefs.GetInt("Ads");
+            removeAdsButton.SetActive(hasAds == 1);
+        }else{
+            removeAdsButton.SetActive(true);
+        }
         imagenTiempo.gameObject.SetActive(false);
         imagenPuntuacion.gameObject.SetActive(false);
         imagenTiempoDown.SetActive(false);

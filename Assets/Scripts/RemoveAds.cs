@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 public class RemoveAds : MonoBehaviour
 {
-    // Start is called before the first frame update
-   public Button yourButton;
-    void Start()
-    {
-        Button btn = yourButton.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
-    }
+    public Button removeAdsButton;
+    public Text buttonText;
+    public void RemoveAdsOK (){
+        //0 = no ads
+        //1 = ads
+        Debug.Log("You removed ads!");
+        PlayerPrefs.SetInt("Ads", 0);
+        removeAdsButton.interactable = false;
+        buttonText.text = "Purchased";
+    } 
 
-    void TaskOnClick(){
-        print("remove button pressed");
-    }
+    public void RemoveAdsFailure (){
+        
+        Debug.Log("A problem removing ads!");
+    } 
 }
