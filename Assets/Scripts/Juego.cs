@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Advertisements;
 
 
 public class Juego : MonoBehaviour
@@ -26,6 +27,7 @@ public class Juego : MonoBehaviour
     public static GameObject yourButton;
     public static GameObject menuButton;
     public static GameObject removeAdsButton;
+    public static GameObject playAgainWithAd;
     public static GameObject player;
     public static GameObject mainCamera;
 
@@ -41,9 +43,12 @@ public class Juego : MonoBehaviour
 
     public static Juego instance;
 
+    public static int frutasComidas = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        //PlayerPrefs.SetInt("Ads", 1);
         Movement.puntuacionLabel = puntuacionLabel;
         camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -100,6 +105,10 @@ public class Juego : MonoBehaviour
             {
                 removeAdsButton = t.gameObject;
             }
+            if (t.name == "PlayAgainButton")
+            {
+                playAgainWithAd = t.gameObject;
+            }
         }
 
         
@@ -120,14 +129,20 @@ public class Juego : MonoBehaviour
             gameOver.gameObject.SetActive(true);
             player.SetActive(false);
             menuButton.gameObject.SetActive(true);
+            if (frutasComidas >= 5){
+                playAgainWithAd.SetActive(true);
+            }
         }
     }
 
-    public static void start()
+    public static void start(bool resetPuntuacion = true)
     {
         if (estado != gameState.jugando)
         {
-            MenuPrincipal.GetComponent<HUD>().reset();
+            if(resetPuntuacion){
+                MenuPrincipal.GetComponent<HUD>().reset();
+            }
+            playAgainWithAd.SetActive(false);
             imagenTiempoDown.SetActive(true);
             tituloImagen.SetActive(false);
             gameOver.gameObject.SetActive(false);
@@ -136,6 +151,8 @@ public class Juego : MonoBehaviour
             removeAdsButton.gameObject.SetActive(false);
             imagenTiempo.gameObject.SetActive(true);
             imagenPuntuacion.gameObject.SetActive(true);
+
+            frutasComidas = 0;
 
             player.SetActive(true);
 
@@ -192,8 +209,12 @@ public class Juego : MonoBehaviour
         estado = gameState.jugando;
     }
     public static void backToMenu(){
+        if(InitializeAdsScript.hasAds()){
+            instance.StartCoroutine(ShowAdWhenReady()); // PUBLICIDAD INTERSTICIAL NORMAL
+        }
         firstTime = true;
         estado = gameState.menu;
+        playAgainWithAd.SetActive(false);
         tituloImagen.SetActive(true);
         gameOver.gameObject.SetActive(false);
         yourButton.gameObject.SetActive(true);
@@ -223,5 +244,13 @@ public class Juego : MonoBehaviour
         BloquesFactory.inicio = -10;
         BloquesFactory.generateInit();
         BloquesFactory.generateSuelo(25);
+    }
+
+    public static IEnumerator ShowAdWhenReady()
+    {
+        while (!Advertisement.IsReady(InitializeAdsScript.placementId))
+            yield return new WaitForSeconds (0.5f);
+ 
+        Advertisement.Show(InitializeAdsScript.placementId);
     }
 }

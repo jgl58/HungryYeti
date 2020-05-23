@@ -26,6 +26,7 @@ public class Frutas : MonoBehaviour
             int puntuacion = int.Parse(puntuacionLabel.text);
             puntuacionLabel.text = string.Format ("{0:0000}", puntuacion + 25);
             Destroy(other.gameObject);
+            Juego.frutasComidas++;
         }
     }
 }
