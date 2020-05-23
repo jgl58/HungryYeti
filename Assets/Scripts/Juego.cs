@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
-
+/*using UnityEngine.SocialPlatforms;
+#if UNITY_ANDROID
+using GooglePlayGames;
+#endif*/
 
 public class Juego : MonoBehaviour
 {
@@ -48,6 +51,10 @@ public class Juego : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+       // socialLogin();
+
+
         PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("Ads", 1);
         Movement.puntuacionLabel = puntuacionLabel;
@@ -127,6 +134,30 @@ public class Juego : MonoBehaviour
     void Update()
     {
        
+    }
+
+/*
+    void socialLogin()
+    {
+        #if UNITY_ANDROID
+                PlayGamesPlatform.DebugLogEnabled = false;
+                PlayGamesPlatform.Activate();
+        #else
+         GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
+        #endif
+        Social.localUser.Authenticate(ProcessAuthentication);
+    }*/
+
+    void ProcessAuthentication(bool success)
+    {
+        if (success)
+        {
+            Debug.Log("Authenticated in Game Center");
+        }
+        else
+        {
+            Debug.Log("Fallo al autentificar Game Center");
+      }
     }
 
     public static void die()
