@@ -5,18 +5,17 @@ using UnityEngine.Advertisements;
 
 public class InitializeAdsScript : MonoBehaviour { 
 
-    #if UNITY_IOS
-    private string gameId = "3616359";
-    #elif UNITY_ANDROID
     private string gameId = "3616358";
-    #endif
-
     public static string placementId = "GameOver";
     public static string placementRewardedId = "rewardedVideo";
     bool testMode = true;
 
     void Start () {
+        #if UNITY_IOS
+        gameId = "3616359";        
+        #endif
         Advertisement.Initialize(gameId, testMode);
+        
     }
 
     public static bool hasAds(){
