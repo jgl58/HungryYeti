@@ -72,6 +72,8 @@ public class HUD : MonoBehaviour
         secondsCount = 0.0f;
         minuteCount = 0;
         hourCount = 0;
+        tiempoLabelDown.text = "5";
+        lastCheckTime = maxTime;
     }
 
 }
