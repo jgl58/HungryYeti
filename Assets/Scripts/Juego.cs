@@ -160,13 +160,28 @@ public class Juego : MonoBehaviour
             {
                 foreach (IAchievement achievement in achievements)
                 {
-                    logros.Add(achievement);
+                    if (!achievement.completed)
+                    {
+                        logros.Add(achievement);
+                    }
                 }
             }
             else
                 Debug.Log("No achievements returned");
         });
     }
+
+    public static void updatePercentLogro(string id, double percent)
+    {
+        foreach (IAchievement achievement in logros)
+        {
+            if (achievement.id == id)
+            {
+                achievement.percentCompleted += percent;
+            }
+        }
+    }
+
 
     public static bool getLogroCompleted(string id)
     {
@@ -192,7 +207,7 @@ public class Juego : MonoBehaviour
         return 0.0;
     }
 
-        public void verLogros()
+    public void verLogros()
     {
         Social.ShowAchievementsUI();
     }

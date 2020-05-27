@@ -31,14 +31,16 @@ public class PlayerCollision : MonoBehaviour
     //When the Primitive collides with the walls, it will reverse direction
     private void OnTriggerEnter(Collider other)
     {
-        Celda celda = Juego.camino.First.Value;
+
         if (other.gameObject.tag == "Player")
         {
             print("Entro tronco");
             if (!Juego.getLogroCompleted(Juego.LOGRO_100_TRONCOS))
             {
+                Juego.cargarLogros();
                 Juego.desbloquearLogro(Juego.LOGRO_100_TRONCOS,
                     Juego.getLogroPercentCompleted(Juego.LOGRO_100_TRONCOS) + 1.0);
+                    Juego.updatePercentLogro(Juego.LOGRO_100_TRONCOS, 1.0);
             }
             offset = (player.transform.position.x - transform.position.x);
             playerFollow = true;

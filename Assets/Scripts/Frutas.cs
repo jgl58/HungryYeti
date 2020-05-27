@@ -36,6 +36,7 @@ public class Frutas : MonoBehaviour
             {
                 Juego.desbloquearLogro(Juego.LOGRO_100_FRUTAS,
                     Juego.getLogroPercentCompleted(Juego.LOGRO_100_FRUTAS) + 1.0);
+                    Juego.updatePercentLogro(Juego.LOGRO_100_FRUTAS, 1.0);
             }
 
             Juego.frutasComidas++;
