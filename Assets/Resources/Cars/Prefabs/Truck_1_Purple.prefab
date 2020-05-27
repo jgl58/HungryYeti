@@ -671,6 +671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964313aa53eed467f972eca11be91679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crushSound: {fileID: 8300000, guid: 6637d89ae03324424b2f26a33432f5d0, type: 3}
   delta: 1.5
   speed: 1.5
 --- !u!65 &321315070784440365
