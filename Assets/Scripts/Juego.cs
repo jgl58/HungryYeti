@@ -29,6 +29,7 @@ public class Juego : MonoBehaviour
     public static GameObject menuButton;
     public static GameObject removeAdsButton;
     public static GameObject pauseButton;
+    public static GameObject exitButton;
     public static GameObject pauseTitle;
     public static GameObject continueButton;
     public static GameObject playAgainWithAd;
@@ -126,6 +127,10 @@ public class Juego : MonoBehaviour
             {
                 continueButton = t.gameObject;
             }
+            if (t.name == "ExitButton")
+            {
+                exitButton = t.gameObject;
+            }
         }
 
         if (PlayerPrefs.HasKey("Ads"))
@@ -142,7 +147,20 @@ public class Juego : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (estado == gameState.jugando)
+            {
+                pause();
+            }
+        }
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus && estado == gameState.jugando)
+        {
+            pause();
+        }
     }
 
     public static void die()
@@ -178,6 +196,7 @@ public class Juego : MonoBehaviour
             imagenTiempo.gameObject.SetActive(true);
             imagenPuntuacion.gameObject.SetActive(true);
             pauseButton.gameObject.SetActive(true);
+            exitButton.SetActive(false);
 
             frutasComidas = 0;
 
@@ -271,6 +290,7 @@ public class Juego : MonoBehaviour
         menuButton.gameObject.SetActive(false);
         continueButton.SetActive(false);
         pauseTitle.SetActive(false);
+        exitButton.SetActive(true);
         Time.timeScale = 1;
         if (PlayerPrefs.HasKey("Ads"))
         {
