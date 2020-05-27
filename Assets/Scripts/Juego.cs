@@ -21,7 +21,11 @@ public class Juego : MonoBehaviour
     public static string LOGRO_100_FRUTAS = "CgkIpMLIoLcZEAIQBg";
     public static string LOGRO_100_TRONCOS = "CgkIpMLIoLcZEAIQBw";
 
+
+    public static string MEJORES_PUNTUACIONES = "CgkIpMLIoLcZEAIQCA";
+
     public static List<IAchievement> logros = new List<IAchievement>();
+    public static List<IScore> puntuaciones = new List<IScore>();
 
     public enum gameState
     {
@@ -153,6 +157,22 @@ public class Juego : MonoBehaviour
         
     }
 
+    public static void cargarScores()
+    {
+        Social.LoadScores(MEJORES_PUNTUACIONES,scores => {
+            if (scores.Length > 0)
+            {
+                foreach (IScore score in scores)
+                { 
+                    puntuaciones.Add(score);
+                    
+                }
+            }
+            else
+                Debug.Log("No achievements returned");
+        });
+    }
+
     public static void cargarLogros()
     {
         Social.LoadAchievements(achievements => {
@@ -209,7 +229,8 @@ public class Juego : MonoBehaviour
 
     public void verLogros()
     {
-        Social.ShowAchievementsUI();
+        Social.ShowLeaderboardUI();
+
     }
 
 
@@ -218,6 +239,7 @@ public class Juego : MonoBehaviour
         if (success)
         {
             cargarLogros();
+            cargarScores();
             Debug.Log("Authenticated, checking achievements");
            
         }
@@ -267,6 +289,14 @@ public class Juego : MonoBehaviour
             if (frutasComidas >= 5){
                 playAgainWithAd.SetActive(true);
             }
+            long puntos = long.Parse(MenuPrincipal.GetComponent<HUD>().puntuacionLabel.text);
+            print(puntos + "");
+            if (Social.localUser.authenticated)
+            {
+                Social.ReportScore(puntos, MEJORES_PUNTUACIONES, (bool success) => { });
+            }
+            
+            
         }
     }
 

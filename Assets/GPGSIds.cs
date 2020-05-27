@@ -26,6 +26,7 @@ public static class GPGSIds
 {
         public const string achievement_mira_antes_de_cruzar = "CgkIpMLIoLcZEAIQAw"; // <GPGSID>
         public const string achievement_recoge_100_frutas = "CgkIpMLIoLcZEAIQBg"; // <GPGSID>
+        public const string leaderboard_mejores_puntuaciones = "CgkIpMLIoLcZEAIQCA"; // <GPGSID>
         public const string achievement_tu_primera_fruta = "CgkIpMLIoLcZEAIQAQ"; // <GPGSID>
         public const string achievement_cuidado_con_los_trineos = "CgkIpMLIoLcZEAIQBQ"; // <GPGSID>
         public const string achievement_la_has_palmado = "CgkIpMLIoLcZEAIQAg"; // <GPGSID>
