@@ -35,6 +35,11 @@ public class PlayerCollision : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             print("Entro tronco");
+            if (!Juego.getLogroCompleted(Juego.LOGRO_100_TRONCOS))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_100_TRONCOS,
+                    Juego.getLogroPercentCompleted(Juego.LOGRO_100_TRONCOS) + 1.0);
+            }
             offset = (player.transform.position.x - transform.position.x);
             playerFollow = true;
         }

@@ -63,6 +63,10 @@ public class CarMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player" && transform.position.z == other.gameObject.transform.position.z){
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
+            }
             Juego.die();
         }
     }
@@ -70,6 +74,10 @@ public class CarMovement : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player" && gameObject.tag == "Camion" && transform.position.z == other.gameObject.transform.position.z){
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
+            }
             Juego.die();
         }
     }
