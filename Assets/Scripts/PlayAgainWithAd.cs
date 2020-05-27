@@ -27,14 +27,16 @@ public class PlayAgainWithAd : MonoBehaviour, IUnityAdsListener
 
     public void OnUnityAdsDidFinish (string placementId, ShowResult showResult) {
         gameObject.SetActive(false);
-        if (showResult == ShowResult.Finished) {
-            print("todo guay");
-            Juego.start(false);
-        } else if (showResult == ShowResult.Skipped) {
-            //nada
-            gameObject.SetActive(false);
-        } else if (showResult == ShowResult.Failed) {
-            Debug.LogWarning ("The ad did not finish due to an error");
+        if(placementId == myPlacementId){
+            if (showResult == ShowResult.Finished) {
+                print("todo guay");
+                Juego.start(false);
+            } else if (showResult == ShowResult.Skipped) {
+                //nada
+                gameObject.SetActive(false);
+            } else if (showResult == ShowResult.Failed) {
+                Debug.LogWarning ("The ad did not finish due to an error");
+            }
         }
     }
 
