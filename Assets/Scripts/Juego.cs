@@ -35,6 +35,7 @@ public class Juego : MonoBehaviour
     public static GameObject playAgainWithAd;
     public static GameObject player;
     public static GameObject mainCamera;
+    public static bool rewardedGastado = false;
 
     public static gameState estado = gameState.jugando;
 
@@ -172,7 +173,8 @@ public class Juego : MonoBehaviour
             gameOver.gameObject.SetActive(true);
             player.SetActive(false);
             menuButton.gameObject.SetActive(true);
-            if (frutasComidas >= 5){
+            if (frutasComidas >= 5 && !rewardedGastado){
+                rewardedGastado = true;
                 playAgainWithAd.SetActive(true);
             }
             pauseButton.SetActive(false);
@@ -185,6 +187,7 @@ public class Juego : MonoBehaviour
         {
             if(resetPuntuacion){
                 MenuPrincipal.GetComponent<HUD>().reset();
+                rewardedGastado = false;
             }
             playAgainWithAd.SetActive(false);
             imagenTiempoDown.SetActive(true);
