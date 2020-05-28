@@ -20,8 +20,24 @@ public class DeadTrigger : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            print("Te has morido");
+            if (gameObject.tag == "Trineo")
+            {
+                Juego.restartTriggers();
+                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+                
+                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_TRINEO))
+                {
+                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_TRINEO, 100.0);
+                }
+
+            }
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
+            }
             Juego.die();
+            
+            
 
         }
     }

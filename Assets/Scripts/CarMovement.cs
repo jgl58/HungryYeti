@@ -6,6 +6,8 @@ using System;
 
 public class CarMovement : MonoBehaviour
 {
+    public AudioSource source {get{return GetComponent<AudioSource>();}}
+    public AudioClip crushSound;
     public float delta = 1.5f;  // Amount to move left and right from the start point
     public float speed = 1.0f;
     private Vector3 startPos;
@@ -20,6 +22,7 @@ public class CarMovement : MonoBehaviour
         speed = speed * UnityEngine.Random.Range(90, 130) / 100;
 
         GameObject[] puntuaciones = GameObject.FindGameObjectsWithTag("Canvas");
+        gameObject.AddComponent<AudioSource> ();
         if(puntuaciones.Length > 0){
             int puntuacion = int.Parse(puntuaciones[0].GetComponent<HUD>().puntuacionLabel.text);
             speed += ((int)Math.Truncate((float)(puntuacion/2000)) * 0.2f);
@@ -65,14 +68,28 @@ public class CarMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player"){
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
+            }
             Juego.die();
+            source.PlayOneShot(crushSound);
+            Juego.restartTriggers();
+            other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
         }
     }
 
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player" && gameObject.tag == "Camion"){
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
+            }
             Juego.die();
+            source.PlayOneShot(crushSound);
+            Juego.restartTriggers();
+            other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
         }
     }
 }
