@@ -67,6 +67,7 @@ public class HUD : MonoBehaviour
     }
 
     public void reset() {
+
         tiempoLabel.text = "00:00";
         puntuacionLabel.text = "0000";
         secondsCount = 0.0f;

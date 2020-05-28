@@ -26,6 +26,19 @@ public class Frutas : MonoBehaviour
             int puntuacion = int.Parse(puntuacionLabel.text);
             puntuacionLabel.text = string.Format ("{0:0000}", puntuacion + 25);
             Destroy(other.gameObject);
+
+
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_FRUTA))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_FRUTA, 100.0);
+            }
+            if (!Juego.getLogroCompleted(Juego.LOGRO_100_FRUTAS))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_100_FRUTAS,
+                    Juego.getLogroPercentCompleted(Juego.LOGRO_100_FRUTAS) + 1.0);
+                    Juego.updatePercentLogro(Juego.LOGRO_100_FRUTAS, 1.0);
+            }
+
             Juego.frutasComidas++;
         }
     }
