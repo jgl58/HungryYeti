@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
+    public AudioSource source {get{return GetComponent<AudioSource>();}}
+    public AudioClip crushSound;
     public float delta = 1.5f;  // Amount to move left and right from the start point
     public float speed = 1.0f;
     private Vector3 startPos;
@@ -16,6 +18,8 @@ public class CarMovement : MonoBehaviour
             goRight = false;
         }
         speed = speed * Random.Range(90, 130) / 100;
+
+        gameObject.AddComponent<AudioSource> ();
 
         /*GameObject[] puntuaciones = GameObject.FindGameObjectsWithTag("Canvas");
         if(puntuaciones.Length > 0){
@@ -68,6 +72,7 @@ public class CarMovement : MonoBehaviour
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
             }
             Juego.die();
+            source.PlayOneShot(crushSound);
         }
     }
 
@@ -79,6 +84,7 @@ public class CarMovement : MonoBehaviour
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
             }
             Juego.die();
+            source.PlayOneShot(crushSound);
         }
     }
 }

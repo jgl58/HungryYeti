@@ -3,7 +3,9 @@ guid: a509f462cf8c34af69013eab9ecf0334
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - puntuacionLabel: {instanceID: 0}
+  - mordiscoSound: {fileID: 8300000, guid: cc7fde4d5edb74a0c8c0e925ba051f74, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
