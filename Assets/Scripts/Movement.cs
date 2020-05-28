@@ -124,8 +124,7 @@ public class Movement : MonoBehaviour
     private void goUp(Vector3 nextPosition){
         go = true;
         source.PlayOneShot(jumpSound);
-        player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
-        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+        Juego.restartTriggers();
         player.gameObject.GetComponent<Animator>().SetTrigger("SaltarAdelante");
         player.gameObject.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
             player.gameObject.transform.position = nextPosition;
@@ -163,6 +162,7 @@ public class Movement : MonoBehaviour
                     Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_AGUA, 100.0);
                 }
                 Juego.die();
+                player.SetActive(false);
             }
             else
             {
@@ -198,8 +198,7 @@ public class Movement : MonoBehaviour
         //Time.timeScale = 0.1f;
         source.PlayOneShot(jumpSound);
         Vector3 posicionNueva = derecha ? miCelda.moverDerecha(player) : miCelda.moverIzquierda(player);
-        player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
-        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+        Juego.restartTriggers();
         player.gameObject.GetComponent<Animator>().SetTrigger("Saltar");
         player.gameObject.LeanMove(posicionNueva,0.25f).setEase(saltoEasing).setOnComplete(()=>{
             player.gameObject.transform.position = posicionNueva;
@@ -211,6 +210,8 @@ public class Movement : MonoBehaviour
             });
         }
     }
+
+    
 
 
     

@@ -314,7 +314,7 @@ public class Juego : MonoBehaviour
             estado = gameState.perdido;
             yourButton.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
-            player.SetActive(false);
+            //player.SetActive(false);
             menuButton.gameObject.SetActive(true);
             if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
             {
@@ -356,6 +356,9 @@ public class Juego : MonoBehaviour
             exitButton.SetActive(false);
             frutasComidas = 0;
 
+            Juego.restartTriggers();
+            player.gameObject.GetComponent<Animator>().SetTrigger("Levantarse");
+
             player.SetActive(true);
 
             print(firstTime);
@@ -370,8 +373,10 @@ public class Juego : MonoBehaviour
 
                 Vector3 position = player.transform.position;
                 position.z = -3;
+                position.y = 0.5f;
                 position.x = 1;
                 player.transform.position = position;
+                player.transform.eulerAngles = new Vector3(0,0,0);
 
                 mainCamera.transform.position = inicioCamera;
 
@@ -488,6 +493,13 @@ public class Juego : MonoBehaviour
             yield return new WaitForSeconds (0.5f);
  
         Advertisement.Show(InitializeAdsScript.placementId);
+    }
+
+    public static void restartTriggers(){
+        player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Morir");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Levantarse");
     }
 
 

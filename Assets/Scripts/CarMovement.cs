@@ -73,6 +73,8 @@ public class CarMovement : MonoBehaviour
             }
             Juego.die();
             source.PlayOneShot(crushSound);
+            Juego.restartTriggers();
+            other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
         }
     }
 
@@ -85,6 +87,8 @@ public class CarMovement : MonoBehaviour
             }
             Juego.die();
             source.PlayOneShot(crushSound);
+            Juego.restartTriggers();
+            other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
         }
     }
 }
