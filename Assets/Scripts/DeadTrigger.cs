@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class DeadTrigger : MonoBehaviour
 {
+    public AudioSource source {get{return GetComponent<AudioSource>();}}
+    public AudioClip crushSound;
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameObject.AddComponent<AudioSource> ();
     }
 
     // Update is called once per frame
@@ -35,6 +37,7 @@ public class DeadTrigger : MonoBehaviour
             {
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
             }
+            source.PlayOneShot(crushSound);
             Juego.die();
             
             
