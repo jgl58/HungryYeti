@@ -359,9 +359,6 @@ public class Juego : MonoBehaviour
             exitButton.SetActive(false);
             frutasComidas = 0;
 
-            Juego.restartTriggers();
-            player.gameObject.GetComponent<Animator>().SetTrigger("Levantarse");
-
             player.SetActive(true);
 
             print(firstTime);
@@ -395,6 +392,10 @@ public class Juego : MonoBehaviour
             { 
                 firstTime = false;
             }
+
+            Juego.restartTriggers();
+            player.GetComponent<Animator>().SetTrigger("Levantarse");
+
             instance.StartCoroutine(AnimationCamera());
             
             estoyTronco = false;

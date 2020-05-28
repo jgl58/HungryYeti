@@ -72,10 +72,12 @@ public class CarMovement : MonoBehaviour
             {
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
             }
-            Juego.die();
-            source.PlayOneShot(crushSound);
-            Juego.restartTriggers();
-            other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+            if(Juego.estado == Juego.gameState.jugando){
+                source.PlayOneShot(crushSound);
+                Juego.restartTriggers();
+                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+                Juego.die();
+            } 
         }
     }
 
@@ -86,10 +88,12 @@ public class CarMovement : MonoBehaviour
             {
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
             }
-            Juego.die();
-            source.PlayOneShot(crushSound);
-            Juego.restartTriggers();
-            other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+            if(Juego.estado == Juego.gameState.jugando){
+                source.PlayOneShot(crushSound);
+                Juego.restartTriggers();
+                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+                Juego.die();
+            } 
         }
     }
 }
