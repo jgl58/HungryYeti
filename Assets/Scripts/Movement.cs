@@ -158,6 +158,10 @@ public class Movement : MonoBehaviour
             if (estoyEnAgua && !Juego.estoyTronco)
             {
                 Instantiate(splashSound);
+                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_AGUA))
+                {
+                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_AGUA, 100.0);
+                }
                 Juego.die();
             }
             else

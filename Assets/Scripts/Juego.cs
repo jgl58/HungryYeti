@@ -4,14 +4,35 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
+using UnityEngine.SocialPlatforms;
+#if UNITY_ANDROID
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+#endif
 
 public class Juego : MonoBehaviour
 {
+
+    public static string LOGRO_PRIMERA_FRUTA = "CgkIpMLIoLcZEAIQAQ";
+    public static string LOGRO_PRIMERA_MUERTE = "CgkIpMLIoLcZEAIQAg";
+    public static string LOGRO_PRIMERA_MUERTE_COCHE = "CgkIpMLIoLcZEAIQAw";
+    public static string LOGRO_PRIMERA_MUERTE_AGUA = "CgkIpMLIoLcZEAIQBA";
+    public static string LOGRO_PRIMERA_MUERTE_TRINEO = "CgkIpMLIoLcZEAIQBQ";
+    public static string LOGRO_100_FRUTAS = "CgkIpMLIoLcZEAIQBg";
+    public static string LOGRO_100_TRONCOS = "CgkIpMLIoLcZEAIQBw";
+
+
+    public static string MEJORES_PUNTUACIONES = "CgkIpMLIoLcZEAIQCA";
+
+    public static List<IAchievement> logros = new List<IAchievement>();
+    public static List<IScore> puntuaciones = new List<IScore>();
+
     public enum gameState
     {
         menu,
         jugando,
-        perdido
+        perdido,
+        pausa
     }
     public static LinkedList<Celda> camino;
 
@@ -27,9 +48,14 @@ public class Juego : MonoBehaviour
     public static GameObject yourButton;
     public static GameObject menuButton;
     public static GameObject removeAdsButton;
+    public static GameObject pauseButton;
+    public static GameObject exitButton;
+    public static GameObject pauseTitle;
+    public static GameObject continueButton;
     public static GameObject playAgainWithAd;
     public static GameObject player;
     public static GameObject mainCamera;
+    public static GameObject logrosButton;
 
     public static gameState estado = gameState.jugando;
 
@@ -48,6 +74,15 @@ public class Juego : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    #if UNITY_ANDROID
+            PlayGamesPlatform.DebugLogEnabled = false;
+            PlayGamesPlatform.Activate();
+    #endif
+
+        Social.localUser.Authenticate(ProcessAuthentication);
+
+
+
         PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("Ads", 1);
         Movement.puntuacionLabel = puntuacionLabel;
@@ -110,6 +145,26 @@ public class Juego : MonoBehaviour
             {
                 playAgainWithAd = t.gameObject;
             }
+            if (t.name == "LogrosButton")
+            {
+                logrosButton = t.gameObject;
+            }
+            if (t.name == "PauseTitle")
+            {
+                pauseTitle = t.gameObject;
+            }
+            if (t.name == "PauseButton")
+            {
+                pauseButton = t.gameObject;
+            }
+            if (t.name == "ContinueButton")
+            {
+                continueButton = t.gameObject;
+            }
+            if (t.name == "ExitButton")
+            {
+                exitButton = t.gameObject;
+            }
         }
 
         if (PlayerPrefs.HasKey("Ads"))
@@ -123,10 +178,133 @@ public class Juego : MonoBehaviour
         
     }
 
+    public static void cargarScores()
+    {
+        Social.LoadScores(MEJORES_PUNTUACIONES,scores => {
+            if (scores.Length > 0)
+            {
+                foreach (IScore score in scores)
+                { 
+                    puntuaciones.Add(score);
+                    
+                }
+            }
+            else
+                Debug.Log("No achievements returned");
+        });
+    }
+
+    public static void cargarLogros()
+    {
+        Social.LoadAchievements(achievements => {
+            if (achievements.Length > 0)
+            {
+                foreach (IAchievement achievement in achievements)
+                {
+                    if (!achievement.completed)
+                    {
+                        logros.Add(achievement);
+                    }
+                }
+            }
+            else
+                Debug.Log("No achievements returned");
+        });
+    }
+
+    public static void updatePercentLogro(string id, double percent)
+    {
+        foreach (IAchievement achievement in logros)
+        {
+            if (achievement.id == id)
+            {
+                achievement.percentCompleted += percent;
+            }
+        }
+    }
+
+
+    public static bool getLogroCompleted(string id)
+    {
+        foreach (IAchievement achievement in logros)
+        {
+            if (achievement.id == id)
+            {
+                return achievement.completed;
+            }
+        }
+        return false;
+
+    }
+    public static double getLogroPercentCompleted(string id)
+    {
+        foreach (IAchievement achievement in logros)
+        {
+            if (achievement.id == id)
+            {
+                return achievement.percentCompleted;
+            }
+        }
+        return 0.0;
+    }
+
+    public void verLogros()
+    {
+        Social.ShowLeaderboardUI();
+
+    }
+
+
+    void ProcessAuthentication(bool success)
+    {
+        if (success)
+        {
+            cargarLogros();
+            cargarScores();
+            Debug.Log("Authenticated, checking achievements");
+           
+        }
+        else
+            Debug.Log("Failed to authenticate");
+    }
+
+    public static void desbloquearLogro(string idLogro, double completo)
+    {
+        if (Social.localUser.authenticated)
+        { 
+
+            Social.ReportProgress(idLogro, completo, (bool result) => {
+                if (result)
+                { 
+                    Debug.Log("Logro desbloqueado con exito");
+                }
+                else
+                {
+                    Debug.Log("Error al desbloquear logro");
+              }
+            });
+
+            
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-       
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (estado == gameState.jugando)
+            {
+                pause();
+            }
+        }
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus && estado == gameState.jugando)
+        {
+            pause();
+        }
     }
 
     public static void die()
@@ -138,9 +316,22 @@ public class Juego : MonoBehaviour
             gameOver.gameObject.SetActive(true);
             player.SetActive(false);
             menuButton.gameObject.SetActive(true);
+            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
+            {
+                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
+            }
             if (frutasComidas >= 5){
                 playAgainWithAd.SetActive(true);
             }
+            long puntos = long.Parse(MenuPrincipal.GetComponent<HUD>().puntuacionLabel.text);
+            print(puntos + "");
+            if (Social.localUser.authenticated)
+            {
+                Social.ReportScore(puntos, MEJORES_PUNTUACIONES, (bool success) => { });
+            }
+          
+            pauseButton.SetActive(false);
+
         }
     }
 
@@ -160,7 +351,9 @@ public class Juego : MonoBehaviour
             removeAdsButton.gameObject.SetActive(false);
             imagenTiempo.gameObject.SetActive(true);
             imagenPuntuacion.gameObject.SetActive(true);
-
+            logrosButton.gameObject.SetActive(false);
+            pauseButton.gameObject.SetActive(true);
+            exitButton.SetActive(false);
             frutasComidas = 0;
 
             player.SetActive(true);
@@ -200,6 +393,29 @@ public class Juego : MonoBehaviour
         }
     }
 
+    public static void pause()
+    {
+        if (estado == gameState.jugando) {
+            estado = gameState.pausa;
+            Time.timeScale = 0;
+            continueButton.SetActive(true);
+            pauseButton.SetActive(false);
+            pauseTitle.SetActive(true);
+            menuButton.gameObject.SetActive(true);
+        }
+    }
+
+    public static void continuar()
+    {
+        if (estado == gameState.pausa) {
+            estado = gameState.jugando;
+            Time.timeScale = 1;
+            continueButton.SetActive(false);
+            pauseButton.SetActive(true);
+            pauseTitle.SetActive(false);
+            menuButton.gameObject.SetActive(false);
+        }
+    }
 
     public static IEnumerator AnimationCamera()
     {
@@ -228,6 +444,11 @@ public class Juego : MonoBehaviour
         gameOver.gameObject.SetActive(false);
         yourButton.gameObject.SetActive(true);
         menuButton.gameObject.SetActive(false);
+        logrosButton.gameObject.SetActive(true);
+        continueButton.SetActive(false);
+        pauseTitle.SetActive(false);
+        exitButton.SetActive(true);
+        Time.timeScale = 1;
         if (PlayerPrefs.HasKey("Ads"))
         {
             int hasAds = PlayerPrefs.GetInt("Ads");
@@ -268,4 +489,6 @@ public class Juego : MonoBehaviour
  
         Advertisement.Show(InitializeAdsScript.placementId);
     }
+
+
 }

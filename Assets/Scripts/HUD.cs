@@ -67,11 +67,14 @@ public class HUD : MonoBehaviour
     }
 
     public void reset() {
+
         tiempoLabel.text = "00:00";
         puntuacionLabel.text = "0000";
         secondsCount = 0.0f;
         minuteCount = 0;
         hourCount = 0;
+        tiempoLabelDown.text = "5";
+        lastCheckTime = maxTime;
     }
 
 }
