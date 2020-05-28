@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 
 public class HUD : MonoBehaviour
 {
     //COSAS DE MORIR
-    public const float maxTime = 6.0f; //MENOS 1, ES DECIR, 6.0f -> 5 segundos;
+    public const float maxTime = 11.0f; //MENOS 1, ES DECIR, 6.0f -> 5 segundos;
+    private float auxMaxTime = maxTime;
     public static float lastCheckTime = maxTime;
     public static Vector3 lastCheckPos;
     public GameObject player;
@@ -34,17 +36,27 @@ public class HUD : MonoBehaviour
         if(Juego.estado == Juego.gameState.jugando){
             UpdateTimerUI();
             UpdateDie();
+            DecreaseMaxTime();
+        }
+    }
+
+    
+
+    public void DecreaseMaxTime(){
+        int puntuacion = int.Parse(puntuacionLabel.text);
+        if(auxMaxTime > 2){
+            auxMaxTime = maxTime - Math.Min((int)Math.Truncate((float)(puntuacion/2000)), maxTime - 3);
         }
     }
 
     public void UpdateDie(){
         if (player.transform.position != lastCheckPos){
-            lastCheckTime = maxTime;
+            lastCheckTime = auxMaxTime;
         }
         if (lastCheckTime < 1)
         {
             tiempoLabelDown.text = "0";
-            lastCheckTime = maxTime;
+            lastCheckTime = auxMaxTime;
             lastCheckPos = player.transform.position;
             Juego.die(); 
         } else {
@@ -72,7 +84,7 @@ public class HUD : MonoBehaviour
         secondsCount = 0.0f;
         minuteCount = 0;
         hourCount = 0;
-        tiempoLabelDown.text = "5";
+        tiempoLabelDown.text = "10";
         lastCheckTime = maxTime;
     }
 

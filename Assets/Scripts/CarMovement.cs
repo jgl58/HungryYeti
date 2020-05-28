@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System;
 
 public class CarMovement : MonoBehaviour
 {
@@ -15,13 +17,13 @@ public class CarMovement : MonoBehaviour
         {
             goRight = false;
         }
-        speed = speed * Random.Range(90, 130) / 100;
+        speed = speed * UnityEngine.Random.Range(90, 130) / 100;
 
-        /*GameObject[] puntuaciones = GameObject.FindGameObjectsWithTag("Canvas");
+        GameObject[] puntuaciones = GameObject.FindGameObjectsWithTag("Canvas");
         if(puntuaciones.Length > 0){
             int puntuacion = int.Parse(puntuaciones[0].GetComponent<HUD>().puntuacionLabel.text);
-            speed *= (puntuacion / 100) == 0 ? 1 : (puntuacion / 100) + 0.5f;
-        }*/
+            speed += ((int)Math.Truncate((float)(puntuacion/2000)) * 0.2f);
+        }
         
     }
 
