@@ -441,15 +441,15 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject getFruta(){
         int fruta = Random.Range(1, 9);
         switch(fruta){
-            case 1: return (GameObject)Resources.Load("Fruits/Prefabs/apple"); 
-            case 2: return (GameObject)Resources.Load("Fruits/Prefabs/banana"); 
-            case 3: return (GameObject)Resources.Load("Fruits/Prefabs/cherries"); 
-            case 4: return (GameObject)Resources.Load("Fruits/Prefabs/lemon"); 
-            case 5: return (GameObject)Resources.Load("Fruits/Prefabs/peach"); 
-            case 6: return (GameObject)Resources.Load("Fruits/Prefabs/pear"); 
-            case 7: return (GameObject)Resources.Load("Fruits/Prefabs/strawberry"); 
-            case 8: return (GameObject)Resources.Load("Fruits/Prefabs/watermelon"); 
-            default: return (GameObject)Resources.Load("Fruits/Prefabs/apple");
+            case 1: return (GameObject)Resources.Load("Prefabs/apple"); 
+            case 2: return (GameObject)Resources.Load("Prefabs/banana"); 
+            case 3: return (GameObject)Resources.Load("Prefabs/cherries"); 
+            case 4: return (GameObject)Resources.Load("Prefabs/lemon"); 
+            case 5: return (GameObject)Resources.Load("Prefabs/peach"); 
+            case 6: return (GameObject)Resources.Load("Prefabs/pear"); 
+            case 7: return (GameObject)Resources.Load("Prefabs/strawberry"); 
+            case 8: return (GameObject)Resources.Load("Prefabs/watermelon"); 
+            default: return (GameObject)Resources.Load("Prefabs/apple");
         }
     }
 

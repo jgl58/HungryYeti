@@ -55,6 +55,7 @@ public class Juego : MonoBehaviour
     public static GameObject playAgainWithAd;
     public static GameObject player;
     public static GameObject mainCamera;
+    public static bool rewardedGastado = false;
     public static GameObject logrosButton;
 
     public static gameState estado = gameState.jugando;
@@ -320,7 +321,8 @@ public class Juego : MonoBehaviour
             {
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
             }
-            if (frutasComidas >= 5){
+            if (frutasComidas >= 5 && !rewardedGastado){
+                rewardedGastado = true;
                 playAgainWithAd.SetActive(true);
             }
             long puntos = long.Parse(MenuPrincipal.GetComponent<HUD>().puntuacionLabel.text);
@@ -341,6 +343,7 @@ public class Juego : MonoBehaviour
         {
             if(resetPuntuacion){
                 MenuPrincipal.GetComponent<HUD>().reset();
+                rewardedGastado = false;
             }
             playAgainWithAd.SetActive(false);
             imagenTiempoDown.SetActive(true);
@@ -355,9 +358,6 @@ public class Juego : MonoBehaviour
             pauseButton.gameObject.SetActive(true);
             exitButton.SetActive(false);
             frutasComidas = 0;
-
-            Juego.restartTriggers();
-            player.gameObject.GetComponent<Animator>().SetTrigger("Levantarse");
 
             player.SetActive(true);
 
@@ -392,6 +392,10 @@ public class Juego : MonoBehaviour
             { 
                 firstTime = false;
             }
+
+            Juego.restartTriggers();
+            player.GetComponent<Animator>().SetTrigger("Levantarse");
+
             instance.StartCoroutine(AnimationCamera());
             
             estoyTronco = false;
