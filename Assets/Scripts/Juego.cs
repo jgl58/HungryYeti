@@ -351,6 +351,7 @@ public class Juego : MonoBehaviour
             if(resetPuntuacion){
                 MenuPrincipal.GetComponent<HUD>().reset();
             }
+
             playAgainWithAd.SetActive(false);
             imagenTiempoDown.SetActive(true);
             tituloImagen.SetActive(false);
@@ -367,7 +368,8 @@ public class Juego : MonoBehaviour
 
             player.SetActive(true);
 
-            Transform escudo = player.transform.Find("Escudo(clone)");
+            powerUpState = PowerUpState.ninguno;
+            Transform escudo = player.transform.Find("Escudo(Clone)");
             if(escudo != null)
             {
                 Destroy(escudo.gameObject);
@@ -449,6 +451,7 @@ public class Juego : MonoBehaviour
         estado = gameState.jugando;
     }
     public static void backToMenu(){
+
         if(InitializeAdsScript.hasAds()){
             instance.StartCoroutine(ShowAdWhenReady()); // PUBLICIDAD INTERSTICIAL NORMAL
         }
@@ -474,13 +477,15 @@ public class Juego : MonoBehaviour
         imagenTiempo.gameObject.SetActive(false);
         imagenPuntuacion.gameObject.SetActive(false);
         imagenTiempoDown.SetActive(false);
+
         GameObject suelo = GameObject.Find("Suelo");
         foreach (Transform child in suelo.transform)
         {
             Destroy(child.gameObject);
         }
 
-        Transform escudo = player.transform.Find("Escudo(clone)");
+        powerUpState = PowerUpState.ninguno;
+        Transform escudo = player.transform.Find("Escudo(Clone)");
         if (escudo != null)
         {
             Destroy(escudo.gameObject);

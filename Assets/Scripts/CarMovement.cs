@@ -74,7 +74,7 @@ public class CarMovement : MonoBehaviour
             if(Juego.powerUpState == Juego.PowerUpState.escudo)
             {
                 Juego.powerUpState = Juego.PowerUpState.ninguno;
-                Transform escudo = other.transform.Find("Escudo(clone)");
+                Transform escudo = other.transform.Find("Escudo(Clone)");
                 if (escudo != null)
                 {
                     Destroy(escudo.gameObject);
@@ -99,7 +99,7 @@ public class CarMovement : MonoBehaviour
             if (Juego.powerUpState == Juego.PowerUpState.escudo)
             {
                 Juego.powerUpState = Juego.PowerUpState.ninguno;
-                Transform escudo = other.transform.Find("Escudo(clone)");
+                Transform escudo = other.transform.Find("Escudo(Clone)");
                 if (escudo != null)
                 {
                     Destroy(escudo.gameObject);

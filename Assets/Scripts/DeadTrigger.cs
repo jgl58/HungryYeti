@@ -31,7 +31,7 @@ public class DeadTrigger : MonoBehaviour
                 {
                     Juego.powerUpState = Juego.PowerUpState.ninguno;
 
-                    Transform escudo = other.transform.Find("Escudo(clone)");
+                    Transform escudo = other.transform.Find("Escudo(Clone)");
                     if (escudo != null)
                     {
                         Destroy(escudo.gameObject);
@@ -41,7 +41,6 @@ public class DeadTrigger : MonoBehaviour
                 {
                     Juego.die();
                 }
-
 
             }
             if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))

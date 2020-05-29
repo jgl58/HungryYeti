@@ -27,7 +27,7 @@ public class PowerUp : MonoBehaviour
             if (gameObject.tag == "Escudo" && 
                 Juego.powerUpState == Juego.PowerUpState.ninguno)
             {
-                
+                print("Tengo escudo");
                 gameObject.transform.parent = other.gameObject.transform;
 
                 Vector3 powerupPosition = gameObject.transform.localPosition;
