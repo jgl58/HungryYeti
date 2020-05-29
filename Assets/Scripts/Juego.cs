@@ -27,6 +27,15 @@ public class Juego : MonoBehaviour
     public static List<IAchievement> logros = new List<IAchievement>();
     public static List<IScore> puntuaciones = new List<IScore>();
 
+
+    public enum PowerUpState
+    {
+        ninguno,
+        escudo
+    }
+
+    public static PowerUpState powerUpState = PowerUpState.ninguno;
+
     public enum gameState
     {
         menu,
@@ -358,6 +367,12 @@ public class Juego : MonoBehaviour
 
             player.SetActive(true);
 
+            Transform escudo = player.transform.Find("Escudo(clone)");
+            if(escudo != null)
+            {
+                Destroy(escudo.gameObject);
+            }
+
             print(firstTime);
 
             if (!firstTime)
@@ -463,6 +478,12 @@ public class Juego : MonoBehaviour
         foreach (Transform child in suelo.transform)
         {
             Destroy(child.gameObject);
+        }
+
+        Transform escudo = player.transform.Find("Escudo(clone)");
+        if (escudo != null)
+        {
+            Destroy(escudo.gameObject);
         }
 
         Vector3 position = player.transform.position;
