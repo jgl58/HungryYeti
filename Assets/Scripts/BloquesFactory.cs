@@ -6,8 +6,8 @@ public class BloquesFactory : MonoBehaviour
     public static int inicio;
     public static int BLOQUES_ITERACION = 6;
     public static int BLOQUES_BLANCOS_INICIO = 10;
-    public static int FRECUENCIA_FRUTAS = 3;
-    public static int FRECUENCIA_POWERUP = 3;
+    public static int FRECUENCIA_FRUTAS = 5;
+    public static int FRECUENCIA_POWERUP = 10;
     public static int BLOQUES_ESQUIADORES = 30;
 
     //Suelos y prefabs

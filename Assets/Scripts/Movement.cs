@@ -158,11 +158,46 @@ public class Movement : MonoBehaviour
             if (estoyEnAgua && !Juego.estoyTronco)
             {
                 Instantiate(splashSound);
-                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_AGUA))
+
+                if (Juego.powerUpState == Juego.PowerUpState.escudo)
                 {
-                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_AGUA, 100.0);
+                    int posicionNuevaFila = 1;
+                    LinkedListNode<Celda> fila = Juego.camino.First.Next;
+                    while(fila.Value.GetCelda(0) != BloquesType.Nieve)
+                    {
+                        if(fila.Value.GetCelda(0) == BloquesType.Agua)
+                        {
+                            posicionNuevaFila++;
+                        }
+                        fila = fila.Next;
+                        Juego.camino.RemoveFirst();
+                    }
+                    Juego.camino.RemoveFirst();
+                    Vector3 pos = player.transform.position;
+                    pos.z += posicionNuevaFila;
+                    player.transform.position = pos;
+
+
+                    Transform escudo = player.transform.Find("Escudo(Clone)");
+                    if (escudo != null)
+                    {
+                        Destroy(escudo.gameObject);
+                    }
+                    Juego.powerUpState = Juego.PowerUpState.ninguno;
+
+
+                    Vector3 camera = mainCamera.transform.position;
+                    camera.z += posicionNuevaFila;
+                    mainCamera.gameObject.LeanMove(camera, 0.15f);
                 }
-                Juego.die();
+                else
+                {
+                    if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_AGUA))
+                    {
+                        Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_AGUA, 100.0);
+                    }
+                    Juego.die();
+                }
             }
             else
             {
