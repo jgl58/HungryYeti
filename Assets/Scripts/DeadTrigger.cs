@@ -22,6 +22,8 @@ public class DeadTrigger : MonoBehaviour
         {
             if (gameObject.tag == "Trineo")
             {
+                Juego.restartTriggers();
+                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
                 
                 if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_TRINEO))
                 {

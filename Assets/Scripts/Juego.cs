@@ -64,6 +64,7 @@ public class Juego : MonoBehaviour
     public static GameObject playAgainWithAd;
     public static GameObject player;
     public static GameObject mainCamera;
+    public static bool rewardedGastado = false;
     public static GameObject logrosButton;
 
     public static gameState estado = gameState.jugando;
@@ -323,13 +324,14 @@ public class Juego : MonoBehaviour
             estado = gameState.perdido;
             yourButton.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
-            player.SetActive(false);
+            //player.SetActive(false);
             menuButton.gameObject.SetActive(true);
             if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
             {
                 Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
             }
-            if (frutasComidas >= 5){
+            if (frutasComidas >= 5 && !rewardedGastado){
+                rewardedGastado = true;
                 playAgainWithAd.SetActive(true);
             }
             long puntos = long.Parse(MenuPrincipal.GetComponent<HUD>().puntuacionLabel.text);
@@ -350,6 +352,7 @@ public class Juego : MonoBehaviour
         {
             if(resetPuntuacion){
                 MenuPrincipal.GetComponent<HUD>().reset();
+                rewardedGastado = false;
             }
 
             playAgainWithAd.SetActive(false);
@@ -387,8 +390,10 @@ public class Juego : MonoBehaviour
 
                 Vector3 position = player.transform.position;
                 position.z = -3;
+                position.y = 0.5f;
                 position.x = 1;
                 player.transform.position = position;
+                player.transform.eulerAngles = new Vector3(0,0,0);
 
                 mainCamera.transform.position = inicioCamera;
 
@@ -404,6 +409,10 @@ public class Juego : MonoBehaviour
             { 
                 firstTime = false;
             }
+
+            Juego.restartTriggers();
+            player.GetComponent<Animator>().SetTrigger("Levantarse");
+
             instance.StartCoroutine(AnimationCamera());
             
             estoyTronco = false;
@@ -514,6 +523,13 @@ public class Juego : MonoBehaviour
             yield return new WaitForSeconds (0.5f);
  
         Advertisement.Show(InitializeAdsScript.placementId);
+    }
+
+    public static void restartTriggers(){
+        player.gameObject.GetComponent<Animator>().ResetTrigger("SaltarAdelante");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Saltar");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Morir");
+        player.gameObject.GetComponent<Animator>().ResetTrigger("Levantarse");
     }
 
 
