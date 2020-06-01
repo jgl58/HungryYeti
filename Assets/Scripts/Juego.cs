@@ -261,6 +261,7 @@ public class Juego : MonoBehaviour
     public void verLogros()
     {
         Social.ShowLeaderboardUI();
+        Social.ShowAchievementsUI();
 
     }
 
