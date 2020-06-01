@@ -53,7 +53,7 @@ public class Movement : MonoBehaviour
                 if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
                 {
                     Vector3 nextPosition = player.transform.position;
-                    nextPosition.z++;
+                    Math.Truncate(nextPosition.z++);
 
                     //player.transform.position = nextPosition;
                     //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
@@ -91,7 +91,7 @@ public class Movement : MonoBehaviour
                         if (!go && player.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsTag("idle") && miCelda.comprobarCaminoArriba(player))
                         {
                             Vector3 nextPosition = player.transform.position;
-                            nextPosition.z++;
+                            Math.Truncate(nextPosition.z++);
 
                             goUp(nextPosition);
 
@@ -125,9 +125,10 @@ public class Movement : MonoBehaviour
         go = true;
         source.PlayOneShot(jumpSound);
         Juego.restartTriggers();
-        player.gameObject.GetComponent<Animator>().SetTrigger("SaltarAdelante");
-        player.gameObject.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
-            player.gameObject.transform.position = nextPosition;
+        player.GetComponent<Animator>().SetTrigger("SaltarAdelante");
+        player.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
+            player.transform.position = nextPosition;
+            print(nextPosition.z);
             go = false;
             Celda actual = Juego.camino.First.Value;
 
