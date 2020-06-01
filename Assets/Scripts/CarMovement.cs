@@ -12,6 +12,7 @@ public class CarMovement : MonoBehaviour
     public float speed = 1.0f;
     private Vector3 startPos;
     bool goRight = true;
+
     void Start()
     {
         startPos = transform.position;
@@ -70,7 +71,7 @@ public class CarMovement : MonoBehaviour
         if(other.gameObject.tag == "Player"){
             
             if(Juego.powerUpState == Juego.PowerUpState.escudo)
-            {
+            { 
                 source.PlayOneShot(crushSound);
                 Juego.powerUpState = Juego.PowerUpState.ninguno;
                 Transform escudo = other.transform.Find("Escudo(Clone)");
@@ -96,12 +97,12 @@ public class CarMovement : MonoBehaviour
             }
         }
     }
-
+/*
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && gameObject.tag == "Camion"){
-            
-            
+        if (other.gameObject.tag == "Player"){
+
+            print("OnStay");
             if (Juego.powerUpState == Juego.PowerUpState.escudo)
             {
                 source.PlayOneShot(crushSound);
@@ -127,5 +128,5 @@ public class CarMovement : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
