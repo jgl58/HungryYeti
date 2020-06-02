@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    public Material goldMaterial;
+    public Material yetiMaterial;
+
+    private GameObject yeti;
     float y;
     // Start is called before the first frame update
     void Start()
     {
-        
+        yeti = GameObject.FindGameObjectWithTag("Dummy");
     }
 
     // Update is called once per frame
@@ -43,6 +47,7 @@ public class PowerUp : MonoBehaviour
                 Juego.doublePoints == false)
             {
                 print("Dobles puntos");
+                yeti.GetComponent<Renderer>().material = goldMaterial;
                 gameObject.SetActive(false);
                 Juego.doublePointsUI.SetActive(true);
                 //animacion dobles puntos
@@ -60,6 +65,7 @@ public class PowerUp : MonoBehaviour
 
     private void resetDoublePoints()
     {
+        yeti.GetComponent<Renderer>().material = yetiMaterial;
         Juego.doublePoints = false;
         Juego.doublePointsUI.SetActive(false);
     }
