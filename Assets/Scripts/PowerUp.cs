@@ -49,6 +49,7 @@ public class PowerUp : MonoBehaviour
 
                 gameObject.transform.localPosition = powerupPosition;
                 Juego.powerUpState = Juego.PowerUpState.escudo;
+                Juego.heartUI.SetActive(true);
             }
 
             if (gameObject.tag == "double" &&

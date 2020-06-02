@@ -73,6 +73,7 @@ public class Juego : MonoBehaviour
     public static GameObject marcadoresButton;
 
     public static GameObject doublePointsUI;
+    public static GameObject heartUI;
 
 
     public static gameState estado = gameState.jugando;
@@ -210,6 +211,10 @@ public class Juego : MonoBehaviour
             if (t.name == "DoublePoints")
             {
                 doublePointsUI = t.gameObject;
+            }
+            if (t.name == "Shield")
+            {
+                heartUI = t.gameObject;
             }
         }
     }
@@ -402,6 +407,7 @@ public class Juego : MonoBehaviour
             marcadoresButton.gameObject.SetActive(false);
             pauseButton.gameObject.SetActive(true);
             doublePointsUI.SetActive(false);
+            heartUI.SetActive(false);
             exitButton.SetActive(false);
             frutasComidas = 0;
 
@@ -513,6 +519,7 @@ public class Juego : MonoBehaviour
         pauseTitle.SetActive(false);
         exitButton.SetActive(true);
         doublePointsUI.SetActive(false);
+        heartUI.SetActive(false);
         Time.timeScale = 1;
         if (PlayerPrefs.HasKey("Ads"))
         {
