@@ -11,6 +11,7 @@ TagManager:
   - Trineo
   - Camion
   - Fruta
+  - double
   layers:
   - Default
   - TransparentFX

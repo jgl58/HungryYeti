@@ -12,6 +12,7 @@ public class CarMovement : MonoBehaviour
     public float speed = 1.0f;
     private Vector3 startPos;
     bool goRight = true;
+
     void Start()
     {
         startPos = transform.position;
@@ -68,32 +69,64 @@ public class CarMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player"){
-            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
-            {
-                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
-            }
-            if(Juego.estado == Juego.gameState.jugando){
+            
+            if(Juego.powerUpState == Juego.PowerUpState.escudo)
+            { 
                 source.PlayOneShot(crushSound);
-                Juego.restartTriggers();
-                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
-                Juego.die();
-            } 
+                Juego.powerUpState = Juego.PowerUpState.ninguno;
+                Transform escudo = other.transform.Find("Escudo(Clone)");
+                if (escudo != null)
+                {
+                    Destroy(escudo.gameObject);
+                }
+            }
+            else
+            {
+                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+                {
+                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
+                }
+
+                if (Juego.estado == Juego.gameState.jugando)
+                {
+                    source.PlayOneShot(crushSound);
+                    Juego.restartTriggers();
+                    other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+                    Juego.die();
+                }
+            }
         }
     }
-
+/*
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player" && gameObject.tag == "Camion"){
-            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+        if (other.gameObject.tag == "Player"){
+
+            print("OnStay");
+            if (Juego.powerUpState == Juego.PowerUpState.escudo)
             {
-                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
-            }
-            if(Juego.estado == Juego.gameState.jugando){
                 source.PlayOneShot(crushSound);
-                Juego.restartTriggers();
-                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
-                Juego.die();
-            } 
+                Juego.powerUpState = Juego.PowerUpState.ninguno;
+                Transform escudo = other.transform.Find("Escudo(Clone)");
+                if (escudo != null)
+                {
+                    Destroy(escudo.gameObject);
+                }
+            }
+            else
+            {
+                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
+                {
+                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
+                }
+                if (Juego.estado == Juego.gameState.jugando)
+                {
+                    source.PlayOneShot(crushSound);
+                    Juego.restartTriggers();
+                    other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+                    Juego.die();
+                }
+            }
         }
-    }
+    }*/
 }

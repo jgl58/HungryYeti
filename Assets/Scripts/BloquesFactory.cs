@@ -6,7 +6,8 @@ public class BloquesFactory : MonoBehaviour
     public static int inicio;
     public static int BLOQUES_ITERACION = 6;
     public static int BLOQUES_BLANCOS_INICIO = 10;
-    public static int FRECUENCIA_FRUTAS = 3;
+    public static int FRECUENCIA_FRUTAS = 5;
+    public static int FRECUENCIA_POWERUP = 10;
     public static int BLOQUES_ESQUIADORES = 30;
 
     //Suelos y prefabs
@@ -20,6 +21,8 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject lateral = (GameObject)Resources.Load("Prefabs/Lateral");
     private static GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
     private static GameObject trineo = (GameObject)Resources.Load("Prefabs/Trineo");
+    private static GameObject escudo = (GameObject)Resources.Load("Prefabs/Escudo");
+    private static GameObject doublePoints= (GameObject)Resources.Load("Prefabs/double");
 
     private static List<int> points = new List<int>() { -3, -1, 1, 3 };
 
@@ -80,11 +83,7 @@ public class BloquesFactory : MonoBehaviour
                 }
                 ponerLateral(lateral, suelo, inicio);
 
-                int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
-                if(ponerFruta == 0){
-                    obj = Instantiate(getFruta(), new Vector3(getPosX(1, 5), 0.7f, inicio), new Quaternion());
-                    obj.transform.parent = suelo.transform;
-                }
+                ponerCollecionable(getPosX(1, 5), inicio);
             
                 inicio++;
             }
@@ -158,11 +157,7 @@ public class BloquesFactory : MonoBehaviour
                             };
                     Juego.camino.AddLast(new Celda(lista, points));
 
-                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
-                    if(ponerFruta == 0){
-                        obj = Instantiate(getFruta(), new Vector3(-1, 0.7f, inicio), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                    }
+                    ponerCollecionable(-1, inicio);
 
                 }
                 break;
@@ -182,11 +177,7 @@ public class BloquesFactory : MonoBehaviour
                     };
                     Juego.camino.AddLast(new Celda(lista, points));
 
-                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
-                    if(ponerFruta == 0){
-                        obj = Instantiate(getFruta(), new Vector3(getPosX(1, 4), 0.7f, inicio), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                    }
+                    ponerCollecionable(getPosX(1, 4), inicio);
 
                 }
                 break;
@@ -206,11 +197,7 @@ public class BloquesFactory : MonoBehaviour
                     };
                     Juego.camino.AddLast(new Celda(lista, points));
 
-                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
-                    if(ponerFruta == 0){
-                        obj = Instantiate(getFruta(), new Vector3(getPosX(2, 5), 0.7f, inicio), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                    }
+                    ponerCollecionable(getPosX(2, 5), inicio);
 
                 }
                 break;
@@ -229,11 +216,7 @@ public class BloquesFactory : MonoBehaviour
                     };
                     Juego.camino.AddLast(new Celda(lista, points));
 
-                    int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
-                    if(ponerFruta == 0){
-                        obj = Instantiate(getFruta(), new Vector3(getPosX(2, 4), 0.7f, inicio), new Quaternion());
-                        obj.transform.parent = suelo.transform;
-                    }
+                    ponerCollecionable(getPosX(2, 4), inicio);
 
                 }
 
@@ -242,6 +225,32 @@ public class BloquesFactory : MonoBehaviour
 
         return posicion + 1;
 
+    }
+
+
+    public static void ponerCollecionable(float x, float z)
+    {
+        int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
+        if (ponerFruta == 0)
+        {
+            GameObject fruit = Instantiate(getFruta(), new Vector3(x, 0.7f, z), new Quaternion());
+            fruit.transform.parent = suelo.transform;
+        }
+        else
+        {
+            int ponerPowerup = Random.Range(0, FRECUENCIA_POWERUP);
+            if (ponerPowerup == 0)
+            {
+                GameObject power = Instantiate(escudo, new Vector3(x, 1.0f, z), new Quaternion());
+                power.transform.parent = suelo.transform;
+            }
+            else if(ponerPowerup == 1)
+            {
+                GameObject power = Instantiate(doublePoints, new Vector3(x, 1.0f, z), new Quaternion());
+                power.transform.parent = suelo.transform;
+
+            }
+        }
     }
 
     public static int ponerAgua(int posicion)
@@ -341,11 +350,7 @@ public class BloquesFactory : MonoBehaviour
                 };
                 Juego.camino.AddLast(new Celda(lista, points));
 
-                int ponerFruta = Random.Range(0, FRECUENCIA_FRUTAS);
-                if(ponerFruta == 0){
-                    GameObject fruit = Instantiate(getFruta(), new Vector3(getPosX(1, 5), 0.7f, j), new Quaternion());
-                    fruit.transform.parent = suelo.transform;
-                }
+                ponerCollecionable(getPosX(1, 5), j);
 
                 if(j == posicion + 2){
                     MeshFilter mf = obj.GetComponent<MeshFilter>();
