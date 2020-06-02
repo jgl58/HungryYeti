@@ -35,6 +35,7 @@ public class Juego : MonoBehaviour
     }
 
     public static PowerUpState powerUpState = PowerUpState.ninguno;
+    public static bool doublePoints = false;
 
     public enum gameState
     {
@@ -66,6 +67,10 @@ public class Juego : MonoBehaviour
     public static GameObject mainCamera;
     public static bool rewardedGastado = false;
     public static GameObject logrosButton;
+    public static GameObject marcadoresButton;
+
+    public static GameObject doublePointsUI;
+
 
     public static gameState estado = gameState.jugando;
 
@@ -81,13 +86,15 @@ public class Juego : MonoBehaviour
 
     public static int frutasComidas = 0;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
-    #if UNITY_ANDROID
-            PlayGamesPlatform.DebugLogEnabled = false;
-            PlayGamesPlatform.Activate();
-    #endif
+#if UNITY_ANDROID
+        PlayGamesPlatform.DebugLogEnabled = false;
+        PlayGamesPlatform.Activate();
+#endif
 
         Social.localUser.Authenticate(ProcessAuthentication);
 
@@ -102,10 +109,10 @@ public class Juego : MonoBehaviour
 
 
         inicioCamera = new Vector3(-0.8f, 6.5f, -6f);
-        finCamera = new Vector3(0f,13f,-9f);
+        finCamera = new Vector3(0f, 13f, -9f);
 
-        rotationInicioCamera = new Vector3(51f,31f,0f);
-        rotationFinCamera = new Vector3(53f,0f,0f);
+        rotationInicioCamera = new Vector3(51f, 31f, 0f);
+        rotationFinCamera = new Vector3(53f, 0f, 0f);
 
         instance = this;
 
@@ -115,6 +122,24 @@ public class Juego : MonoBehaviour
         BloquesFactory.generateInit();
         BloquesFactory.generateSuelo(25);
         estado = gameState.menu;
+
+        cargarItems();
+
+        if (PlayerPrefs.HasKey("Ads"))
+        {
+            int hasAds = PlayerPrefs.GetInt("Ads");
+            removeAdsButton.SetActive(hasAds == 1);
+        } else {
+            removeAdsButton.SetActive(true);
+        }
+
+
+    }
+
+        
+
+    public static void cargarItems()
+    {
         MenuPrincipal = GameObject.Find("/MenuPrincipal");
         Transform[] trs = MenuPrincipal.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)
@@ -159,6 +184,10 @@ public class Juego : MonoBehaviour
             {
                 logrosButton = t.gameObject;
             }
+            if (t.name == "MarcadoresButton")
+            {
+                marcadoresButton = t.gameObject;
+            }
             if (t.name == "PauseTitle")
             {
                 pauseTitle = t.gameObject;
@@ -175,17 +204,11 @@ public class Juego : MonoBehaviour
             {
                 exitButton = t.gameObject;
             }
+            if (t.name == "DoublePoints")
+            {
+                doublePointsUI = t.gameObject;
+            }
         }
-
-        if (PlayerPrefs.HasKey("Ads"))
-        {
-            int hasAds = PlayerPrefs.GetInt("Ads");
-            removeAdsButton.SetActive(hasAds == 1);
-        }else{
-            removeAdsButton.SetActive(true);
-        }
-
-        
     }
 
     public static void cargarScores()
@@ -351,6 +374,8 @@ public class Juego : MonoBehaviour
         }
     }
 
+
+
     public static void start(bool resetPuntuacion = true)
     {
         if (estado != gameState.jugando)
@@ -370,7 +395,9 @@ public class Juego : MonoBehaviour
             imagenTiempo.gameObject.SetActive(true);
             imagenPuntuacion.gameObject.SetActive(true);
             logrosButton.gameObject.SetActive(false);
+            marcadoresButton.gameObject.SetActive(false);
             pauseButton.gameObject.SetActive(true);
+            doublePointsUI.SetActive(false);
             exitButton.SetActive(false);
             frutasComidas = 0;
 
@@ -477,9 +504,11 @@ public class Juego : MonoBehaviour
         yourButton.gameObject.SetActive(true);
         menuButton.gameObject.SetActive(false);
         logrosButton.gameObject.SetActive(true);
+        marcadoresButton.gameObject.SetActive(true);
         continueButton.SetActive(false);
         pauseTitle.SetActive(false);
         exitButton.SetActive(true);
+        doublePointsUI.SetActive(false);
         Time.timeScale = 1;
         if (PlayerPrefs.HasKey("Ads"))
         {

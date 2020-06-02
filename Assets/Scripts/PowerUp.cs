@@ -39,7 +39,30 @@ public class PowerUp : MonoBehaviour
                 Juego.powerUpState = Juego.PowerUpState.escudo;
             }
 
+            if (gameObject.tag == "double" &&
+                Juego.doublePoints == false)
+            {
+                print("Dobles puntos");
+                gameObject.SetActive(false);
+                Juego.doublePointsUI.SetActive(true);
+                //animacion dobles puntos
+
+                Juego.doublePoints = true;
+
+                //lanzamos el reset despues de 10 segundos
+
+                Invoke("resetDoublePoints", 10.0f);
+            }
+
 
         }
     }
+
+    private void resetDoublePoints()
+    {
+        Juego.doublePoints = false;
+        Juego.doublePointsUI.SetActive(false);
+    }
+
+   
 }

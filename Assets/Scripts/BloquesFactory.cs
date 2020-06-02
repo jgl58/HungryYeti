@@ -22,6 +22,7 @@ public class BloquesFactory : MonoBehaviour
     private static GameObject tronco = (GameObject)Resources.Load("Prefabs/Tronco");
     private static GameObject trineo = (GameObject)Resources.Load("Prefabs/Trineo");
     private static GameObject escudo = (GameObject)Resources.Load("Prefabs/Escudo");
+    private static GameObject doublePoints= (GameObject)Resources.Load("Prefabs/double");
 
     private static List<int> points = new List<int>() { -3, -1, 1, 3 };
 
@@ -242,6 +243,12 @@ public class BloquesFactory : MonoBehaviour
             {
                 GameObject power = Instantiate(escudo, new Vector3(x, 1.0f, z), new Quaternion());
                 power.transform.parent = suelo.transform;
+            }
+            else if(ponerPowerup == 1)
+            {
+                GameObject power = Instantiate(doublePoints, new Vector3(x, 1.0f, z), new Quaternion());
+                power.transform.parent = suelo.transform;
+
             }
         }
     }

@@ -37,7 +37,7 @@ public class PlayerCollision : MonoBehaviour
             print("Entro tronco");
             if (!Juego.getLogroCompleted(Juego.LOGRO_100_TRONCOS))
             {
-               /* Juego.cargarLogros();
+          /*      Juego.cargarLogros();
                 Juego.desbloquearLogro(Juego.LOGRO_100_TRONCOS,
                     Juego.getLogroPercentCompleted(Juego.LOGRO_100_TRONCOS) + 1.0);
                     Juego.updatePercentLogro(Juego.LOGRO_100_TRONCOS, 1.0);*/

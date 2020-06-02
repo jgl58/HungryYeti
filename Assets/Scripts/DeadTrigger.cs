@@ -24,13 +24,7 @@ public class DeadTrigger : MonoBehaviour
         {
             if (gameObject.tag == "Trineo")
             {
-                Juego.restartTriggers();
-                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
-                
-                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_TRINEO))
-                {
-                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_TRINEO, 100.0);
-                }
+               
                 if (Juego.powerUpState == Juego.PowerUpState.escudo)
                 {
                     Juego.powerUpState = Juego.PowerUpState.ninguno;
@@ -43,19 +37,32 @@ public class DeadTrigger : MonoBehaviour
                 }
                 else
                 {
+                    Juego.restartTriggers();
+                    other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+
+                    if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_TRINEO))
+                    {
+                        Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_TRINEO, 100.0);
+                    }
                     source.PlayOneShot(crushSound);
                     Juego.die();
                 }
 
             }
-            if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
-            {
-                Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
-            }
             else
             {
-                source.PlayOneShot(crushSound);
-                Juego.die();
+                Juego.restartTriggers();
+                other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
+
+                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
+                {
+                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
+                }
+                else
+                {
+                    source.PlayOneShot(crushSound);
+                    Juego.die();
+                }
             }
 
         }

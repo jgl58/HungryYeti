@@ -27,7 +27,14 @@ public class Frutas : MonoBehaviour
         if(other.gameObject.tag == "Fruta"){
             source.PlayOneShot(mordiscoSound);
             int puntuacion = int.Parse(puntuacionLabel.text);
-            puntuacionLabel.text = string.Format ("{0:0000}", puntuacion + 25);
+            if (Juego.doublePoints)
+            {
+                puntuacionLabel.text = string.Format("{0:0000}", puntuacion + 50);
+            }
+            else{
+                puntuacionLabel.text = string.Format("{0:0000}", puntuacion + 25);
+            }
+
             Destroy(other.gameObject);
 
 
@@ -43,6 +50,23 @@ public class Frutas : MonoBehaviour
             }
 
             Juego.frutasComidas++;
+           // StartCoroutine(Patrulla(other.gameObject));
         }
+    }
+
+
+    IEnumerator Patrulla(GameObject fruta)
+    {
+        Vector3 finalPosition = new Vector3(-1,11,fruta.transform.localPosition.z);
+        Vector3 origen = fruta.transform.localPosition;
+        float t = 0.0f;
+        while (t< 3.0f)
+        {
+            fruta.transform.position = Vector3.Lerp(origen, finalPosition, t);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(fruta);
+
     }
 }
