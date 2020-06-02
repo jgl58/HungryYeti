@@ -9,6 +9,7 @@ public class PowerUp : MonoBehaviour
 
     private GameObject yeti;
     float y;
+    private bool hasShield = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,10 @@ public class PowerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(hasShield){
+            print(hasShield);
+            gameObject.transform.RotateAround(gameObject.transform.parent.position, Vector3.up, 100 * Time.deltaTime);
+        }
 
         y += Time.deltaTime * 50;
         transform.rotation = Quaternion.Euler(0, y, 0);
@@ -32,6 +37,7 @@ public class PowerUp : MonoBehaviour
                 Juego.powerUpState == Juego.PowerUpState.ninguno)
             {
                 print("Tengo escudo");
+                hasShield = true;
                 gameObject.transform.parent = other.gameObject.transform;
 
                 Vector3 powerupPosition = gameObject.transform.localPosition;

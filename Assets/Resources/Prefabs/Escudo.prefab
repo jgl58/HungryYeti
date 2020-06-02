@@ -75,6 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87243049222522145bde385ce7b72dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldMaterial: {fileID: 0}
+  yetiMaterial: {fileID: 0}
 --- !u!1001 &498011647018116413
 PrefabInstance:
   m_ObjectHideFlags: 0

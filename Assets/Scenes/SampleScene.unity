@@ -2916,6 +2916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a0839db7bd443a5a02f1fbddf57f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  auxYetiMaterial: {fileID: 2100000, guid: 1679dc719d3ae487c830f42b5ed07136, type: 2}
   puntuacionLabel: {fileID: 1517362241}
 --- !u!4 &1331752994
 Transform:
@@ -3876,6 +3877,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1521295631275334, guid: 867394b82c64c47d0b1ac8aafda2d31b, type: 3}
+      propertyPath: m_TagString
+      value: Dummy
+      objectReference: {fileID: 0}
     - target: {fileID: 4516979631634900, guid: 867394b82c64c47d0b1ac8aafda2d31b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -3925,6 +3930,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 53d32bee1ffe5422eb17f5d4546b6a7a, type: 2}
+    - target: {fileID: 137997245947891862, guid: 867394b82c64c47d0b1ac8aafda2d31b,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1679dc719d3ae487c830f42b5ed07136, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 867394b82c64c47d0b1ac8aafda2d31b, type: 3}
 --- !u!1 &2057150557

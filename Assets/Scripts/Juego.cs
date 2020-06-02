@@ -13,6 +13,9 @@ using GooglePlayGames.BasicApi;
 public class Juego : MonoBehaviour
 {
 
+    public static Material yetiMaterial;
+    public Material auxYetiMaterial;
+    private static GameObject dummy;
     public static string LOGRO_PRIMERA_FRUTA = "CgkIpMLIoLcZEAIQAQ";
     public static string LOGRO_PRIMERA_MUERTE = "CgkIpMLIoLcZEAIQAg";
     public static string LOGRO_PRIMERA_MUERTE_COCHE = "CgkIpMLIoLcZEAIQAw";
@@ -98,7 +101,8 @@ public class Juego : MonoBehaviour
 
         Social.localUser.Authenticate(ProcessAuthentication);
 
-
+        dummy = GameObject.FindGameObjectWithTag("Dummy");
+        yetiMaterial = auxYetiMaterial;
 
         PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("Ads", 1);
@@ -379,6 +383,7 @@ public class Juego : MonoBehaviour
     {
         if (estado != gameState.jugando)
         {
+            dummy.GetComponent<Renderer>().material = yetiMaterial;
             if(resetPuntuacion){
                 MenuPrincipal.GetComponent<HUD>().reset();
                 rewardedGastado = false;
