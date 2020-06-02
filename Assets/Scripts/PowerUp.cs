@@ -6,8 +6,9 @@ public class PowerUp : MonoBehaviour
 {
     public Material goldMaterial;
     public Material yetiMaterial;
-
     private GameObject yeti;
+    public GameObject shineSound;
+    public GameObject heartSound;
     float y;
     private bool hasShield = false;
     // Start is called before the first frame update
@@ -37,6 +38,7 @@ public class PowerUp : MonoBehaviour
                 Juego.powerUpState == Juego.PowerUpState.ninguno)
             {
                 print("Tengo escudo");
+                Instantiate(heartSound);
                 hasShield = true;
                 gameObject.transform.parent = other.gameObject.transform;
 
@@ -53,6 +55,7 @@ public class PowerUp : MonoBehaviour
                 Juego.doublePoints == false)
             {
                 print("Dobles puntos");
+                Instantiate(shineSound);
                 yeti.GetComponent<Renderer>().material = goldMaterial;
                 gameObject.SetActive(false);
                 Juego.doublePointsUI.SetActive(true);

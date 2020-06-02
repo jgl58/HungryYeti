@@ -77,6 +77,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldMaterial: {fileID: 0}
   yetiMaterial: {fileID: 0}
+  shineSound: {fileID: 0}
+  heartSound: {fileID: 8375730267607239843, guid: 0ed8b71fabf9d4ca0a68cbf6536c5339,
+    type: 3}
 --- !u!1001 &498011647018116413
 PrefabInstance:
   m_ObjectHideFlags: 0
