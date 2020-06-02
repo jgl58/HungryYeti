@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.67587847, g: 0.74081415, b: 0.84803164, a: 1}
+  m_IndirectSpecularColor: {r: 0.6788762, g: 0.74124616, b: 0.8464053, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3568,6 +3568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puntuacionLabel: {fileID: 1517362241}
   mordiscoSound: {fileID: 8300000, guid: cc7fde4d5edb74a0c8c0e925ba051f74, type: 3}
+  mainCamera: {fileID: 534669904}
 --- !u!1 &1776461398
 GameObject:
   m_ObjectHideFlags: 0

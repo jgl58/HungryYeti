@@ -133,7 +133,6 @@ public class Juego : MonoBehaviour
             removeAdsButton.SetActive(true);
         }
 
-
     }
 
         

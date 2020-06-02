@@ -9,6 +9,7 @@ public class Frutas : MonoBehaviour
     public Text puntuacionLabel;
     public AudioSource source {get{return GetComponent<AudioSource>();}}
     public AudioClip mordiscoSound;
+    public Camera mainCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,7 @@ public class Frutas : MonoBehaviour
                 puntuacionLabel.text = string.Format("{0:0000}", puntuacion + 25);
             }
 
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
 
 
             if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_FRUTA))
@@ -50,12 +51,16 @@ public class Frutas : MonoBehaviour
             }
 
             Juego.frutasComidas++;
-           // StartCoroutine(Patrulla(other.gameObject));
+            other.gameObject.LeanMove(mainCamera.ViewportToWorldPoint(new Vector3(0.1f, 1, mainCamera.nearClipPlane + 2)), 1f).setOnComplete(()=>{
+                //rotationDirection = rotationState.up;
+                Destroy(other.gameObject);
+            });
+            //StartCoroutine(Patrulla(other.gameObject));
         }
     }
 
 
-    IEnumerator Patrulla(GameObject fruta)
+    /*IEnumerator Patrulla(GameObject fruta)
     {
         Vector3 finalPosition = new Vector3(-1,11,fruta.transform.localPosition.z);
         Vector3 origen = fruta.transform.localPosition;
@@ -68,5 +73,5 @@ public class Frutas : MonoBehaviour
         }
         Destroy(fruta);
 
-    }
+    }*/
 }
