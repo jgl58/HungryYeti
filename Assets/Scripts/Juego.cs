@@ -49,6 +49,11 @@ public class Juego : MonoBehaviour
     public static bool firstTime = true;
 
     public Text puntuacionLabel;
+    public static Text auxPuntuacionLabel;
+    public static Text tiempoLabel;
+    public static Text bestScore;
+    public static Text currentScore;
+    public static Text timeScore;
     public static GameObject imagenTiempoDown;
     public static GameObject MenuPrincipal;
     public static GameObject tituloImagen;
@@ -100,7 +105,7 @@ public class Juego : MonoBehaviour
 
 
 
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("Ads", 1);
         Movement.puntuacionLabel = puntuacionLabel;
         camino = new LinkedList<Celda>();
@@ -123,6 +128,7 @@ public class Juego : MonoBehaviour
         BloquesFactory.generateSuelo(25);
         estado = gameState.menu;
 
+        cargarItemsGameOver();
         cargarItems();
 
         if (PlayerPrefs.HasKey("Ads"))
@@ -135,8 +141,26 @@ public class Juego : MonoBehaviour
 
 
     }
+    
 
-        
+    public static void cargarItemsGameOver(){
+        Transform[] trs = GameObject.Find("/MenuPrincipal/SafeArea/GameOver").GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.name == "BestScoreTexto")
+            {
+                bestScore = t.gameObject.GetComponent<Text>();
+            }
+            if (t.name == "CurrentScoreTexto")
+            {
+                currentScore = t.gameObject.GetComponent<Text>();
+            }
+            if (t.name == "TimeScoreTexto")
+            {
+                timeScore = t.gameObject.GetComponent<Text>();
+            }
+        }
+    }
 
     public static void cargarItems()
     {
@@ -207,6 +231,14 @@ public class Juego : MonoBehaviour
             if (t.name == "DoublePoints")
             {
                 doublePointsUI = t.gameObject;
+            }
+            if (t.name == "Puntuacion")
+            {
+                auxPuntuacionLabel = t.gameObject.GetComponent<Text>();
+            }
+            if (t.name == "Tiempo")
+            {
+                tiempoLabel = t.gameObject.GetComponent<Text>();
             }
         }
     }
@@ -345,6 +377,21 @@ public class Juego : MonoBehaviour
         }
     }
 
+    public static void updateScore(){
+        int best = 0;
+        if (PlayerPrefs.HasKey("Best")){ best = PlayerPrefs.GetInt("Best");}
+        int score = int.Parse(auxPuntuacionLabel.text);
+        if(score > best){
+            PlayerPrefs.SetInt("Best", score);
+            bestScore.text = "BEST: " + score.ToString("0000");
+            currentScore.text = "SCORE: " + score.ToString("0000");
+        } else {
+            bestScore.text = "BEST: " + best.ToString("0000");
+            currentScore.text = "SCORE: " + score.ToString("0000");
+        }
+        timeScore.text = "TIME: " + tiempoLabel.text;
+    }
+
     public static void die()
     {
         if (estado == gameState.jugando)
@@ -352,6 +399,9 @@ public class Juego : MonoBehaviour
             estado = gameState.perdido;
             yourButton.gameObject.SetActive(true);
             gameOver.gameObject.SetActive(true);
+            updateScore();
+            imagenTiempo.gameObject.SetActive(false);
+            imagenPuntuacion.gameObject.SetActive(false);
             //player.SetActive(false);
             menuButton.gameObject.SetActive(true);
             if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
@@ -371,7 +421,7 @@ public class Juego : MonoBehaviour
 
             doublePoints = false;
             pauseButton.SetActive(false);
-
+            imagenTiempoDown.SetActive(false);
         }
     }
 
