@@ -32,6 +32,8 @@ public class DeadTrigger : MonoBehaviour
                     Transform escudo = other.transform.Find("Escudo(Clone)");
                     if (escudo != null)
                     {
+                        source.PlayOneShot(crushSound);
+                        Juego.heartUI.SetActive(false);
                         Destroy(escudo.gameObject);
                     }
                 }

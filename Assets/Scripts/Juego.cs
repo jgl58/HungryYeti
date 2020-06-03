@@ -13,6 +13,9 @@ using GooglePlayGames.BasicApi;
 public class Juego : MonoBehaviour
 {
 
+    public static Material yetiMaterial;
+    public Material auxYetiMaterial;
+    private static GameObject dummy;
     public static string LOGRO_PRIMERA_FRUTA = "CgkIpMLIoLcZEAIQAQ";
     public static string LOGRO_PRIMERA_MUERTE = "CgkIpMLIoLcZEAIQAg";
     public static string LOGRO_PRIMERA_MUERTE_COCHE = "CgkIpMLIoLcZEAIQAw";
@@ -75,6 +78,7 @@ public class Juego : MonoBehaviour
     public static GameObject marcadoresButton;
 
     public static GameObject doublePointsUI;
+    public static GameObject heartUI;
 
 
     public static gameState estado = gameState.jugando;
@@ -103,7 +107,8 @@ public class Juego : MonoBehaviour
 
         Social.localUser.Authenticate(ProcessAuthentication);
 
-
+        dummy = GameObject.FindGameObjectWithTag("Dummy");
+        yetiMaterial = auxYetiMaterial;
 
         //PlayerPrefs.DeleteAll();
         //PlayerPrefs.SetInt("Ads", 1);
@@ -138,7 +143,6 @@ public class Juego : MonoBehaviour
         } else {
             removeAdsButton.SetActive(true);
         }
-
 
     }
     
@@ -239,6 +243,11 @@ public class Juego : MonoBehaviour
             if (t.name == "Tiempo")
             {
                 tiempoLabel = t.gameObject.GetComponent<Text>();
+            }
+            if (t.name == "Shield")
+            {
+                heartUI = t.gameObject;
+
             }
         }
     }
@@ -431,6 +440,7 @@ public class Juego : MonoBehaviour
     {
         if (estado != gameState.jugando)
         {
+            dummy.GetComponent<Renderer>().material = yetiMaterial;
             if(resetPuntuacion){
                 MenuPrincipal.GetComponent<HUD>().reset();
                 rewardedGastado = false;
@@ -555,7 +565,8 @@ public class Juego : MonoBehaviour
         position.x = 1;
         player.transform.position = position;
         player.transform.eulerAngles = new Vector3(0, 0, 0);
-
+        restartTriggers();
+        player.GetComponent<Animator>().SetTrigger("Levantarse");
 
         player.SetActive(true);
 

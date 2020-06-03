@@ -181,6 +181,7 @@ public class Movement : MonoBehaviour
                     Transform escudo = player.transform.Find("Escudo(Clone)");
                     if (escudo != null)
                     {
+                        Juego.heartUI.SetActive(false);
                         Destroy(escudo.gameObject);
                     }
                     Juego.powerUpState = Juego.PowerUpState.ninguno;

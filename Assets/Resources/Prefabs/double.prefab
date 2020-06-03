@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87243049222522145bde385ce7b72dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldMaterial: {fileID: 2100000, guid: fc8072d252d344b1f99ed2a130a30d55, type: 2}
+  yetiMaterial: {fileID: 2100000, guid: 1679dc719d3ae487c830f42b5ed07136, type: 2}
+  shineSound: {fileID: 3989479619773028396, guid: 3c553c9de4e5347df80262e8c0fcff32,
+    type: 3}
 --- !u!54 &-4828115060206398573
 Rigidbody:
   m_ObjectHideFlags: 0
