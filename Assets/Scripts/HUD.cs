@@ -13,6 +13,8 @@ public class HUD : MonoBehaviour
     public static float lastCheckTime = maxTime;
     public static Vector3 lastCheckPos;
     public GameObject player;
+    public GameObject clockSound;
+    private GameObject auxClockSound;
 
     //OTRAS COSAS
     public Text tiempoLabelDown;
@@ -61,6 +63,7 @@ public class HUD : MonoBehaviour
             lastCheckTime = auxMaxTime;
             //subir player
             LeanTween.cancel(id);
+            Destroy(auxClockSound);
             dieAction = false;
             player.transform.position = new Vector3(
                 player.transform.position.x,
@@ -74,6 +77,7 @@ public class HUD : MonoBehaviour
             lastCheckPos = player.transform.position;
             auxText = "";
             dieAction = false;
+            Destroy(auxClockSound);
             Juego.die(); 
         } else {
 
@@ -91,6 +95,7 @@ public class HUD : MonoBehaviour
                 });
                 if (!dieAction)
                 {
+                    auxClockSound = Instantiate(clockSound);
                     id = player.LeanMoveY(-1f, 5.0f).id;
                     dieAction = true;
                 }
@@ -123,6 +128,7 @@ public class HUD : MonoBehaviour
         lastCheckTime = maxTime;
         auxText = "";
         dieAction = false;
+        Destroy(auxClockSound);
     }
 
 }

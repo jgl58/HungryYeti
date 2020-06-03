@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.67587847, g: 0.74081415, b: 0.84803164, a: 1}
+  m_IndirectSpecularColor: {r: 0.6788762, g: 0.74124616, b: 0.8464053, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3319,6 +3319,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1658868412}
+  clockSound: {fileID: 1997000196645026878, guid: ebc982c00b49c47348dcf945d485796f,
+    type: 3}
   tiempoLabelDown: {fileID: 1025719992}
   tiempoLabel: {fileID: 2057150559}
   puntuacionLabel: {fileID: 1517362241}
