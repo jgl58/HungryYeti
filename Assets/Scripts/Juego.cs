@@ -368,7 +368,8 @@ public class Juego : MonoBehaviour
             {
                 Social.ReportScore(puntos, MEJORES_PUNTUACIONES, (bool success) => { });
             }
-          
+
+            doublePoints = false;
             pauseButton.SetActive(false);
 
         }
@@ -385,23 +386,7 @@ public class Juego : MonoBehaviour
                 rewardedGastado = false;
             }
 
-            playAgainWithAd.SetActive(false);
-            imagenTiempoDown.SetActive(true);
-            tituloImagen.SetActive(false);
-            gameOver.gameObject.SetActive(false);
-            yourButton.gameObject.SetActive(false);
-            menuButton.gameObject.SetActive(false);
-            removeAdsButton.gameObject.SetActive(false);
-            imagenTiempo.gameObject.SetActive(true);
-            imagenPuntuacion.gameObject.SetActive(true);
-            logrosButton.gameObject.SetActive(false);
-            marcadoresButton.gameObject.SetActive(false);
-            pauseButton.gameObject.SetActive(true);
-            doublePointsUI.SetActive(false);
-            exitButton.SetActive(false);
-            frutasComidas = 0;
-
-            player.SetActive(true);
+            setGame();
 
             powerUpState = PowerUpState.ninguno;
             Transform escudo = player.transform.Find("Escudo(Clone)");
@@ -410,7 +395,6 @@ public class Juego : MonoBehaviour
                 Destroy(escudo.gameObject);
             }
 
-            print(firstTime);
 
             if (!firstTime)
             {
@@ -498,28 +482,9 @@ public class Juego : MonoBehaviour
         }
         firstTime = true;
         estado = gameState.menu;
-        playAgainWithAd.SetActive(false);
-        tituloImagen.SetActive(true);
-        gameOver.gameObject.SetActive(false);
-        yourButton.gameObject.SetActive(true);
-        menuButton.gameObject.SetActive(false);
-        logrosButton.gameObject.SetActive(true);
-        marcadoresButton.gameObject.SetActive(true);
-        continueButton.SetActive(false);
-        pauseTitle.SetActive(false);
-        exitButton.SetActive(true);
-        doublePointsUI.SetActive(false);
+        setMenu();
         Time.timeScale = 1;
-        if (PlayerPrefs.HasKey("Ads"))
-        {
-            int hasAds = PlayerPrefs.GetInt("Ads");
-            removeAdsButton.SetActive(hasAds == 1);
-        }else{
-            removeAdsButton.SetActive(true);
-        }
-        imagenTiempo.gameObject.SetActive(false);
-        imagenPuntuacion.gameObject.SetActive(false);
-        imagenTiempoDown.SetActive(false);
+        
 
         GameObject suelo = GameObject.Find("Suelo");
         foreach (Transform child in suelo.transform)
@@ -536,8 +501,11 @@ public class Juego : MonoBehaviour
 
         Vector3 position = player.transform.position;
         position.z = -3;
+        position.y = 0.5f;
         position.x = 1;
         player.transform.position = position;
+        player.transform.eulerAngles = new Vector3(0, 0, 0);
+
 
         player.SetActive(true);
 
@@ -567,4 +535,57 @@ public class Juego : MonoBehaviour
     }
 
 
+    public static void setMenu()
+    {
+        playAgainWithAd.SetActive(false);
+        tituloImagen.SetActive(true);
+        gameOver.gameObject.SetActive(false);
+        yourButton.gameObject.SetActive(true);
+        menuButton.gameObject.SetActive(false);
+        logrosButton.gameObject.SetActive(true);
+        marcadoresButton.gameObject.SetActive(true);
+        continueButton.SetActive(false);
+        pauseTitle.SetActive(false);
+        exitButton.SetActive(true);
+        doublePointsUI.SetActive(false);
+        doublePoints = false;
+
+        if (PlayerPrefs.HasKey("Ads"))
+        {
+            int hasAds = PlayerPrefs.GetInt("Ads");
+            removeAdsButton.SetActive(hasAds == 1);
+        }
+        else
+        {
+            removeAdsButton.SetActive(true);
+        }
+        imagenTiempo.gameObject.SetActive(false);
+        imagenPuntuacion.gameObject.SetActive(false);
+        imagenTiempoDown.SetActive(false);
+    }
+
+    public static void setGame()
+    {
+        playAgainWithAd.SetActive(false);
+        imagenTiempoDown.SetActive(true);
+        tituloImagen.SetActive(false);
+        gameOver.gameObject.SetActive(false);
+        yourButton.gameObject.SetActive(false);
+        menuButton.gameObject.SetActive(false);
+        removeAdsButton.gameObject.SetActive(false);
+        imagenTiempo.gameObject.SetActive(true);
+        imagenPuntuacion.gameObject.SetActive(true);
+        logrosButton.gameObject.SetActive(false);
+        marcadoresButton.gameObject.SetActive(false);
+        pauseButton.gameObject.SetActive(true);
+        doublePointsUI.SetActive(false);
+        exitButton.SetActive(false);
+        frutasComidas = 0;
+        doublePoints = false;
+        powerUpState = PowerUpState.ninguno;
+        player.SetActive(true);
+
+        estoyTronco = false;
+
+    }
 }

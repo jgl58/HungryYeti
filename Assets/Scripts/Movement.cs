@@ -128,10 +128,11 @@ public class Movement : MonoBehaviour
         player.GetComponent<Animator>().SetTrigger("SaltarAdelante");
         player.LeanMove(nextPosition,0.15f).setEase(saltoEasing).setOnComplete(()=>{
             player.transform.position = nextPosition;
-            print(nextPosition.z);
             go = false;
-            Celda actual = Juego.camino.First.Value;
 
+
+            Celda actual = Juego.camino.First.Value;
+            print(actual.GetCelda(actual.getColumnaPlayer(player)));
             estoyEnAgua = actual.GetCelda(actual.getColumnaPlayer(player)) == BloquesType.Agua;
 
             if (estoyEnAgua)
@@ -140,7 +141,7 @@ public class Movement : MonoBehaviour
 
                 foreach (Collider c in colliders)
                 {
-                    if (c.gameObject.tag != "Player")
+                    if (c.tag != "Player")
                     {
                         print("Hay tronco");
                         Juego.estoyTronco = true;
@@ -148,7 +149,6 @@ public class Movement : MonoBehaviour
                     }
                     else
                     {
-                        
                         print("Espero que sepas nadar");
                         Juego.estoyTronco = false;
                     }

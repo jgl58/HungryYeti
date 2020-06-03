@@ -24,6 +24,7 @@ public class HUD : MonoBehaviour
     private int hourCount;
  
     private float time;
+    private string auxText = "";
 
     void Start()
     {
@@ -58,11 +59,23 @@ public class HUD : MonoBehaviour
             tiempoLabelDown.text = "0";
             lastCheckTime = auxMaxTime;
             lastCheckPos = player.transform.position;
+            auxText = "";
             Juego.die(); 
         } else {
+
             lastCheckTime -= Time.deltaTime;
+
             tiempoLabelDown.text = ((int)lastCheckTime).ToString("0");
+            
             lastCheckPos = player.transform.position;
+
+            if (lastCheckTime < 6 && auxText != tiempoLabelDown.text)
+            {
+                auxText = tiempoLabelDown.text;
+                tiempoLabelDown.gameObject.LeanScale(new Vector3(2,2,1), 0.3f).setOnComplete(() => {
+                    tiempoLabelDown.gameObject.LeanScale(new Vector3(1,1,1), 0.3f);
+                });
+            }
         }
     }
 
@@ -87,6 +100,7 @@ public class HUD : MonoBehaviour
         hourCount = 0;
         tiempoLabelDown.text = "10";
         lastCheckTime = maxTime;
+        auxText = "";
     }
 
 }
