@@ -12,6 +12,8 @@ TagManager:
   - Camion
   - Fruta
   - double
+  - Dummy
+  - Escudo
   layers:
   - Default
   - TransparentFX

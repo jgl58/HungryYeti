@@ -24,9 +24,14 @@ public class HUD : MonoBehaviour
     private int hourCount;
  
     private float time;
+    private string auxText = "";
+    private int id;
+    private bool dieAction = false;
+
 
     void Start()
     {
+        
         //puntuacionLabel.text = string.Format ("{0:0000}", 1);
         lastCheckPos = player.transform.position;
     }
@@ -50,19 +55,48 @@ public class HUD : MonoBehaviour
     }
 
     public void UpdateDie(){
-        if (player.transform.position != lastCheckPos){
+        if (player.transform.position.x != lastCheckPos.x || 
+            player.transform.position.z != lastCheckPos.z)
+        {
             lastCheckTime = auxMaxTime;
+            //subir player
+            LeanTween.cancel(id);
+            dieAction = false;
+            player.transform.position = new Vector3(
+                player.transform.position.x,
+                0.5f,
+                player.transform.position.z);
         }
         if (lastCheckTime < 1)
         {
             tiempoLabelDown.text = "0";
             lastCheckTime = auxMaxTime;
             lastCheckPos = player.transform.position;
+            auxText = "";
+            dieAction = false;
             Juego.die(); 
         } else {
+
             lastCheckTime -= Time.deltaTime;
+
             tiempoLabelDown.text = ((int)lastCheckTime).ToString("0");
+            
             lastCheckPos = player.transform.position;
+
+            if (lastCheckTime < 6 && auxText != tiempoLabelDown.text)
+            {
+                auxText = tiempoLabelDown.text;
+                tiempoLabelDown.gameObject.LeanScale(new Vector3(2,2,1), 0.3f).setOnComplete(() => {
+                    tiempoLabelDown.gameObject.LeanScale(new Vector3(1,1,1), 0.3f);
+                });
+                if (!dieAction)
+                {
+                    id = player.LeanMoveY(-1f, 5.0f).id;
+                    dieAction = true;
+                }
+                
+                
+            }
         }
     }
 
@@ -87,6 +121,8 @@ public class HUD : MonoBehaviour
         hourCount = 0;
         tiempoLabelDown.text = "10";
         lastCheckTime = maxTime;
+        auxText = "";
+        dieAction = false;
     }
 
 }

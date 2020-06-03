@@ -77,6 +77,7 @@ public class CarMovement : MonoBehaviour
                 Transform escudo = other.transform.Find("Escudo(Clone)");
                 if (escudo != null)
                 {
+                    Juego.heartUI.SetActive(false);
                     Destroy(escudo.gameObject);
                 }
             }

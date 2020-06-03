@@ -61,7 +61,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 0.5, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6696547074517389598
 MonoBehaviour:
@@ -75,6 +75,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87243049222522145bde385ce7b72dad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldMaterial: {fileID: 0}
+  yetiMaterial: {fileID: 0}
+  shineSound: {fileID: 0}
+  heartSound: {fileID: 8375730267607239843, guid: 0ed8b71fabf9d4ca0a68cbf6536c5339,
+    type: 3}
 --- !u!1001 &498011647018116413
 PrefabInstance:
   m_ObjectHideFlags: 0

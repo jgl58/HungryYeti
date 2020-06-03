@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+    public Material goldMaterial;
+    public Material yetiMaterial;
+    private GameObject yeti;
+    public GameObject shineSound;
+    public GameObject heartSound;
     float y;
+    private bool hasShield = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        yeti = GameObject.FindGameObjectWithTag("Dummy");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(hasShield){
+            print(hasShield);
+            gameObject.transform.RotateAround(gameObject.transform.parent.position, Vector3.up, 100 * Time.deltaTime);
+        }
 
         y += Time.deltaTime * 50;
         transform.rotation = Quaternion.Euler(0, y, 0);
@@ -28,6 +38,8 @@ public class PowerUp : MonoBehaviour
                 Juego.powerUpState == Juego.PowerUpState.ninguno)
             {
                 print("Tengo escudo");
+                Instantiate(heartSound);
+                hasShield = true;
                 gameObject.transform.parent = other.gameObject.transform;
 
                 Vector3 powerupPosition = gameObject.transform.localPosition;
@@ -37,12 +49,15 @@ public class PowerUp : MonoBehaviour
 
                 gameObject.transform.localPosition = powerupPosition;
                 Juego.powerUpState = Juego.PowerUpState.escudo;
+                Juego.heartUI.SetActive(true);
             }
 
             if (gameObject.tag == "double" &&
                 Juego.doublePoints == false)
             {
                 print("Dobles puntos");
+                Instantiate(shineSound);
+                yeti.GetComponent<Renderer>().material = goldMaterial;
                 gameObject.SetActive(false);
                 Juego.doublePointsUI.SetActive(true);
                 //animacion dobles puntos
@@ -60,6 +75,7 @@ public class PowerUp : MonoBehaviour
 
     private void resetDoublePoints()
     {
+        yeti.GetComponent<Renderer>().material = yetiMaterial;
         Juego.doublePoints = false;
         Juego.doublePointsUI.SetActive(false);
     }
