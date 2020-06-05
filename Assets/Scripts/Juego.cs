@@ -110,8 +110,6 @@ public class Juego : MonoBehaviour
         dummy = GameObject.FindGameObjectWithTag("Dummy");
         yetiMaterial = auxYetiMaterial;
 
-        //PlayerPrefs.DeleteAll();
-        //PlayerPrefs.SetInt("Ads", 1);
         Movement.puntuacionLabel = puntuacionLabel;
         camino = new LinkedList<Celda>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -422,7 +420,7 @@ public class Juego : MonoBehaviour
                 playAgainWithAd.SetActive(true);
             }
             long puntos = long.Parse(MenuPrincipal.GetComponent<HUD>().puntuacionLabel.text);
-            print(puntos + "");
+           
             if (Social.localUser.authenticated)
             {
                 Social.ReportScore(puntos, MEJORES_PUNTUACIONES, (bool success) => { });

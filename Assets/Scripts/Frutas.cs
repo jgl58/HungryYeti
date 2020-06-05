@@ -52,26 +52,10 @@ public class Frutas : MonoBehaviour
 
             Juego.frutasComidas++;
             other.gameObject.LeanMove(mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0, mainCamera.nearClipPlane + 2)), 1f).setOnComplete(()=>{
-                //rotationDirection = rotationState.up;
+                
                 Destroy(other.gameObject);
             });
-            //StartCoroutine(Patrulla(other.gameObject));
         }
     }
 
-
-    /*IEnumerator Patrulla(GameObject fruta)
-    {
-        Vector3 finalPosition = new Vector3(-1,11,fruta.transform.localPosition.z);
-        Vector3 origen = fruta.transform.localPosition;
-        float t = 0.0f;
-        while (t< 3.0f)
-        {
-            fruta.transform.position = Vector3.Lerp(origen, finalPosition, t);
-            t += Time.deltaTime;
-            yield return null;
-        }
-        Destroy(fruta);
-
-    }*/
 }
