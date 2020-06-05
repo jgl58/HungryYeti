@@ -21,14 +21,13 @@ public class PlayerCollision : MonoBehaviour
 
         if (playerFollow && celda.GetCelda(celda.getColumnaPlayer(player)) == BloquesType.Agua)
         {
-            print("Me muevo con el tronco");
+   
             
             player.transform.position = new Vector3(
             transform.position.x + offset,
             player.transform.position.y,
             player.transform.position.z);
 
-            print(transform.position.ToString());
         }
 
 
@@ -40,13 +39,13 @@ public class PlayerCollision : MonoBehaviour
 
         if (other.tag == "Player")
         {
-            print("Entro tronco");
+           
             if (!Juego.getLogroCompleted(Juego.LOGRO_100_TRONCOS))
             {
-             /*   Juego.cargarLogros();
+                Juego.cargarLogros();
                 Juego.desbloquearLogro(Juego.LOGRO_100_TRONCOS,
                     Juego.getLogroPercentCompleted(Juego.LOGRO_100_TRONCOS) + 1.0);
-                    Juego.updatePercentLogro(Juego.LOGRO_100_TRONCOS, 1.0);*/
+                    Juego.updatePercentLogro(Juego.LOGRO_100_TRONCOS, 1.0);
             }
             offset = (player.transform.position.x - transform.position.x);
             playerFollow = true;
@@ -58,7 +57,6 @@ public class PlayerCollision : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            print("Salgo tronco");
             Celda c = Juego.camino.First.Value;
             c.recolocarPlayer(player);
             playerFollow = false;

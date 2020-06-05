@@ -21,7 +21,6 @@ public class PowerUp : MonoBehaviour
     void Update()
     {
         if(hasShield){
-            print(hasShield);
             gameObject.transform.RotateAround(gameObject.transform.parent.position, Vector3.up, 100 * Time.deltaTime);
         }
 
@@ -37,7 +36,6 @@ public class PowerUp : MonoBehaviour
             if (gameObject.tag == "Escudo" && 
                 Juego.powerUpState == Juego.PowerUpState.ninguno)
             {
-                print("Tengo escudo");
                 Instantiate(heartSound);
                 hasShield = true;
                 gameObject.transform.parent = other.gameObject.transform;
@@ -55,7 +53,6 @@ public class PowerUp : MonoBehaviour
             if (gameObject.tag == "double" &&
                 Juego.doublePoints == false)
             {
-                print("Dobles puntos");
                 Instantiate(shineSound);
                 yeti.GetComponent<Renderer>().material = goldMaterial;
                 gameObject.SetActive(false);

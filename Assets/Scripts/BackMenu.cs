@@ -14,7 +14,6 @@ public class BackMenu : MonoBehaviour
     }
 
     void TaskOnClick(){
-        print("backbuttonPressed");
         Juego.backToMenu();
     }
 }

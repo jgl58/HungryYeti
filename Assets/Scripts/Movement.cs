@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-        //gameObject.AddComponent<AudioSource> ();
+        
     }
 
 
@@ -55,10 +55,7 @@ public class Movement : MonoBehaviour
                     Vector3 nextPosition = player.transform.position;
                     Math.Truncate(nextPosition.z++);
 
-                    //player.transform.position = nextPosition;
-                    //StartCoroutine(desplazarCorrutina(nextPosition,0,player));
                     goUp(nextPosition);
-                    //StartCoroutine(desplazarCorrutina(nextPosition,0,camera));
                    
                 }
    
@@ -113,8 +110,6 @@ public class Movement : MonoBehaviour
     }
 
     bool checkTap(){
-        print(beginTouchPosition.x);
-        print(endTouchPosition.x);
         if(beginTouchPosition.x + 50 > endTouchPosition.x && beginTouchPosition.x - 50  < endTouchPosition.x){
             return true;
         }
@@ -132,7 +127,6 @@ public class Movement : MonoBehaviour
 
 
             Celda actual = Juego.camino.First.Value;
-            print(actual.GetCelda(actual.getColumnaPlayer(player)));
             estoyEnAgua = actual.GetCelda(actual.getColumnaPlayer(player)) == BloquesType.Agua;
 
             if (estoyEnAgua)
@@ -143,13 +137,11 @@ public class Movement : MonoBehaviour
                 {
                     if (c.tag != "Player")
                     {
-                        print("Hay tronco");
                         Juego.estoyTronco = true;
                         break;
                     }
                     else
                     {
-                        print("Espero que sepas nadar");
                         Juego.estoyTronco = false;
                     }
                 }
@@ -208,8 +200,7 @@ public class Movement : MonoBehaviour
                 if (refreshCounter == 0)
                 {
                     refreshCounter = BloquesFactory.BLOQUES_ITERACION;
-                    print("Cargamos nuevos bloques");
-
+                    
 
                     BloquesFactory.generateSuelo(BloquesFactory.BLOQUES_ITERACION);
                 }

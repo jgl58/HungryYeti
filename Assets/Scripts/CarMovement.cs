@@ -98,36 +98,5 @@ public class CarMovement : MonoBehaviour
             }
         }
     }
-/*
-    void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.tag == "Player"){
 
-            print("OnStay");
-            if (Juego.powerUpState == Juego.PowerUpState.escudo)
-            {
-                source.PlayOneShot(crushSound);
-                Juego.powerUpState = Juego.PowerUpState.ninguno;
-                Transform escudo = other.transform.Find("Escudo(Clone)");
-                if (escudo != null)
-                {
-                    Destroy(escudo.gameObject);
-                }
-            }
-            else
-            {
-                if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE_COCHE))
-                {
-                    Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE_COCHE, 100.0);
-                }
-                if (Juego.estado == Juego.gameState.jugando)
-                {
-                    source.PlayOneShot(crushSound);
-                    Juego.restartTriggers();
-                    other.gameObject.GetComponent<Animator>().SetTrigger("Morir");
-                    Juego.die();
-                }
-            }
-        }
-    }*/
 }

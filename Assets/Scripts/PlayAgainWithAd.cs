@@ -29,7 +29,7 @@ public class PlayAgainWithAd : MonoBehaviour, IUnityAdsListener
         gameObject.SetActive(false);
         if(placementId == myPlacementId){
             if (showResult == ShowResult.Finished) {
-                print("todo guay");
+               
                 Juego.start(false);
             } else if (showResult == ShowResult.Skipped) {
                 //nada
