@@ -51,7 +51,7 @@ public class Frutas : MonoBehaviour
             }
 
             Juego.frutasComidas++;
-            other.gameObject.LeanMove(mainCamera.ViewportToWorldPoint(new Vector3(0.1f, 1, mainCamera.nearClipPlane + 2)), 1f).setOnComplete(()=>{
+            other.gameObject.LeanMove(mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0, mainCamera.nearClipPlane + 2)), 1f).setOnComplete(()=>{
                 //rotationDirection = rotationState.up;
                 Destroy(other.gameObject);
             });
