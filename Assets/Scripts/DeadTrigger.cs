@@ -59,12 +59,11 @@ public class DeadTrigger : MonoBehaviour
                 if (!Juego.getLogroCompleted(Juego.LOGRO_PRIMERA_MUERTE))
                 {
                     Juego.desbloquearLogro(Juego.LOGRO_PRIMERA_MUERTE, 100.0);
+                    
                 }
-                else
-                {
                     source.PlayOneShot(crushSound);
                     Juego.die();
-                }
+                
             }
 
         }
